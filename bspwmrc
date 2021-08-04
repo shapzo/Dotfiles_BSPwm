@@ -1,0 +1,73 @@
+#!/usr/bin/sh
+#=====================================================================================
+#    '##::::'##:'##:::'##::::'########:::'######::'########::'##:::::'##:'##::::'##:  
+#     ###::'###:. ##:'##::::: ##.... ##:'##... ##: ##.... ##: ##:'##: ##: ###::'###:  
+#     ####'####::. ####:::::: ##:::: ##: ##:::..:: ##:::: ##: ##: ##: ##: ####'####:  
+#     ## ### ##:::. ##::::::: ########::. ######:: ########:: ##: ##: ##: ## ### ##:  
+#     ##. #: ##:::: ##::::::: ##.... ##::..... ##: ##.....::: ##: ##: ##: ##. #: ##:  
+#     ##:.:: ##:::: ##::::::: ##:::: ##:'##::: ##: ##:::::::: ##: ##: ##: ##:.:: ##:  
+#     ##:::: ##:::: ##::::::: ########::. ######:: ##::::::::. ###. ###:: ##:::: ##:  
+#   ..:::::..:::::..::::::::........::::......:::..::::::::::...::...:::..:::::..::   
+#=====================================================================================
+#lo k se inicia al principio de la sesion
+sxhkd &
+picom -b &         
+xsetroot -cursor_name left_ptr &
+
+$HOME/.config/polybar/BSPwm/launch.sh &
+
+#set wallpaper
+feh --bg-fill /home/rodrigo/Imágenes/wallp29.jpg
+
+#monitores
+bspc monitor -d I II III IV V VI VII VIII IX
+
+#gaps
+bspc config border_width         2
+bspc config window_gap           5
+
+#Dark theme for bspwm -Drakula-
+bspc config normal_border_color "#a27d00"
+bspc config active_border_color "#d6b300"
+bspc config focused_border_color "#ffffff"
+bspc config presel_feedback_color "#6c7817"
+
+
+SPACES=$(bspc query -D)
+for SPACE in $SPACES
+do
+  bspc config -d ${SPACE} window_gap      8
+  bspc config -d ${SPACE} top_padding     1
+  bspc config -d ${SPACE} bottom_padding  5
+  bspc config -d ${SPACE} left_padding    8
+  bspc config -d ${SPACE} right_padding   8
+done
+
+bspc config automatic_scheme      spiral
+bspc config split_ratio           0.50
+bspc config borderless_monocle    true
+bspc config gapless_monocle       false  
+bspc config single_monocle        true
+bspc config focus_follows_pointer true
+bspc config focused_frame_opacity 0.05
+bspc config normal_frame_opacity  0.9
+bspc config border_radius         15.0
+
+# Rules
+bscp rule -a polybar manage=off
+bspc rule -a lollypop state=floating sticky=on
+#bspc rule -a rofi state=tiled sticky=on
+
+
+# Set Desktop 7 to start with floating windows
+FLOATING_DESKTOP_ID=$(bspc query -D -d '^1')
+bspc subscribe node_manage | while read -a msg ; do
+	desk_id=${msg[2]}
+	wid=${msg[3]}
+	[ "$FLOATING_DESKTOP_ID" = "$desk_id" ] && bspc node "$wid" -t floating
+#
+done
+       
+xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
+

@@ -1,0 +1,130 @@
+configuration {
+    font:                           "Organo Regular 11";
+    show-icons:                     true;
+    drun-display-format:            "{name}";
+    fullscreen:                     false;
+    threads:                        1;
+    scroll-method:                  0;
+    disable-history:                true;
+}
+
+* {
+    background:                     #2f444011;
+    background-color:               #52535385;
+    background-entry:               #000;
+    background-alt:                 #1f3a36;
+    foreground:                     #000;
+    foreground-selected:            #000;
+    urgent:                         #000;
+    urgent-selected:                #000;
+    border-radius:                  20px;
+}
+
+window {
+    transparency:                   "real";
+    background-color:               @background;
+    text-color:                     @foreground;
+    height:                         95%;
+    width:                          98%;
+    location:                       northwest;
+    anchor:                         northwest;
+    x-offset:                       1%;
+    y-offset:                       4.2%;
+}
+
+prompt {
+    enabled: false;
+}
+
+
+inputbar {
+    background-color:               #a686af85;
+    text-color:                     @foreground;
+    expand:                         false;
+    margin:                         0px 20% 0px 20%;
+    padding:                        20px 20px 20px 20px;
+    position:                       north;
+}
+
+
+entry {
+    background-color:               @background;
+    text-color:                     @foreground;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0.5;
+    placeholder:                    "K deseas papi!!";
+    blink:                          true;
+}
+
+case-indicator {
+    background-color:               @background;
+    text-color:                     @foreground;
+    spacing:                        0;
+}
+
+
+listview {
+    background-color:               @background;
+    columns:                        6;
+    spacing:                        4px;
+    cycle:                          false;
+    dynamic:                        true;
+    layout:                         vertical;
+}
+
+mainbox {
+    background-color:               @background-color;
+    children:                       [ inputbar, listview ];
+    spacing:                        25px;
+    padding:                        45px 5% 45px 5%;
+}
+
+
+element {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    vertical;
+    padding:                        25px 0px 25px 0px;
+}
+
+element-icon {
+    size:                           70px;
+    border:                         0px;
+}
+
+element-text {
+    expand:                         true;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    margin:                         5px 10px 0px 10px;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:               @urgent;
+    text-color:                     @foreground;
+}
+
+element normal.active,
+element alternate.active {
+    background-color:               @background-alt;
+    text-color:                     @foreground;
+}
+
+element selected {
+    border: 0% 0% 0.5% 0%;
+    border-color: #0f885e;
+    background-color:               @background-alt;
+    text-color:                     @foreground-selected;
+}
+
+element selected.urgent {
+    background-color:               @urgent-selected;
+    text-color:                     @foreground;
+}
+
+element selected.active {
+    background-color:               @background-alt;
+    color:                          @foreground-selected;
+}
