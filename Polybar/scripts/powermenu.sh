@@ -5,11 +5,11 @@ rofi_command="rofi -theme $HOME/.config/rofi/themes/dracula.rasi"
 uptime=$(uptime -p | sed -e 's/up //g')
 
 # Options
-shutdown="Apagar"
-reboot="Reiniciar"
-lock="Bloquear"
-suspend="Suspender"
-logout="Salir"
+shutdown="Shutdown"
+reboot="Reboot"
+lock="Lock"
+suspend="Suspend"
+logout="Logout"
 
 # Variable passed to rofi
 options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"
