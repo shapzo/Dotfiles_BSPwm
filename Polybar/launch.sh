@@ -10,7 +10,9 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch the bar's
 
-polybar -q left -c "$DIR"/config.ini &
+polybar -q app -c "$DIR"/config.ini &
+polybar -q ewmh -c "$DIR"/config.ini &
+polybar -q center -c "$DIR"/config.ini &
 polybar -q center -c "$DIR"/config.ini &
 polybar -q xbacklight -c "$DIR"/config.ini &
 polybar -q volume -c "$DIR"/config.ini &
