@@ -39,6 +39,12 @@
     border:           3;
     padding:          9;
     border-radius: 12;
+    height:                         25%;
+    width:                          19%;
+    location:                       northwest;
+    anchor:                         northwest;
+    x-offset:                       80%;
+    y-offset:                       70%;
 }
 #mainbox {
     background-color: inherit;

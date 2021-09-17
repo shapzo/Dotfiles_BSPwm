@@ -37,7 +37,6 @@ super + {_,shift + }z
 super + m
 	bspc desktop -l next
 
-
 super + alt + {Up,Down}
 	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {-,+} 5 ))
 
@@ -49,7 +48,6 @@ super + {a,s,d,f}
 
 alt + space
 	bspc node -t "~"{floating,tiled}
-
 
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
@@ -71,7 +69,6 @@ super + shift + {Left,Right}
 super + ctrl + {Right,Left}
 	bspc node -d {next,prev} -f
 
-# focus the last node/desktop
 super + {grave,Tab}
 	bspc {node,desktop} -f last
 
@@ -81,9 +78,11 @@ super + ctrl + {h,j,k,l}
 super + ctrl + {1-9}
 	bspc node -o 0.{1-9}
 
-# lockscreen
 alt + l
-    betterlockscreen -l dimblur
+    betterlockscreen -l dimblur 
+
+alt + p
+	kill picom	
 
 super + alt + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
@@ -103,15 +102,23 @@ super + Escape
 super + button{4,5}
 	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {-,+} 5 ))
 
+super + alt + button{4,5}
+	bspc config window_gap $(( $(bspc config window_gap) {-,+} 5 ))
+
+super + g
+	bspc node -g sticky
+
 super + alt + {m,x,z}
 	bspc node -g {marked,locked,private}
 
 alt + {_,shift + }Tab
 	bspc node -f {next,prev}.local
 
-ctrl + alt + space
+ctrl + super + space
 	bspc node -p cancel
 
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 #-----------------------------------------------------
 
 #Volume Control

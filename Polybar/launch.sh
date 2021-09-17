@@ -13,7 +13,6 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 polybar -q app -c "$DIR"/config.ini &
 polybar -q ewmh -c "$DIR"/config.ini &
 polybar -q center -c "$DIR"/config.ini &
-polybar -q center -c "$DIR"/config.ini &
 polybar -q xbacklight -c "$DIR"/config.ini &
 polybar -q volume -c "$DIR"/config.ini &
 polybar -q battery -c "$DIR"/config.ini &
