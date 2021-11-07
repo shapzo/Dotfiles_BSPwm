@@ -12,7 +12,7 @@
 #--------------------------------abrir apps---------
 # terminal emulator
 super + Return
-	tilix
+	urxvt
 
 # program launcher
 alt + d

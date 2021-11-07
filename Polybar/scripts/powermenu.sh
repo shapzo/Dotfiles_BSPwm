@@ -1,8 +1,8 @@
 #!/bin/bash
 #rofi_command="rofi -theme /usr/share/rofi/themes/dracula.rasi"
-rofi_command="rofi -theme $HOME/.config/rofi/themes/dracula.rasi"
+rofi_command="rofi -theme $HOME/.config/rofi/themes/power.rasi"
 
-uptime=$(uptime -p | sed -e 's/up //g')
+uptime="   Select an option  "
 
 # Options
 shutdown="  Shutdown"

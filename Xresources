@@ -1,0 +1,111 @@
+! ------------------------------------------------------------------------------
+! URxvt my configuration
+! ------------------------------------------------------------------------------
+
+! general settings
+
+URxvt.urlLauncher:      firefox-developer-edition
+URxvt.underlineURLs:    true
+URxvt.urlButton:        1
+
+! appearance
+URxvt.geometry: 		     90x27
+URxvt.depth:             32
+URxvt.transparent:       false
+URxvt.shading:           80
+URxvt.scrollBar:         false
+URxvt.scrollTtyOutput:   false
+URxvt.scrollWithBuffer:  true
+URxvt.scrollTtyKeypress: true
+URxvt.internalBorder:    20
+URxvt.externalBorder:    0
+
+! fonts
+URxvt.letterSpace: 	    		1
+URxvt.font:                	xft:Hurmit Nerd Font:bold:size=11, xft:powerline:size=11, xft:Font Awesome 5 Free:size=14, xft:FontAwesome:size=12jk,b k 
+Urxvt.boldFont:             xft:Hurmit Nerd Font:size=11:autohint=true:bold
+Urxvt.italicFont:           xft:Hurmit Nerd Font:size=11:autohint=true:italic
+Urxvt.boldItalicFont:       xft:Hurmit Nerd Font:size=11:autohint=true:bold:italic
+
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
+
+
+! special
+URxvt*foreground:   #bd93f9
+URxvt*background:   [60]#201c25
+URxvt*cursorColor:  #bd93f9
+
+! black
+*.color0:       #101010
+*.color8:       #434758
+
+! red
+*.color1:       #f07178
+*.color9:       #ff8b92
+
+! green
+*.color2:       #c3e88d
+*.color10:      #ddffa7
+
+! yellow
+*.color3:       #ffcb6b
+*.color11:      #ffe585
+
+! blue
+*.color4:       #82aaff
+*.color12:      #9cc4ff
+
+! magenta
+*.color5:       #c792ea
+*.color13:      #e1acff
+
+! cyan
+*.color6:       #89ddff
+*.color14:      #a3f7ff
+
+! white
+*.color7:       #d0d0d0
+*.color15:      #ffffff
+
+! perl extensions
+! You can install extra perl extensions you should add them here
+URxvt.perl-ext-common:  default,clipboard,url-select,keyboard-select,fullscreen,resize-font
+
+! macros for resize-font - sudo pacman -S urxvt-resize-font-git
+URxvt.resize-font.step:   1
+URxvt.keysym.C-minus:     resize-font:smaller
+URxvt.keysym.C-plus:      resize-font:bigger
+URxvt.keysym.C-equal:     resize-font:reset
+URxvt.keysym.C-question:  resize-font:show
+URxvt.keysym.C-Down:      resize-font:smaller
+URxvt.keysym.C-Up:        resize-font:bigger
+
+! macros for clipboard and selection
+URxvt.copyCommand:      xclip -i -selection clipboard
+URxvt.pasteCommand:     xclip -o -selection clipboard
+URxvt.keysym.M-c:       perl:clipboard:copy
+URxvt.keysym.m-v:       perl:clipboard:paste
+URxvt.keysym.M-C-v:     perl:clipboard:paste_escaped
+URxvt.keysym.M-Escape:  perl:keyboard-select:activate
+URxvt.keysym.M-s:       perl:keyboard-select:search
+URxvt.keysym.M-u:       perl:url-select:select_next
+
+! fullscreen - sudo pacman -S urxvt-fullscreen
+urxvt.keysym.F11:       perl:fullscreen:switch
+
+! tabbed
+URxvt.tabbed.tabbar-fg: 4
+URxvt.tabbed.tabbar-bg: 16
+URxvt.tabbed.tab-fg:    15
+URxvt.tabbed.tab-bg:    4
+URxvt.buffered:         false
+
+! clipboard
+URxvt.keysym.Control-C: perl:clipboard:copy
+URxvt.keysym.Control-V: perl:clipboard:paste

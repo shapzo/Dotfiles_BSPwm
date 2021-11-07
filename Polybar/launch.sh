@@ -15,7 +15,7 @@ polybar -q ewmh -c "$DIR"/config.ini &
 polybar -q center -c "$DIR"/config.ini &
 polybar -q xbacklight -c "$DIR"/config.ini &
 polybar -q volume -c "$DIR"/config.ini &
-polybar -q battery -c "$DIR"/config.ini &
 polybar -q wireless -c "$DIR"/config.ini &
+polybar -q battery -c "$DIR"/config.ini &
 polybar -q date -c "$DIR"/config.ini &
 polybar -q power -c "$DIR"/config.ini &
