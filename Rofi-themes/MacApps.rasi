@@ -1,9 +1,23 @@
-// menu apps
+//================================================
+//         ___           ___           ___       |
+//        /\__\         /\  \         /\  \      |
+//       /::|  |       /::\  \       /::\  \     |
+//      /:|:|  |      /:/\:\  \     /:/\:\  \    |
+//     /:/|:|__|__   /::\~\:\  \   /:/  \:\  \   |
+//    /:/ |::::\__\ /:/\:\ \:\__\ /:/__/ \:\__\  |
+//    \/__/~~/:/  / \/__\:\/:/  / \:\  \  \/__/  |
+//          /:/  /       \::/  /   \:\  \        |
+//         /:/  /        /:/  /     \:\  \       |
+//        /:/  /        /:/  /       \:\__\      |
+//        \/__/         \/__/         \/__/      |
+//================================================
+
+//Rofi theme mac-apps   --beta version--
+
 configuration {
     font:                           "Organo Regular 11";
     show-icons:                     true;
     drun-display-format:            "{name}";
-    fullscreen:                     true;
     threads:                        1;
     scroll-method:                  0;
     disable-history:                false;
@@ -11,17 +25,13 @@ configuration {
 
 * {
     background:                     #00000000;
-
     background-color:               #f2d2ff49;
-
-    background-alt:                 #8443aa9d;
+    background-alt:                 #f2d2ff9f;
     foreground:                     #111111;
     foreground-selected:            #000000;
-    
-    background-entry:               #ff0505;
-    urgent:                         #ff0505;
-    urgent-selected:                #ff0505;
-
+    background-entry:               #f2d2ff9f;
+    urgent:                         #ff0505; 
+    urgent-selected:                #ff0505; 
     border-radius:                  18px;
 }
 
@@ -29,12 +39,13 @@ window {
     transparency:                   "real";
     background-color:               @background;
     text-color:                     @foreground;
-    height:                         95%;
+    height:                         91%;
     width:                          98%;
     location:                       northwest;
     anchor:                         northwest;
     x-offset:                       1%;
-    y-offset:                       4.2%;
+    y-offset:                       2%;
+    fullscreen:                     true;
 }
 
 prompt {
@@ -46,7 +57,7 @@ inputbar {
     background-color:               #76787985;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0px 25% 0px 25%;
+    margin:                         0% 25% 0% 25%;
     padding:                        10px 20px 10px 20px;
     position:                       north;
 }
@@ -58,7 +69,7 @@ entry {
     placeholder-color:              @foreground-selected;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    " Search";
+    placeholder:                    " Buscar";
     blink:                          true;
 }
 
@@ -71,38 +82,40 @@ case-indicator {
 
 listview {
     background-color:               @background;
-    columns:                        6;
-    spacing:                        4px;
+    columns:                        5;
+    //lines:                          4;
+    spacing:                        15px;
     cycle:                          false;
     dynamic:                        true;
-    layout:                         vertical;
+    layout:                         vertical;    
 }
 
 mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview ];
-    spacing:                        30px;
+    spacing:                        10px;
     padding:                        45px 5% 45px 5%;
 }
-
 
 element {
     background-color:               @background;
     text-color:                     @foreground;
     orientation:                    vertical;
-    padding:                        25px 0px 25px 0px;
+    padding:                        50px 40px 50px 40px;
 }
 
 element-icon {
-    size:                           70px;
+    background-color:               @background;
+    size:                           60px;
     border:                         0px;
 }
 
 element-text {
+    background-color:               @background;
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-    margin:                         5px 10px 0px 10px;
+    margin:                         1px 5px 5px 5px;
 }
 
 element normal.urgent,
@@ -118,7 +131,7 @@ element alternate.active {
 }
 
 element selected {
-    border:                         0% 0% 0.1% 0%;
+    border:                         0px;
     border-color:                   #9543aa9d;
     background-color:               @background-alt;
     text-color:                     @foreground-selected;
@@ -131,5 +144,5 @@ element selected.urgent {
 
 element selected.active {
   background-color:               @background-alt;
-  color:                          @foreground-selected;
+  text-color:                          @foreground-selected;
 }

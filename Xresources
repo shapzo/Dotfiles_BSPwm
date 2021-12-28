@@ -1,5 +1,5 @@
 ! ------------------------------------------------------------------------------
-! URxvt my configuration
+! URxvt configuration
 ! ------------------------------------------------------------------------------
 
 ! general settings
@@ -22,7 +22,7 @@ URxvt.externalBorder:    0
 
 ! fonts
 URxvt.letterSpace: 	    		1
-URxvt.font:                	xft:Hurmit Nerd Font:bold:size=11, xft:powerline:size=11, xft:Font Awesome 5 Free:size=14, xft:FontAwesome:size=12jk,b k 
+URxvt.font:                	xft:Hurmit Nerd Font:bold:size=11, xft:powerline:size=11, xft:Font Awesome 5 Free:size=14, xft:FontAwesome:size=12 
 Urxvt.boldFont:             xft:Hurmit Nerd Font:size=11:autohint=true:bold
 Urxvt.italicFont:           xft:Hurmit Nerd Font:size=11:autohint=true:italic
 Urxvt.boldItalicFont:       xft:Hurmit Nerd Font:size=11:autohint=true:bold:italic

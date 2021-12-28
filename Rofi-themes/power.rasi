@@ -1,4 +1,6 @@
-// power menu
+// power menu   --beta version--
+//unwanted appearance not yet achieved
+
 configuration {
     font:                           "Organo Regular 12";
     show-icons:                     true;
@@ -20,12 +22,12 @@ configuration {
     urgent-selected:                #ff0505;
 }
 
+
 window {
     padding:                        10;
     height:                         27%;
     width:                          19%;
     background-color:               @background-color;
-    text-color:                     @foreground;
     location:                       northwest;
     anchor:                         northwest;
     x-offset:                       80.5%;
@@ -33,44 +35,53 @@ window {
     transparency:                   "real";
 }
 
-prompt {
-    enabled:                        true;
-    text-color:                     @foreground;
-}
 inputbar {
-    background-color:               @background-color;
+    //background-color:               @background-color;
     padding:                        0px ;
     position:                       north;
     border-radius: 8;
+    
 }
 
 listview {
-    background-color:               @background;
-    dynamic:                        true;
     layout:                         vertical;
+    spacing:      2px ;
+    padding:      2px 0px 0px ;
+    fixed-height: 0;
 }
 
 mainbox {
-    background-color:               @background;
+    //background-color:               @background-color;
     children:                       [ inputbar, listview ];
+    border:  0;
+    padding: 0;
 }
 
 element {
-    background-color:               @background;
-    text-color:                     @foreground;
-    padding: 4px ;
-    border-radius: 12;
+    border: 0;
+    //background-color:               @background-color;
 }
+
+element-text {
+    padding:                        0px 0px 0px 0px;
+    border-radius:                  12;
+    horizontal-align:               0;
+    vertical-align:                 0.5;
+    margin:                         1px 5px 5px 5px;
+    //background-color:               @background-color;
+    //text-color:                     @foreground;
+}
+
 element normal.urgent,
 element alternate.urgent {
-    background-color:               @urgent;
-    text-color:                     @foreground;
+    //background-color:               @urgent;
+   // text-color:                     @foreground;
 }
 
 element normal.active,
 element alternate.active {
-    background-color:               @background-alt;
-    text-color:                     @foreground;
+    //background-color:               @background-alt;
+   // text-color:                     @foreground;
 }
 element selected {
     border:                         0% 0% 0.1% 0%;
@@ -83,6 +94,6 @@ element selected.urgent {
   text-color:                     @foreground;
 }
 element selected.active {
-  background-color:               @background-alt;
-  color:                          @foreground-selected;
+  //background-color:               @background-alt;
+  //color:                          @foreground-selected;
 }
