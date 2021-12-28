@@ -1,3 +1,22 @@
+#==================================================================================================
+#                                    hhhhhhh                                                       |
+#                                    h:::::h                                                       |
+#                                    h:::::h                                                       |
+#                                    h:::::h                                                       |
+#    zzzzzzzzzzzzzzzzz    ssssssssss   h::::h hhhhh      rrrrr   rrrrrrrrr       cccccccccccccccc  |
+#    z:::::::::::::::z  ss::::::::::s  h::::hh:::::hhh   r::::rrr:::::::::r    cc:::::::::::::::c  |
+#    z::::::::::::::z ss:::::::::::::s h::::::::::::::hh r:::::::::::::::::r  c:::::::::::::::::c  |
+#    zzzzzzzz::::::z  s::::::ssss:::::sh:::::::hhh::::::hrr::::::rrrrr::::::rc:::::::cccccc:::::c  |
+#        z::::::z    s:::::s  ssssss h::::::h   h::::::hr:::::r     r:::::rc::::::c     ccccccc    |
+#        z::::::z       s::::::s      h:::::h     h:::::hr:::::r     rrrrrrrc:::::c                |
+#        z::::::z           s::::::s   h:::::h     h:::::hr:::::r            c:::::c               |
+#    z::::::z      ssssss   s:::::s h:::::h     h:::::hr:::::r            c::::::c     ccccccc     |
+#    z::::::zzzzzzzzs:::::ssss::::::sh:::::h     h:::::hr:::::r            c:::::::cccccc:::::c    |
+#    z::::::::::::::zs::::::::::::::s h:::::h     h:::::hr:::::r             c:::::::::::::::::c   |
+#    z:::::::::::::::z s:::::::::::ss  h:::::h     h:::::hr:::::r              cc:::::::::::::::c  |
+#    zzzzzzzzzzzzzzzzz  sssssssssss    hhhhhhh     hhhhhhhrrrrrrr                cccccccccccccccc  |
+#==================================================================================================
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
