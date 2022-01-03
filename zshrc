@@ -54,7 +54,7 @@ zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # DISABLE_MAGIC_FUNCTIONS="true"
 
 # Descomente la siguiente línea para deshabilitar los colores en ls..
-DISABLE_LS_COLORS="false"
+# DISABLE_LS_COLORS="false"
 
 # Descomente la siguiente línea para deshabilitar el título del terminal de configuración automática.
 # DISABLE_AUTO_TITLE="true"

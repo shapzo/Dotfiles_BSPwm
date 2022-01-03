@@ -24,76 +24,62 @@ configuration {
 
 
 window {
-    padding:                        10;
-    height:                         27%;
-    width:                          19%;
-    background-color:               @background-color;
-    location:                       northwest;
-    anchor:                         northwest;
-    x-offset:                       80.5%;
-    y-offset:                       68.5%;
     transparency:                   "real";
+    height:                         28%;
+    width:                          16%;
+    background-color:               @background-color;
+    text-color:                     @foreground;
+    location:                       south;
+
+    //for mac version
+    //x-offset:                       41.5%;
+    //y-offset:                       -5%;
+
+    //for window version
+    x-offset:                       37.4%;
+    y-offset:                       -5%;
+    //for window version
+    border:                         3px;
+    border-color:                   @border-color;
+
+    
 }
 
-inputbar {
-    //background-color:               @background-color;
-    padding:                        0px ;
+prompt {
+    enabled: 						true;
+    padding:                        5px ;
     position:                       north;
-    border-radius: 8;
-    
 }
 
 listview {
     layout:                         vertical;
-    spacing:      2px ;
-    padding:      2px 0px 0px ;
-    fixed-height: 0;
 }
 
 mainbox {
-    //background-color:               @background-color;
-    children:                       [ inputbar, listview ];
-    border:  0;
-    padding: 0;
+    background-color:               @background-color;
+    children:                       [ prompt, listview ];
 }
 
 element {
-    border: 0;
-    //background-color:               @background-color;
+    background-color:               @background;
+    orientation:                    horizontal;
+    border-radius:                  0px;
+	padding: 						1px 1px 1px -30px;
+}
+
+element-icon {
+    size:                           25px;
+    border:                         0px;
 }
 
 element-text {
-    padding:                        0px 0px 0px 0px;
-    border-radius:                  12;
-    horizontal-align:               0;
+    expand:                         true;
     vertical-align:                 0.5;
     margin:                         1px 5px 5px 5px;
-    //background-color:               @background-color;
-    //text-color:                     @foreground;
+    
 }
 
-element normal.urgent,
-element alternate.urgent {
-    //background-color:               @urgent;
-   // text-color:                     @foreground;
-}
-
-element normal.active,
-element alternate.active {
-    //background-color:               @background-alt;
-   // text-color:                     @foreground;
-}
 element selected {
-    border:                         0% 0% 0.1% 0%;
-    border-color:                   #9543aa9d;
     background-color:               @background-alt;
-    text-color:                     @foreground-selected;
-}
-element selected.urgent {
-  background-color:               @urgent-selected;
-  text-color:                     @foreground;
-}
-element selected.active {
-  //background-color:               @background-alt;
-  //color:                          @foreground-selected;
+    border-color:                  	@background-color;
 }

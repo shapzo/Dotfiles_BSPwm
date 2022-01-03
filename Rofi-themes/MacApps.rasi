@@ -12,7 +12,7 @@
 //        \/__/         \/__/         \/__/      |
 //================================================
 
-//Rofi theme mac-apps   --beta version--
+//Rofi theme macApps   
 
 configuration {
     font:                           "Organo Regular 11";
@@ -38,13 +38,6 @@ configuration {
 window {
     transparency:                   "real";
     background-color:               @background;
-    text-color:                     @foreground;
-    height:                         91%;
-    width:                          98%;
-    location:                       northwest;
-    anchor:                         northwest;
-    x-offset:                       1%;
-    y-offset:                       2%;
     fullscreen:                     true;
 }
 
@@ -79,15 +72,13 @@ case-indicator {
     spacing:                        0;
 }
 
-
 listview {
     background-color:               @background;
     columns:                        5;
-    //lines:                          4;
     spacing:                        15px;
     cycle:                          false;
     dynamic:                        true;
-    layout:                         vertical;    
+    layout:                         vertical;
 }
 
 mainbox {
@@ -99,7 +90,6 @@ mainbox {
 
 element {
     background-color:               @background;
-    text-color:                     @foreground;
     orientation:                    vertical;
     padding:                        50px 40px 50px 40px;
 }
@@ -107,7 +97,6 @@ element {
 element-icon {
     background-color:               @background;
     size:                           60px;
-    border:                         0px;
 }
 
 element-text {
@@ -118,31 +107,7 @@ element-text {
     margin:                         1px 5px 5px 5px;
 }
 
-element normal.urgent,
-element alternate.urgent {
-    background-color:               @urgent;
-    text-color:                     @foreground;
-}
-
-element normal.active,
-element alternate.active {
-    background-color:               @background-alt;
-    text-color:                     @foreground;
-}
-
 element selected {
-    border:                         0px;
-    border-color:                   #9543aa9d;
     background-color:               @background-alt;
-    text-color:                     @foreground-selected;
-}
-
-element selected.urgent {
-  background-color:               @urgent-selected;
-  text-color:                     @foreground;
-}
-
-element selected.active {
-  background-color:               @background-alt;
-  text-color:                          @foreground-selected;
+    border-color:                  	@background-color;
 }

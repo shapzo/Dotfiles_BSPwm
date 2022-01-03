@@ -2,7 +2,7 @@
 #rofi_command="rofi -theme /usr/share/rofi/themes/dracula.rasi"
 rofi_command="rofi -theme $HOME/.config/rofi/themes/power.rasi"
 
-uptime="   Select an option  "
+uptime=" Seleccione una opción  "
 
 # Options
 shutdown="  Shutdown"
@@ -14,7 +14,7 @@ logout="  Logout"
 # Variable passed to rofi
 options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"
 
-chosen="$(echo -e "$options" | $rofi_command -p "UP - $uptime" -dmenu -selected-row 0)"
+chosen="$(echo -e "$options" | $rofi_command -p "$uptime" -dmenu)"
 case $chosen in
     $shutdown)
         systemctl poweroff
