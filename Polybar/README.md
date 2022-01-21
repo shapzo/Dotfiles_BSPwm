@@ -7,6 +7,6 @@ In my polybar I only have 2 configuration files, which are named poly 1 and poly
 ## Screenshots
 
 ![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Polybar/Screenshot-polybar/Polybar%20(2).png?raw=true)
-this is polybar 1 👨‍🎓
+This is polybar 1 🔷
 ![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Polybar/Screenshot-polybar/Polybar%20(1).png?raw=true)
-this is polybar 2 👨‍🎓
+This is polybar 2 🔶
