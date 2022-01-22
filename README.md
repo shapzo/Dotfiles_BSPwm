@@ -7,9 +7,9 @@ You are free to use my configuration.
 
 ## Screenshots
 
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(3).png?raw=true)
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(4).png?raw=true)
 
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(2).png?raw=true)
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(1).png?raw=true)
 
 
 ## Requirements
