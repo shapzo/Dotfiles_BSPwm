@@ -1,12 +1,23 @@
-! ------------------------------------------------------------------------------
-! URxvt configuration
-! ------------------------------------------------------------------------------
+!
+!      ___           ___           ___           ___           ___     
+!     /\__\         /\  \         |\__\         /\__\         /\  \    
+!    /:/  /        /::\  \        |:|  |       /:/  /         \:\  \   
+!   /:/  /        /:/\:\  \       |:|  |      /:/  /           \:\  \  
+!  /:/  /  ___   /::\~\:\  \      |:|__|__   /:/__/  ___       /::\  \ 
+! /:/__/  /\__\ /:/\:\ \:\__\ ____/::::\__\  |:|  | /\__\     /:/\:\__\
+! \:\  \ /:/  / \/_|::\/:/  / \::::/~~/~     |:|  |/:/  /    /:/  \/__/
+!  \:\  /:/  /     |:|::/  /   ~~|:|~~|      |:|__/:/  /    /:/  /     
+!   \:\/:/  /      |:|\/__/      |:|  |       \::::/__/     \/__/      
+!    \::/  /       |:|  |        |:|  |        ~~~~                    
+!     \/__/         \|__|         \|__|                                
 
 ! general settings
-
+URxvt*termName: 		rxvt
 URxvt.urlLauncher:      firefox-developer-edition
 URxvt.underlineURLs:    true
 URxvt.urlButton:        1
+URxvt.iso14755:         false
+URxvt.iso14755_52:      false
 
 ! appearance
 URxvt.geometry: 		     90x27
@@ -21,33 +32,28 @@ URxvt.internalBorder:    20
 URxvt.externalBorder:    0
 
 ! fonts
-URxvt.letterSpace: 	    		1
-URxvt.font:                	xft:Hurmit Nerd Font:bold:size=11, xft:powerline:size=11, xft:Font Awesome 5 Free:size=14, xft:FontAwesome:size=12 
-Urxvt.boldFont:             xft:Hurmit Nerd Font:size=11:autohint=true:bold
-Urxvt.italicFont:           xft:Hurmit Nerd Font:size=11:autohint=true:italic
-Urxvt.boldItalicFont:       xft:Hurmit Nerd Font:size=11:autohint=true:bold:italic
+URxvt.letterSpace: 	    		0
+URxvt.font:                 xft:Hurmit Nerd Font:size=11, xft:Font Awesome 5 Free-Regular-400:size=14, xft:FontAwesome:size=12
 
-Xft.dpi: 96
-Xft.antialias: true
-Xft.hinting: true
-Xft.rgba: rgb
-Xft.autohint: false
-Xft.hintstyle: hintfull
-Xft.lcdfilter: lcddefault
-
+!URxvt.boldFont:             xft:Hurmit Nerd Font:size=11:autohint=true:style=bold
+!Urxvt.italicFont:           xft:Hurmit Nerd Font:size=11:autohint=true:style=italic
+!Urxvt.boldItalicFont:       xft:Hurmit Nerd Font:size=11:autohint=true:style=bold:italic
 
 ! special
-URxvt*foreground:   #bd93f9
-URxvt*background:   [60]#201c25
+URxvt*foreground:   #00BAB7
+URxvt*background:   [40]#000000
 URxvt*cursorColor:  #bd93f9
 
+*highlightTextColor: 		#383c4a
+*highlightColor: 		#c1ddff
+
 ! black
-*.color0:       #101010
+*.color0:       #5EA9AB
 *.color8:       #434758
 
 ! red
-*.color1:       #f07178
-*.color9:       #ff8b92
+*.color1:       #5EA9AB
+*.color9:       #5EA9AB
 
 ! green
 *.color2:       #c3e88d

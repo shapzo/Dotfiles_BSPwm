@@ -128,6 +128,7 @@ setopt appendhistory
 
 #=========================Alias======================
 alias cls="clear"
+alias csl="clear"
 alias neof="neofetch | lolcat"
 
 alias ll='lsd -lh --group-dirs=first'
@@ -143,21 +144,6 @@ function rmf(){
 function vi(){
     nvim $1
 }
-
-#in GNU/fedora linux
-function se(){
-    dnf search $1
-}
-function in(){
-    sudo dmf install $1
-}
-function re(){
-    sudo dnf remove $1
-}
-function up(){
-    sudo dnf update
-}
-
 #============================plugins========================
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
