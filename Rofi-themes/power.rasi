@@ -31,18 +31,18 @@ window {
     text-color:                     @foreground;
     location:                       south;
 
+    //Uncomment according to the rofi theme you are using, for a better experience
+    
     //for mac version
     //x-offset:                       41.5%;
     //y-offset:                       -5%;
 
     //for window version
-    x-offset:                       37.4%;
-    y-offset:                       -5%;
+    //x-offset:                       37.4%;
+    //y-offset:                       -5%;
     //for window version
-    border:                         3px;
-    border-color:                   @border-color;
-
-    
+    //border:                         3px;
+    //border-color:                   @border-color;
 }
 
 prompt {

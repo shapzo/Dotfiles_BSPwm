@@ -22,8 +22,8 @@ You are free to use my configuration.
  6. [Betterlockscreen](https://github.com/betterlockscreen/betterlockscreen) 🏮
  7. [Feh](https://feh.finalrewind.org/) 🎴
  8. [Tilix terminal](https://gnunn1.github.io/tilix-web/) 💊
- 9. [Urxvt terminal](http://software.schmorp.de/pkg/rxvt-unicode.html) 💊
- 10. [Zsh shell](https://www.zsh.org/) 💋
+ 9. [Urxvt terminal](#) 💊
+ 10. [Zsh shell](#) 💋
  11. [Nerd fonts](https://www.nerdfonts.com/#home) 🟥
  12. [Awesome font](https://fontawesome.com/download) 🟨
  13. [Powerline font](https://github.com/powerline/fonts) 🟪
