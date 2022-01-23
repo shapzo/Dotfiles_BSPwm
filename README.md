@@ -28,8 +28,6 @@ You are free to use my configuration.
  12. [Awesome font](https://fontawesome.com/download) 🟨
  13. [Powerline font](https://github.com/powerline/fonts) 🟪
 
-
-
 ## Author
 
 - [@rodrigo](https://github.com/shapzo) 🐾 ♥
