@@ -18,11 +18,20 @@ super + Return
 alt + d
 	rofi -show drun 
 
+super + shift + w
+	$HOME/.config/polybar/poly2/scripts/powermenu.sh &
+
 alt + c
 	code
 
 alt + b
 	firefox-developer-edition
+
+alt + e
+	urxvt -e 'ranger'
+
+Print
+	gnome-screenshot  -d 2
 
 #-------------------window manager behavior---------
 
@@ -121,6 +130,7 @@ ctrl + super + space
 
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+	
 #-----------------------------------------------------
 
 #Volume Control
