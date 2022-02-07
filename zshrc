@@ -44,15 +44,21 @@ alias nfl="neofetch | lolcat"
 
 alias b="vi ~/.config/bspwm/bspwmrc"
 alias s="vi ~/.config/sxhkd/sxhkdrc"
+alias z="vi ~/.zshrc"
 alias p1="vi ~/.config/polybar/poly1"
 alias p2="vi ~/.config/polybar/poly2"
-alias z="vi ~/.zshrc"
+alias p3="vi ~/.config/polybar/poly3"
 
 alias ll='lsd -lh --group-dirs=first'
 alias l='lsd -l --group-dirs=first'
 alias la='lsd -a --group-dirs=first'
 alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
+
+alias add="git add ."
+alias push="git push origin main"
+alias pull="git pull origin"
+alias remote="git remote add origin"
 
 #===========================function's=================
 #Delete files permanently
@@ -70,6 +76,9 @@ function light(){
 #git functions - beta -
 function clon(){
     git clone $1
+}
+function commit(){
+    git commit -m $1
 }
 
 #============================plugins========================
