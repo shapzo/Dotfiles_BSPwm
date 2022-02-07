@@ -20,7 +20,7 @@ In the [power.rasi] file, uncomment the lines according to the theme that was pr
     y-offset:                       -5%;
 ```
 
-2. for window version
+2. For windows version
 ```http
     
     x-offset:                       37.4%;
