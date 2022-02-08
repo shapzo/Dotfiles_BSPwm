@@ -1,21 +1,21 @@
-// power menu   --beta version--
-//unwanted appearance not yet achieved
+// power menu
 
 configuration {
     font:                           "Organo Regular 12";
     show-icons:                     true;
     scroll-method:                  0;
-    border-radius:                  18px;
 }
 
 * {
     background:                     #00000000;
 
-    background-color:               #f2d2ff49;
+    background-color:               #292e307a;
 
-    background-alt:                 #8443aa9d;
+    background-alt:                 #cc8c389f;
     foreground:                     #111111;
     foreground-selected:            #000000;
+
+    border-color:                   #cc8c38;
     
     background-entry:               #ff0505;
     urgent:                         #ff0505;
@@ -24,8 +24,9 @@ configuration {
 
 
 window {
+    border-radius:                  18px;
     transparency:                   "real";
-    height:                         28%;
+    height:                         30%;
     width:                          16%;
     background-color:               @background-color;
     text-color:                     @foreground;
@@ -47,8 +48,10 @@ window {
 
 prompt {
     enabled: 						true;
-    padding:                        5px ;
+    padding:                        5px 10px 7px 10px;
     position:                       north;
+    background-color:               @background;
+    text-color: 					@foreground;
 }
 
 listview {
@@ -63,23 +66,23 @@ mainbox {
 element {
     background-color:               @background;
     orientation:                    horizontal;
-    border-radius:                  0px;
 	padding: 						1px 1px 1px -30px;
 }
 
 element-icon {
+    background-color:               @background;
     size:                           25px;
-    border:                         0px;
 }
 
 element-text {
     expand:                         true;
     vertical-align:                 0.5;
-    margin:                         1px 5px 5px 5px;
+    margin:                         5px 5px 5px 5px;
+    background-color:               @background;
     
 }
 
 element selected {
     background-color:               @background-alt;
-    border-color:                  	@background-color;
+    border-radius:                  10px;
 }
