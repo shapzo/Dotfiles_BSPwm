@@ -51,24 +51,13 @@ prompt {
     enabled: false;
 }
 
-
-inputbar {
-    background-color:               #76787985;
-    text-color:                     @foreground;
-    expand:                         false;
-    margin:                         0px 10% 0px 10%;
-    padding:                        10px 20px 10px 20px;
-    position:                       north;
-}
-
-
 entry {
     background-color:               @background;
-    text-color:                     @foreground-selected;
-    placeholder-color:              @foreground-selected;
+    text-color:                     @text-icon;
+    placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    " Search";
+    placeholder:                    "  Buscar ";
     blink:                          true;
 }
 
@@ -78,6 +67,14 @@ case-indicator {
     spacing:                        0;
 }
 
+inputbar {
+    background-color:               #76787985;
+    text-color:                     @foreground;
+    expand:                         false;
+    margin:                         0px 10% 0px 10%;
+    padding:                        10px 20px 10px 20px;
+    position:                       north;
+}
 
 listview {
     background-color:               @background;
@@ -90,7 +87,7 @@ listview {
 
 mainbox {
     background-color:               @background-color;
-    children:                       [ inputbar, listview ];
+    children:                       [ inputbar, listview];
     spacing:                        10px;
     padding:                        45px 25px 45px 25px;
     border:                         2px;
@@ -100,18 +97,19 @@ mainbox {
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        30px 30px 30px 30px;
+    padding:                        30px;
     children:                       [ element-icon, element-text ];
 }
 
 element-icon {
     background-color:               @background;
-    size:                           70px;
+    size:                           3.5em;
     border:                         0px;
 }
 
 element-text {
     background-color:               @background;
+    text-color:                     @text-icon;
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
@@ -121,4 +119,10 @@ element-text {
 element selected {
     background-color:               @background-alt;
     border-color:                  	@background-color;
+    border-color:                  	@foreground;
+    border:                         2px;
+}
+
+element-text selected {
+    text-color: 					@foreground-selected;
 }

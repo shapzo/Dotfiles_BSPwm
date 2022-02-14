@@ -29,7 +29,8 @@ configuration {
     background-alt:                 #f2d2ff9f;
     foreground:                     #111111;
     foreground-selected:            #000000;
-    background-entry:               #f2d2ff9f;
+    text-icon:                      #ffffff;   
+    background-entry:               #ffo505;
     urgent:                         #ff0505; 
     urgent-selected:                #ff0505; 
     border-radius:                  18px;
@@ -45,6 +46,21 @@ prompt {
     enabled: false;
 }
 
+entry {
+    background-color:               @background;
+    text-color:                     @text-icon;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0.5;
+    placeholder:                    "  Buscar ";
+    blink:                          true;
+}
+
+case-indicator {
+    background-color:               @background;
+    text-color:                     @foreground;
+    spacing:                        0;
+}
 
 inputbar {
     background-color:               #76787985;
@@ -55,27 +71,10 @@ inputbar {
     position:                       north;
 }
 
-
-entry {
-    background-color:               @background;
-    text-color:                     @foreground-selected;
-    placeholder-color:              @foreground-selected;
-    expand:                         true;
-    horizontal-align:               0.5;
-    placeholder:                    " Buscar";
-    blink:                          true;
-}
-
-case-indicator {
-    background-color:               @background;
-    text-color:                     @foreground;
-    spacing:                        0;
-}
-
 listview {
     background-color:               @background;
     columns:                        5;
-    spacing:                        15px;
+    spacing:                        0.5em;
     cycle:                          false;
     dynamic:                        true;
     layout:                         vertical;
@@ -85,22 +84,24 @@ mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview ];
     spacing:                        10px;
-    padding:                        45px 5% 45px 5%;
+    padding:                        45px 25px 45px 25px;
 }
 
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        50px 40px 50px 40px;
+    padding:                        2em;
+    children:                       [ element-icon, element-text ];
 }
 
 element-icon {
     background-color:               @background;
-    size:                           60px;
+    size:                           3.5em;
 }
 
 element-text {
     background-color:               @background;
+    text-color:                     @text-icon;
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
@@ -109,5 +110,10 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
-    border-color:                  	@background-color;
+    border-color:                  	@foreground;
+    border:                         2px;
+}
+
+element-text selected {
+    text-color: 					@foreground-selected;
 }
