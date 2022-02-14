@@ -30,6 +30,7 @@ configuration {
     background-alt:                 #f2d2ff9f;
     foreground:                     #111111;
     foreground-selected:            #000000;
+    border-color:                   #cc8c38;
     background-entry:               #f2d2ff9f;
     urgent:                         #ff0505;
     urgent-selected:                #ff0505;
@@ -100,6 +101,7 @@ element {
     background-color:               @background;
     orientation:                    vertical;
     padding:                        30px 30px 30px 30px;
+    children:                       [ element-icon, element-text ];
 }
 
 element-icon {

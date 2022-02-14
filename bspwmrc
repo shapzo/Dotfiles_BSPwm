@@ -15,13 +15,13 @@ sxhkd &
 picom -b &         
 xsetroot -cursor_name left_ptr &
 
+#set wallpaper
+feh --bg-fill $HOME/Pictures/Your-wallpaper.jpg
+
 #set polybar
 #$HOME/.config/polybar/poly1/launch.sh &
 $HOME/.config/polybar/poly2/launch.sh &
 #$HOME/.config/polybar/poly3/launch.sh &
-
-#set wallpaper
-feh --bg-fill $HOME/Pictures/Your-wallpaper.jpg
 
 #monitor´s
 #bspc monitor -d         
