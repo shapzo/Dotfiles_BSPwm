@@ -8,18 +8,11 @@ configuration {
 
 * {
     background:                     #00000000;
-
     background-color:               #292e307a;
-
     background-alt:                 #cc8c389f;
     foreground:                     #111111;
     foreground-selected:            #000000;
-
     border-color:                   #cc8c38;
-    
-    background-entry:               #ff0505;
-    urgent:                         #ff0505;
-    urgent-selected:                #ff0505;
 }
 
 
@@ -85,4 +78,8 @@ element-text {
 element selected {
     background-color:               @background-alt;
     border-radius:                  10px;
+}
+
+element-text selected {
+    text-color: 					@foreground-selected;
 }

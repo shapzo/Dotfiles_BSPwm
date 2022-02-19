@@ -29,11 +29,7 @@ configuration {
     background-alt:                 #f2d2ff9f;
     foreground:                     #111111;
     foreground-selected:            #000000;
-    text-icon:                      #ffffff;   
-    background-entry:               #ffo505;
-    urgent:                         #ff0505; 
-    urgent-selected:                #ff0505; 
-    border-radius:                  18px;
+    text-icon:                      #ffffff;    
 }
 
 window {
@@ -52,7 +48,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "  Buscar ";
+    placeholder:                    "  Search ";
     blink:                          true;
 }
 
