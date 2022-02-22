@@ -17,7 +17,7 @@ configuration {
 
 
 window {
-    border-radius:                  18px;
+    border-radius:                  15px;
     transparency:                   "real";
     height:                         30%;
     width:                          16%;
@@ -29,11 +29,11 @@ window {
     
     //for mac version
     //x-offset:                       41.5%;
-    //y-offset:                       -5%;
+    //y-offset:                       -4.3%;
 
     //for window version
     //x-offset:                       37.4%;
-    //y-offset:                       -5%;
+    //y-offset:                       -4.3%;
     //for window version
     //border:                         3px;
     //border-color:                   @border-color;

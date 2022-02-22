@@ -32,13 +32,13 @@ configuration {
     foreground-selected:            #000000;
     text-icon:                      #ffffff;
     border-color:                   #6A417B;
-    border-radius:                  18px;
+    border-radius:                  15px;
 }
 
 window {
     transparency:                   "real";
     background-color:               @background;
-    height:                         90%;
+    height:                         91.7%;
     width:                          55%;
     location:                       center;
     anchor:                         center;
