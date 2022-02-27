@@ -35,12 +35,31 @@ SAVEHIST=10000
 setopt appendhistory
 
 #=========================Aliases======================
+#----------------pacman administration-----------------
+alias cate="paru -Sg | sort -u"
+alias cate1="paru -Sgg | sort -u"
+alias search="paru -Sg | grep"
+alias search1="paru -Sgg | grep"
+
+alias dowpkg="pacman -Sw"
+alias rem="paru -R"
+alias rem1="paru -Rs"
+alias rem2="paru -Rsc"
+
+alias cach="sudo paccache -rvk 2"
+alias vaccache="sudo pacman -Scc"
+alias rmcahe="sudo paccache -r"
+
+#-----------------------utilities----------------------
 alias cls="clear"
 alias csl="clear"
 
 alias nau="nautilus"
 alias nf="neofetch"
 alias nfl="neofetch | lolcat"
+alias pdf="evince"
+alias img="eog"
+alias video="mplayer"
 
 alias b="vi ~/.config/bspwm/bspwmrc"
 alias s="vi ~/.config/sxhkd/sxhkdrc"
@@ -79,6 +98,11 @@ function clon(){
 }
 function commit(){
     git commit -m $1
+}
+fucnion gitbspwm(){
+    git add .
+    git commit -m "BSPwm"
+    git push origin main
 }
 
 #============================plugins========================
