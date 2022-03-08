@@ -1,0 +1,110 @@
+//================================================
+//  ███████╗███╗   ███╗ ██████╗      ██╗██╗      
+//  ██╔════╝████╗ ████║██╔═══██╗     ██║██║    
+//  █████╗  ██╔████╔██║██║   ██║     ██║██║     
+//  ██╔══╝  ██║╚██╔╝██║██║   ██║██   ██║██║    
+//  ███████╗██║ ╚═╝ ██║╚██████╔╝╚█████╔╝██║    
+//  ╚══════╝╚═╝     ╚═╝ ╚═════╝  ╚════╝ ╚═╝  
+//===============================================
+                                       
+// Emoji
+
+configuration {
+    font:                           "Organo Regular 12";
+    show-icons:                     true;
+    drun-display-format:            "{name}";
+    threads:                        1;
+    scroll-method:                  0;
+    disable-history:                false;
+}
+
+* {
+    border-radius:                  15px;
+}
+
+window {
+    border-radius:                  15px;
+    transparency:                   "real";
+    height:                         91.7%;
+    width:                          40%;
+    background-color:               @background-color;
+    text-color:                     @foreground;
+    location:                       west;
+
+    x-offset:                       0.5%;
+    border-color:                   @border-color;
+}
+
+prompt {
+    enabled: false;
+}
+
+entry {
+    background-color:               @background;
+    text-color:                     @text-icon;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0.5;
+    placeholder:                    "  Select an emoji ";
+    blink:                          true;
+}
+
+case-indicator {
+    background-color:               @background;
+    text-color:                     @foreground;
+    spacing:                        0;
+}
+
+inputbar {
+    background-color:               #76787985;
+    text-color:                     @foreground;
+    expand:                         false;
+    margin:                         0px 5% 0px 5%;
+    padding:                        10px 40px 10px 40px;
+    position:                       north;
+}
+
+listview {
+    background-color:               @background;
+    spacing:                        5px;
+    cycle:                          false;
+    dynamic:                        true;
+    layout:                         vertical;
+}
+
+mainbox {
+    background-color:               @background-color;
+    children:                       [ inputbar, listview];
+    spacing:                        5px;
+    padding:                        10px 50px 10px 50px;
+    border:                         2px;
+    border-color:                   @border-color;
+}
+
+element {
+    background-color:               @background;
+    orientation:                    horizontal;
+    padding:                        10px;
+    children:                       [ element-text ];
+}
+
+element-text {
+    background-color:               @background;
+    text-color:                     @text-icon;
+    expand:                         true;
+    size:                           3.5em;
+    margin:                         5px 5px 5px 5px;
+}
+
+element selected {
+    background-color:               @background-alt;
+    border-color:                  	@background-color;
+    border-color:                  	@foreground;
+    border:                         2px;
+}
+
+element-text selected {
+    text-color: 					@foreground-selected;
+}
+
+@import "Colors.rasi"

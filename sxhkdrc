@@ -16,10 +16,16 @@ super + Return
 
 # program launcher
 alt + d
-	rofi -show drun 
+	rofi -show drun
+
+super + w
+	rofi -show window -theme $HOME/.config/rofi/themes/Preview.rasi
+
+super + e
+	rofi -show emoji -modi emoji -theme $HOME/.config/rofi/themes/Emoji.rasi
 
 super + shift + w
-	$HOME/.config/polybar/poly1/scripts/powermenu.sh &
+	$HOME/.config/polybar/poly2/scripts/powermenu.sh &
 
 alt + c
 	code

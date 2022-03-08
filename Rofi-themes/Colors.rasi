@@ -1,0 +1,34 @@
+//=================================================================================|
+//  ------------   --------   ----           --------   -----------  ------------  |
+//  ************  **********  ****          **********  ***********  ************  |
+//  ---          ----    ---- ----         ----    ---- ----    ---  ----          |
+//  ***          ***      *** ****         ***      *** *********    ************  |
+//  ---          ---      --- ----         ---      --- ---------    ------------  |
+//  ***          ****    **** ************ ****    **** ****  ****          *****  |
+//  ------------  ----------  ------------  ----------  ----   ----  ------------  |
+//  ************   ********   ************   ********   ****    **** ************  |
+//=================================================================================|
+
+// colors for themes rofi
+
+* {
+    //color generales para todos los temas
+    background:                     #00000000; /* transparenia para k no se vea nada*/
+
+    background-color:               #292e307a;  /* color de fondo */
+    background-alt:                 #00ff889f; /* color del selector */
+
+    foreground:                     #111111; /* letra sin seleccionar*/
+    foreground-selected:            #000000;    /*letra seleccionada*/
+    text-icon:                      #ffffff;   /*letra de los iconos sin seleccionar*/
+
+    border-color:                   #c70b58; /*color del borde en tema windows11*/
+
+    background-entry:               #ff0505;  /* color de los iconos*/
+    
+    //colors for power
+    foreground-power:                     #c7c7c7; /* letra sin seleccionar*/
+    foreground-selected-power:            #ffffff;    /*letra seleccionada*/
+    background-entry-power:               #ff0505;  /* color de los iconos*/
+
+}

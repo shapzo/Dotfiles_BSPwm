@@ -1,20 +1,23 @@
+//=======================================================================|
+//      ___           ___           ___           ___           ___      |
+//     /\  \         /\  \         /\__\         /\  \         /\  \     |
+//    /::\  \       /::\  \       /:/ _/_       /::\  \       /::\  \    |
+//   /:/\:\  \     /:/\:\  \     /:/ /\__\     /:/\:\  \     /:/\:\  \   |
+//  /::\~\:\  \   /:/  \:\  \   /:/ /:/ _/_   /::\~\:\  \   /::\~\:\  \  |
+// /:/\:\ \:\__\ /:/__/ \:\__\ /:/_/:/ /\__\ /:/\:\ \:\__\ /:/\:\ \:\__\ |
+// \/__\:\/:/  / \:\  \ /:/  / \:\/:/ /:/  / \:\~\:\ \/__/ \/_|::\/:/  / |
+//      \::/  /   \:\  /:/  /   \::/_/:/  /   \:\ \:\__\      |:|::/  /  |
+//       \/__/     \:\/:/  /     \:\/:/  /     \:\ \/__/      |:|\/__/   |
+//                  \::/  /       \::/  /       \:\__\        |:|  |     |
+//                   \/__/         \/__/         \/__/         \|__|     |
+//=======================================================================|
+
 // power menu
 
 configuration {
     font:                           "Organo Regular 12";
-    show-icons:                     true;
     scroll-method:                  0;
 }
-
-* {
-    background:                     #00000000;
-    background-color:               #292e307a;
-    background-alt:                 #cc8c389f;
-    foreground:                     #111111;
-    foreground-selected:            #000000;
-    border-color:                   #cc8c38;
-}
-
 
 window {
     border-radius:                  15px;
@@ -22,21 +25,19 @@ window {
     height:                         30%;
     width:                          16%;
     background-color:               @background-color;
-    text-color:                     @foreground;
+    text-color:                     @foreground-power;
     location:                       south;
 
-    //Uncomment according to the rofi theme you are using, for a better experience
-    
     //for mac version
-    //x-offset:                       41.5%;
-    //y-offset:                       -4.3%;
+    x-offset:                       41.8%;
+    y-offset:                       -4.3%;
 
     //for window version
-    //x-offset:                       37.4%;
-    //y-offset:                       -4.3%;
+    // x-offset:                       37.4%;
+    // y-offset:                       -4.3%;
     //for window version
-    //border:                         3px;
-    //border-color:                   @border-color;
+    border:                         3px;
+    border-color:                   @border-color;
 }
 
 prompt {
@@ -44,7 +45,7 @@ prompt {
     padding:                        5px 10px 7px 10px;
     position:                       north;
     background-color:               @background;
-    text-color: 					@foreground;
+    text-color: 					@foreground-power;
 }
 
 listview {
@@ -81,5 +82,7 @@ element selected {
 }
 
 element-text selected {
-    text-color: 					@foreground-selected;
+    text-color: 					@foreground-selected-power;
 }
+
+@import "Colors.rasi"

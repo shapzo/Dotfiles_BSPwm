@@ -23,15 +23,6 @@ configuration {
     disable-history:                false;
 }
 
-* {
-    background:                     #00000000;
-    background-color:               #f2d2ff49;
-    background-alt:                 #f2d2ff9f;
-    foreground:                     #111111;
-    foreground-selected:            #000000;
-    text-icon:                      #ffffff;    
-}
-
 window {
     transparency:                   "real";
     background-color:               @background;
@@ -113,3 +104,5 @@ element selected {
 element-text selected {
     text-color: 					@foreground-selected;
 }
+
+@import "Colors.rasi"
