@@ -58,4 +58,3 @@ bspc config border_radius         15.0
 #Enable touchpad gestures       
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
-
