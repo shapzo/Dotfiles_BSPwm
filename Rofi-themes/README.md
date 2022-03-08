@@ -31,4 +31,4 @@ In the [power.rasi] file, uncomment the lines according to the theme that was pr
 ``` 
 
 - Theme to select emojis
-
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Rofi-themes/Screenshots/Rorfi-theme%20(4).png?raw=true)
