@@ -29,3 +29,6 @@ In the [power.rasi] file, uncomment the lines according to the theme that was pr
     border:                         3px;
     border-color:                   @border-color;
 ``` 
+
+- Theme to select emojis
+
