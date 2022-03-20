@@ -46,7 +46,6 @@ to later execute it with:
 ```bash
     ./Install.sh
 ``` 
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm-install%20(4).png?raw=true)
 
 ## Author
 
