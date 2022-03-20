@@ -1,10 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Install script for my BSPwm configuration
-# --BETA--
 
 #Dirs
-DIR='pwd'
+DIR=´pwd´
 FDIR="$HOME/.local/share/fonts"
 BDIR="$HOME/.config/bspwm"
 SDIR="$HOME/.config/sxhkd"
@@ -19,7 +18,7 @@ PP3DIR="$HOME/.config/polybar/poly3"
 
 # Install Fonts
 install_fonts() {
-	echo -e "\n[*] Installing fonts..."
+	echo -e "\n [*] Installing fonts..."
 	if [[ -d "$FDIR" ]]; then
 		cp -rf $DIR/Fonts/* "$FDIR"
 	else
@@ -63,18 +62,18 @@ install_picom(){
 
 #install rofi-themes
 install_rofi() {
-	echo -e "\n[*] Installing rofi-themes..."
+	echo -e "\n [*] Installing rofi-themes..."
 	if [[ -d "$RTDIR" ]]; then
 		cp -rf $DIR/Rofi-themes/* "$RTDIR"
 	else
-		mkdir -p "$RDIR" && mkdir -p "$RFDIR"
-		cp -rf $DIR/Rofi-themes/* "$RFDIR"
+		mkdir -p "$RDIR" && mkdir -p "$RTDIR"
+		cp -rf $DIR/Rofi-themes/* "$RTDIR"
 	fi
 }
 
 #installing polybar
 install_polybar() {
-	echo -e "\n[*] Installing polybar..."
+	echo -e "\n [*] Installing polybar..."
 	if [[ -d "$PPDIR" ]]; then
 		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP1DIR"/scripts/powermenu.sh "$PP2DIR"/launch.sh "$PP2DIR"/scripts/powermenu.sh "$PP3DIR"/launch.sh "$PP3DIR"/scripts/powermenu.sh
 	else
@@ -82,3 +81,28 @@ install_polybar() {
 		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP1DIR"/scripts/powermenu.sh "$PP2DIR"/launch.sh "$PP2DIR"/scripts/powermenu.sh "$PP3DIR"/launch.sh "$PP3DIR"/scripts/powermenu.sh
 	fi
 }
+
+#main
+main() {
+    clear
+        
+        echo -e " ██████╗ ███████╗██████╗ ██╗    ██╗███╗   ███╗     ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ ██╗   ██╗██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗ "
+        echo -e " ██╔══██╗██╔════╝██╔══██╗██║    ██║████╗ ████║    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝ ██║   ██║██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║ "
+        echo -e " ██████╔╝███████╗██████╔╝██║ █╗ ██║██╔████╔██║    ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗██║   ██║██████╔╝███████║   ██║   ██║██║   ██║██╔██╗ ██║ "
+        echo -e " ██╔══██╗╚════██║██╔═══╝ ██║███╗██║██║╚██╔╝██║    ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║██║   ██║██╔══██╗██╔══██║   ██║   ██║██║   ██║██║╚██╗██║ "
+        echo -e " ██████╔╝███████║██║     ╚███╔███╔╝██║ ╚═╝ ██║    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝╚██████╔╝██║  ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║ "
+        echo -e " ╚═════╝ ╚══════╝╚═╝      ╚══╝╚══╝ ╚═╝     ╚═╝     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ "
+
+        install_fonts
+        install_bspwm
+        install_sxhkd
+        install_picom
+        install_rofi
+        install_polybar
+
+        echo -e "****************************************"
+
+    exit 1
+}
+
+main
