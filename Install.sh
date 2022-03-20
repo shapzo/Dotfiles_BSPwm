@@ -3,7 +3,7 @@
 # Install script for my BSPwm configuration
 
 #Dirs
-DIR=´pwd´
+DIR=`pwd`
 FDIR="$HOME/.local/share/fonts"
 BDIR="$HOME/.config/bspwm"
 SDIR="$HOME/.config/sxhkd"
