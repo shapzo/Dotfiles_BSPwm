@@ -28,6 +28,8 @@ You are free to use my configuration.
  12. [Awesome font](https://fontawesome.com/download) 🟨
  13. [Powerline font](https://github.com/powerline/fonts) 🟪
 
+-------------------------------------------------------------------
+
 ##  Do you like my setup?
 
 If you want to copy my configuration, run the **Install.sh** script to copy my files:
@@ -46,6 +48,20 @@ to later execute it with:
 ```bash
     ./Install.sh
 ``` 
+
+So that you don't have problems in the **sxhkd** file found in the path ***~/.config/sxhkd/sxhkdrc***, open it with the editor of your choice and change the default terminal.
+```bash
+    # terminal emulator
+    super + Return
+	    kitty
+``` 
+for example if you use the **gnome-terminal**, change it like this:
+```bash
+    # terminal emulator
+    super + Return
+	    gnome-terminal
+```
+-------------------------------------------------------------------
 
 ## Author
 
