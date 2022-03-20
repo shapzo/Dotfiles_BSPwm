@@ -2,14 +2,14 @@
 #rofi_command="rofi -theme $HOME/.config/rofi/themes/dracula.rasi"
 rofi_command="rofi -theme $HOME/.config/rofi/themes/power.rasi"
 
-uptime="   Seleccione una opción  "
+uptime="   Select an option  "
 
 # Options
-shutdown="  Apagar"
-reboot="  Reiniciar"
-lock="  Bloquear"
-suspend="  Suspender"
-logout="  Salir"
+shutdown="  Shutdown"
+reboot="  Reboot"
+lock="  Lock"
+suspend="  Suspend"
+logout="  Logout"
 
 # Variable passed to rofi
 options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"

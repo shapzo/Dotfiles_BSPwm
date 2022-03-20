@@ -2,7 +2,7 @@
 #rofi_command="rofi -theme /usr/share/rofi/themes/dracula.rasi"
 rofi_command="rofi -theme $HOME/.config/rofi/themes/power.rasi"
 
-uptime=" Seleccione una opción  "
+uptime="   Select an option  "
 
 # Options
 shutdown="  Shutdown"

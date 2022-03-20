@@ -35,7 +35,12 @@ install_bspwm(){
     else
         mkdir -p "$BDIR"
         cp $DIR/bspwmrc "$BDIR" && cd "$BDIR" && chmod +x bspwmrc
+    fi 
+
+    if [[ -d "$BDIR" ]]; then
+        cp $DIR/Wallpapers/img_1.jpg "$BDIR"
     fi
+
 }
 
 # Install sxhkdrc

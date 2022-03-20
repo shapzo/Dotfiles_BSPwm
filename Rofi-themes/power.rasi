@@ -27,17 +27,16 @@ window {
     background-color:               @background-color;
     text-color:                     @foreground-power;
     location:                       south;
-
-    //for mac version
-    x-offset:                       41.8%;
-    y-offset:                       -4.3%;
-
-    //for window version
-    // x-offset:                       37.4%;
-    // y-offset:                       -4.3%;
-    //for window version
     border:                         3px;
     border-color:                   @border-color;
+
+    //for poly1 and poly3 theme
+    //x-offset:                       41.8%;
+    //y-offset:                       -4.3%;
+
+    //for poly2 theme
+     x-offset:                       37.4%;
+     y-offset:                       -4.3%;
 }
 
 prompt {

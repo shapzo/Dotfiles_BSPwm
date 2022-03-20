@@ -16,7 +16,8 @@ picom -b &
 xsetroot -cursor_name left_ptr &
 
 #set wallpaper
-feh --bg-fill $HOME/Pictures/Your-wallpaper.jpg
+#feh --bg-fill $HOME/Pictures/Your-wallpaper.jpg
+feh --bg-fill $HOME/.config/bspwm/img_1.jpg
 
 #set polybar
 #$HOME/.config/polybar/poly1/launch.sh &
@@ -47,7 +48,7 @@ bspc config single_monocle        true
 bspc config focus_follows_pointer true
 bspc config focused_frame_opacity 0.5
 bspc config normal_frame_opacity  1
-bspc config border_radius         15.0
+#bspc config border_radius         15.0
 
 # Rules
 #bscp rule -a polybar manage=off
