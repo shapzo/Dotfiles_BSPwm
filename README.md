@@ -32,11 +32,11 @@ You are free to use my configuration.
 
 If you want to copy my configuration, run the **Install.sh** script to copy my files:
 
-- [bspwmrc]()
-- [sxhkdrc]()
-- [picom]()
-- [rofi]()
-- [polybar]()
+- [bspwmrc](#)
+- [sxhkdrc](#)
+- [picom](#)
+- [rofi](#)
+- [polybar](#)
 
 To run the script, give it execution permissions with the command:
 ```bash
