@@ -32,7 +32,7 @@ You are free to use my configuration.
 
 ##  Do you like my setup?
 
-If you want to copy my configuration, run the **Install.sh** script to copy my files:
+If you want to copy my configuration, run the **`Install.sh`** script to copy my files:
 
 - [bspwmrc](#)
 - [sxhkdrc](#)
@@ -49,13 +49,13 @@ to later execute it with:
     ./Install.sh
 ``` 
 
-So that you don't have problems in the **sxhkd** file found in the path ***~/.config/sxhkd/sxhkdrc***, open it with the editor of your choice and change the default terminal.
+So that you don't have problems in the **`sxhkd`** file found in the path ***`~/.config/sxhkd/sxhkdrc`***, open it with the editor of your choice and change the default terminal.
 ```bash
     # terminal emulator
     super + Return
 	    kitty
 ``` 
-for example if you use the **gnome-terminal**, change it like this:
+for example if you use the **`gnome-terminal`**, change it like this:
 ```bash
     # terminal emulator
     super + Return

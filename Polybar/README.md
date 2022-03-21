@@ -1,7 +1,7 @@
 
 # Polybar 🍞
 
-In my polybar I only have 2 configuration files, which are named poly 1 and poly 2
+In my polybar I only have 3 configuration files, which are named poly 1, poly 2 and poly3.
 
 
 ## Screenshots
@@ -17,7 +17,7 @@ This is polybar 3 🟨
 
 ## Requirements
 
-In the config.ini file of either of the two polybars, they have fonts set
+In the **`config.ini`** file of either of the two polybars, they have fonts set
 ```bash
 font-0 = Comfortaa:style=Bold:size=9;5
 font-1 = Font Awesome 5 Brands:pixelsize=12;5
