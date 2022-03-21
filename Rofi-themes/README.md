@@ -38,3 +38,5 @@ In the **`power.rasi`** file, uncomment the lines according to the theme that wa
 -------------------------------------------------------------------
 
 - Theme to select commands
+
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Rofi-themes/Screenshots/Rorfi-theme%20(5).png?raw=true)
