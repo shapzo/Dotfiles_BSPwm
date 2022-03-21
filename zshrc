@@ -35,7 +35,7 @@ SAVEHIST=10000
 setopt appendhistory
 
 #=========================Aliases======================
-#----------------pacman administration-----------------
+#----------------pacman / paru administration-----------------
 alias cate="paru -Sg | sort -u"
 alias cate1="paru -Sgg | sort -u"
 alias search="paru -Sg | grep"
@@ -92,7 +92,7 @@ function vi(){
 function light(){
     sudo chmod 777 /sys/class/backlight/amdgpu_bl0/brightness | sudo tlp start
 }
-#git functions - beta -
+#git functions
 function clon(){
     git clone $1
 }
