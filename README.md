@@ -28,17 +28,16 @@ You are free to use my configuration.
  12. [Awesome font](https://fontawesome.com/download) 🟨
  13. [Powerline font](https://github.com/powerline/fonts) 🟪
 
--------------------------------------------------------------------
 
 ##  Do you like my setup?
 
 If you want to copy my configuration, run the **`Install.sh`** script to copy my files:
 
-- [bspwmrc](#)
-- [sxhkdrc](#)
-- [picom](#)
-- [rofi](#)
-- [polybar](#)
+- bspwmrc
+- sxhkdrc
+- picom
+- rofi
+- polybar
 
 To run the script, give it execution permissions with the command:
 ```bash
@@ -61,7 +60,6 @@ for example if you use the **`gnome-terminal`**, change it like this:
     super + Return
 	    gnome-terminal
 ```
--------------------------------------------------------------------
 
 ## Author
 
