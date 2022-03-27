@@ -141,25 +141,9 @@ main() {
     clear
 
     cat <<- EOF
-
-        echo -e "\n"
-        echo -e " ██████╗ ███████╗██████╗ ██╗    ██╗███╗   ███╗    ███████╗███████╗████████╗██╗   ██╗██████╗  "
-        echo -e " ██╔══██╗██╔════╝██╔══██╗██║    ██║████╗ ████║    ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗ "
-        echo -e " ██████╔╝███████╗██████╔╝██║ █╗ ██║██╔████╔██║    ███████╗█████╗     ██║   ██║   ██║██████╔╝ "
-        echo -e " ██╔══██╗╚════██║██╔═══╝ ██║███╗██║██║╚██╔╝██║    ╚════██║██╔══╝     ██║   ██║   ██║██╔═══╝  "
-        echo -e " ██████╔╝███████║██║     ╚███╔███╔╝██║ ╚═╝ ██║    ███████║███████╗   ██║   ╚██████╔╝██║      "
-        echo -e " ╚═════╝ ╚══════╝╚═╝      ╚══╝╚══╝ ╚═╝     ╚═╝    ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝      "
-
-        install_fonts
-        install_bspwm
-        install_sxhkd
-        install_picom
-        install_rofi
-        install_polybar
-
         
-            --configuration additional--
-            In the additional configuration includes the files of: nanorc, zshrc, kitty-terminal and neofetch
+            [*] --configuration additional--
+            [*] In the additional configuration includes the files of: nanorc, zshrc, kitty-terminal and neofetch
 
             [*] choose an option -
             [1] yes
