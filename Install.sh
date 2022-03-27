@@ -171,18 +171,31 @@ main() {
 
         if [[ $REPLY == "1" ]]; then
 
+        install_fonts
+        install_bspwm
+        install_sxhkd
+        install_picom
+        install_rofi
+        install_polybar
+
             install_neofetch
             install_kitty
             install_nano
             install_zsh
 
         elif [[ $REPLY == "2" ]]; then
-            exit 1
+        install_fonts
+        install_bspwm
+        install_sxhkd
+        install_picom
+        install_rofi
+        install_polybar
+
+            
         else
             echo -e "\n[!] Invalid Option, Exiting...\n"
+            exit 1
         fi
-
-    exit 1
 }
 
 main
