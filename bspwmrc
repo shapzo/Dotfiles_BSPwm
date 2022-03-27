@@ -15,6 +15,9 @@ sxhkd &
 picom -b &         
 xsetroot -cursor_name left_ptr &
 
+#To adjust to the resolution of my laptop
+#xrandr -s 1360x768 &
+
 #set wallpaper
 #feh --bg-fill $HOME/Pictures/Your-wallpaper.jpg
 feh --bg-fill $HOME/.config/bspwm/img_1.jpg

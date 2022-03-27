@@ -44,7 +44,7 @@ Print
 super + ctrl + p
 	polybar-msg cmd toggle
 
-super + alt + {q,r}
+super + alt + {q,w}
 	bspc {quit,wm -r}
 
  
