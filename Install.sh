@@ -155,7 +155,7 @@ main() {
         install_rofi
         install_polybar
 
-        cat <<- EOF
+        #cat <<- EOF
             --configuration additional--
             In the additional configuration includes the files of: nanorc, zshrc, kitty-terminal and neofetch
 
@@ -163,7 +163,7 @@ main() {
             [1] yes
             [2] no
 
-        EOF
+        #EOF
 
         read -p "[?] Select Option : "
 
