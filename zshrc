@@ -38,70 +38,82 @@ setopt appendhistory
 
 #=========================Aliases======================
 #----------------pacman / paru administration-----------------
-alias cate="paru -Sg | sort -u"
-alias cate1="paru -Sgg | sort -u"
-alias search="paru -Sg | grep"
-alias search1="paru -Sgg | grep"
+alias cate='paru -Sg | sort -u'
+alias cate1='paru -Sgg | sort -u'
+alias search='paru -Sg | grep'
+alias search1='paru -Sgg | grep'
 
-alias dowpkg="pacman -Sw"
-alias rem="paru -R"
-alias rem1="paru -Rs"
-alias rem2="paru -Rsc"
+alias dowpkg='pacman -Sw'
+alias rem='paru -R'
+alias rem1='paru -Rs'
+alias rem2='paru -Rsc'
 
-alias cach="sudo paccache -rvk 2"
-alias vaccache="sudo pacman -Scc"
-alias rmcahe="sudo paccache -r"
+alias cach='sudo paccache -rvk 2'
+alias vaccache='sudo pacman -Scc'
+alias rmcahe='sudo paccache -r'
 
 #-----------------------utilities----------------------
-alias cls="clear"
-alias csl="clear"
+alias \
+        cls='clear' \
+        csl='clear' \
+        nau='nautilus' \
+        nf='neofetch' \
+        nfl='neofetch | lolcat' \
+        clock='tty-clock -C 5 -b -t -c' \
+        clockl='tty-clock -b -t -c | lolcat' \
+        pdf='evince' \
+        img='eog' \
+        video='mplayer'
 
-alias nau="nautilus"
-alias nf="neofetch"
-alias nfl="neofetch | lolcat"
-alias pdf="evince"
-alias img="eog"
-alias video="mplayer"
+# ls for lsd
+ alias \
+        ll='lsd -lh --group-dirs=first' \
+        l='lsd -l --group-dirs=first' \
+        la='lsd -a --group-dirs=first' \
+        lla='lsd -lha --group-dirs=first' \
+        ls='lsd --group-dirs=first'
 
-alias b="vi ~/.config/bspwm/bspwmrc"
-alias s="vi ~/.config/sxhkd/sxhkdrc"
-alias z="vi ~/.zshrc"
-alias p1="vi ~/.config/polybar/poly1"
-alias p2="vi ~/.config/polybar/poly2"
-alias p3="vi ~/.config/polybar/poly3"
+# config
+alias \
+        z='vi ~/.zshrc' \
+        b='vi ~/.config/bspwm' \
+        s='vi ~/.config/sxhkd/sxhkdrc' \
+        p1='vi ~/.config/polybar/poly1' \
+        p2='vi ~/.config/polybar/poly2' \
+        p3='vi ~/.config/polybar/poly3' \
+        p4='vi ~/.config/polybar/poly4' \
+        r='vi ~/.config/rofi/themes' \
+        k='vi ~/.config/kitty'
 
-alias ll='lsd -lh --group-dirs=first'
-alias l='lsd -l --group-dirs=first'
-alias la='lsd -a --group-dirs=first'
-alias lla='lsd -lha --group-dirs=first'
-alias ls='lsd --group-dirs=first'
-
-alias add="git add ."
-alias push="git push origin main"
-alias pull="git pull origin"
-alias remote="git remote add origin"
+# git
+alias \
+        status='git status' \
+        add='git add .' \
+        push='git push origin main' \
+        pull='git pull origin' \
+        remote='git remote add origin'
 
 #===========================function's=================
 #Delete files permanently
-function rmf(){
+rmf(){
     scrub -p dod $1; shred -zun 10 -v $1
 }
 #Open neovim
-function vi(){
+vi(){
     nvim $1
 }
 #Adjust the brightness of my screen, due to the driver XD and TLP because for the energy management of my laptop
-function light(){
+light(){
     sudo chmod 777 /sys/class/backlight/amdgpu_bl0/brightness | sudo tlp start
 }
 #git functions
-function clon(){
+clon(){
     git clone $1
 }
-function commit(){
+commit(){
     git commit -m $1
 }
-fucnion gitbspwm(){
+gitbspwm(){
     git add .
     git commit -m "BSPwm"
     git push origin main

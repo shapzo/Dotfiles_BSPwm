@@ -97,10 +97,10 @@ install_polybar() {
 install_kitty() {
 	echo -e "\n [*] Installing kitty.conf..."
 	if [[ -d "$KDIR" ]]; then
-		cp $DIR/kitty.conf "$KDIR"
+		cp $DIR/kitty/* "$KDIR"
 	else
 		mkdir -p "$KDIR"
-		cp $DIR/kitty.conf "$KDIR"
+		cp $DIR/kitty/* "$KDIR"
 	fi
 }
 
