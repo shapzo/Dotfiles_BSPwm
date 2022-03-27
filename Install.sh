@@ -18,8 +18,7 @@ PP3DIR="$HOME/.config/polybar/poly3"
 
 KDIR="$HOME/.config/kitty"
 NEODIR="$HOME/.config/neofetch"
-ZDIR="$HOME/."
-NADIR="$HOME/."
+NANZDIR="$HOME"
 
 # Install Fonts
 install_fonts() {
@@ -116,23 +115,23 @@ install_neofetch() {
 	fi
 }
 
-#install zshrc
-install_zsh() {
-	echo -e "\n [*] Installing zshrc..."
-	if [[ -d "$ZDIR" ]]; then
-		cp $DIR/zshrc "$ZDIR" && mv zshrc .zshrc
-	else
-		cp $DIR/zshrc "$ZDIR" && mv zshrc .zshrc
-	fi
-}
-
 #install nanorc
 install_nano() {
 	echo -e "\n [*] Installing nanorc..."
-	if [[ -d "$NADIR" ]]; then
-		cp $DIR/nanorc "$NADIR" && mv nanorc .nanorc
+	if [[ -d "$NANZDIR" ]]; then
+        cp $DIR/nanorc "$NANZDIR" && mv "$NANZDIR"/nanorc "$NANZDIR"/nanorc
 	else
-		cp $DIR/nanorc "$NADIR" && mv nanorc .nanorc
+		echo -e "error"
+	fi
+}
+
+#install zshrc
+install_zsh() {
+	echo -e "\n [*] Installing zshrc..."
+	if [[ -d "$NANZDIR" ]]; then
+		cp $DIR/zshrc "$NANZDIR" && mv "$NANZDIR"/zshrc "$NANZDIR"/.zshrc
+	else
+		echo -e "error"
 	fi
 }
 
@@ -154,8 +153,33 @@ main() {
         install_picom
         install_rofi
         install_polybar
+
+        echo -e "additional configuration, which contains: neofetch, kitty config, zshrc and nanorc"
+
+        echo -e "chosse an option - "
+        echo -e "
+                [1] yes
+                [2] no "
         
-    exit 1
+        read -p "[?] select an option: "
+
+        if [[ $REPLY == "1" ]]; then
+
+            install_neofetch
+            install_kitty
+            install_nano
+            install_zsh
+
+        elif [[ $REPLY == "2" ]]; then
+            
+            exit 1
+
+        else
+
+            echo -e "\n [!] invalid option, Exiting...."
+        
+        fi
+
 }
 
 main
