@@ -149,18 +149,18 @@ main() {
             [1] yes
             [2] no
 
-        EOF
+    EOF
 
         read -p "[?] Select Option : "
 
         if [[ $REPLY == "1" ]]; then
 
-        install_fonts
-        install_bspwm
-        install_sxhkd
-        install_picom
-        install_rofi
-        install_polybar
+            install_fonts
+            install_bspwm
+            install_sxhkd
+            install_picom
+            install_rofi
+            install_polybar
 
             install_neofetch
             install_kitty
@@ -168,18 +168,18 @@ main() {
             install_zsh
 
         elif [[ $REPLY == "2" ]]; then
-        install_fonts
-        install_bspwm
-        install_sxhkd
-        install_picom
-        install_rofi
-        install_polybar
 
+            install_fonts
+            install_bspwm
+            install_sxhkd
+            install_picom
+            install_rofi
+            install_polybar
             
         else
-		echo -e "\n[!] Invalid Option, Exiting...\n"
-		exit 1
-	fi
+            echo -e "\n[!] Invalid Option, Exiting...\n"
+            exit 1
+	    fi
 }
 
 main
