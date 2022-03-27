@@ -119,7 +119,7 @@ install_neofetch() {
 install_nano() {
 	echo -e "\n [*] Installing nanorc..."
 	if [[ -d "$NANZDIR" ]]; then
-        cp $DIR/nanorc "$NANZDIR" && mv "$NANZDIR"/nanorc "$NANZDIR"/nanorc
+        cp $DIR/nanorc "$NANZDIR" && mv "$NANZDIR"/nanorc "$NANZDIR"/.nanorc
 	else
 		echo -e "error"
 	fi
