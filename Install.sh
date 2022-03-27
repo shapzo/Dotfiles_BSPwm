@@ -154,6 +154,8 @@ main() {
         install_rofi
         install_polybar
 
+        echo -e "\n"
+
         echo -e "Additional configuration, which contains: neofetch, kitty config, zshrc and nanorc"
 
         echo -e "chosse an option - "
@@ -170,13 +172,15 @@ main() {
             install_nano
             install_zsh
 
+            echo -e "\n"
+
         elif [[ $REPLY == "2" ]]; then
             
             exit 1
 
         else
 
-            echo -e "\n [!] invalid option, Exiting...."
+            echo -e "\n [!] invalid option, Exiting....\n"
         
         fi
 
