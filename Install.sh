@@ -193,9 +193,9 @@ main() {
 
             
         else
-            echo -e "\n[!] Invalid Option, Exiting...\n"
-            exit 1
-        fi
+		echo -e "\n[!] Invalid Option, Exiting...\n"
+		exit 1
+	fi
 }
 
 main
