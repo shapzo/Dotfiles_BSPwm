@@ -154,7 +154,7 @@ main() {
         install_rofi
         install_polybar
 
-        echo -e "additional configuration, which contains: neofetch, kitty config, zshrc and nanorc"
+        echo -e "Additional configuration, which contains: neofetch, kitty config, zshrc and nanorc"
 
         echo -e "chosse an option - "
         echo -e "
