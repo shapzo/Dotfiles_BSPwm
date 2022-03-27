@@ -18,8 +18,8 @@ PP3DIR="$HOME/.config/polybar/poly3"
 
 KDIR="$HOME/.config/kitty"
 NEODIR="$HOME/.config/neofetch"
-ZDIR="$HOME/"
-NADIR="$HOME/"
+ZDIR="$HOME/."
+NADIR="$HOME/."
 
 # Install Fonts
 install_fonts() {
@@ -140,6 +140,8 @@ install_nano() {
 main() {
     clear
 
+    cat <<- EOF
+
         echo -e "\n"
         echo -e " ██████╗ ███████╗██████╗ ██╗    ██╗███╗   ███╗    ███████╗███████╗████████╗██╗   ██╗██████╗  "
         echo -e " ██╔══██╗██╔════╝██╔══██╗██║    ██║████╗ ████║    ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗ "
@@ -155,7 +157,7 @@ main() {
         install_rofi
         install_polybar
 
-        #cat <<- EOF
+        
             --configuration additional--
             In the additional configuration includes the files of: nanorc, zshrc, kitty-terminal and neofetch
 
@@ -163,7 +165,7 @@ main() {
             [1] yes
             [2] no
 
-        #EOF
+        EOF
 
         read -p "[?] Select Option : "
 
