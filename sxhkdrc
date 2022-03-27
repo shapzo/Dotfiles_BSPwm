@@ -24,6 +24,9 @@ super + w
 super + e
 	rofi -show emoji -modi emoji -theme $HOME/.config/rofi/themes/Emoji.rasi
 
+super + r
+	rofi -show run -theme ~/.config/rofi/themes/Run.rasi
+
 super + shift + w
 	$HOME/.config/polybar/poly2/scripts/powermenu.sh &
 
