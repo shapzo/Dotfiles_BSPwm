@@ -28,7 +28,7 @@ super + r
 	rofi -show run -theme ~/.config/rofi/themes/Run.rasi
 
 super + shift + w
-	$HOME/.config/polybar/poly2/scripts/powermenu.sh &
+	$HOME/.config/polybar/Scripts/powermenu.sh &
 
 alt + c
 	code

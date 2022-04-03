@@ -16,6 +16,8 @@ PP1DIR="$HOME/.config/polybar/poly1"
 PP2DIR="$HOME/.config/polybar/poly2"
 PP3DIR="$HOME/.config/polybar/poly3"
 
+PPSDIR="$HOME/.config/polybar/Scripts"
+
 KDIR="$HOME/.config/kitty"
 NEODIR="$HOME/.config/neofetch"
 NANZDIR="$HOME"
@@ -84,10 +86,10 @@ install_rofi() {
 install_polybar() {
 	echo -e "\n [*] Installing polybar..."
 	if [[ -d "$PPDIR" ]]; then
-		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP1DIR"/scripts/powermenu.sh "$PP2DIR"/launch.sh "$PP2DIR"/scripts/powermenu.sh "$PP3DIR"/launch.sh "$PP3DIR"/scripts/powermenu.sh
+		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PPSDIR"/powermenu.sh
 	else
 		mkdir -p "$PPDIR"
-		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP1DIR"/scripts/powermenu.sh "$PP2DIR"/launch.sh "$PP2DIR"/scripts/powermenu.sh "$PP3DIR"/launch.sh "$PP3DIR"/scripts/powermenu.sh
+		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PPSDIR"/powermenu.sh
 	fi
 }
 
