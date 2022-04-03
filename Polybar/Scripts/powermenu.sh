@@ -5,11 +5,11 @@ rofi_command="rofi -theme $HOME/.config/rofi/themes/power.rasi"
 uptime="   Seleccione una opción  "
 
 # Options
-shutdown="  Apagar"
-reboot="  Reiniciar"
-lock="  Bloquear"
-suspend="  Suspender"
-logout="  Salir"
+shutdown="  Shutdown"
+reboot="  Reboot"
+lock="  Lock"
+suspend="  Suspend"
+logout="  Logout"
 
 # Variable passed to rofi
 options="$lock\n$logout\n$reboot\n$shutdown\n$suspend"
