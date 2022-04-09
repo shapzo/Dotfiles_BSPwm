@@ -24,7 +24,7 @@
 
 ENABLE_CORRECTION="true"
 
-plugins=(git)
+#plugins=(git)
 
 #source $ZSH/oh-my-zsh.sh
 
