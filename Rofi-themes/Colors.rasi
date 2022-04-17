@@ -15,7 +15,7 @@
     //general colors
     background:                     #00000000;
     background-color:               #292e307a;
-    background-alt:                 #00ff889f;
+    background-alt:                 #ab36449f;
     foreground:                     #111111;
     foreground-selected:            #000000;
     text-icon:                      #ffffff;

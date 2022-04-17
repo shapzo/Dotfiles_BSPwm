@@ -23,8 +23,8 @@ xsetroot -cursor_name left_ptr &
 feh --bg-fill $HOME/.config/bspwm/img_1.jpg
 
 #set polybar
-#$HOME/.config/polybar/poly1/launch.sh &
-$HOME/.config/polybar/poly2/launch.sh &
+$HOME/.config/polybar/poly1/launch.sh &
+#$HOME/.config/polybar/poly2/launch.sh &
 #$HOME/.config/polybar/poly3/launch.sh &
 
 #monitor´s
