@@ -18,6 +18,10 @@ xsetroot -cursor_name left_ptr &
 #To adjust to the resolution of my laptop
 #xrandr -s 1360x768 &
 
+#xrandr -s 1920x1080 &
+#xrandr -s 2048x1080 &
+#xrandr -s 3840 x 2160 &
+
 #set wallpaper
 #feh --bg-fill $HOME/Pictures/Your-wallpaper.jpg
 feh --bg-fill $HOME/.config/bspwm/img_1.jpg
