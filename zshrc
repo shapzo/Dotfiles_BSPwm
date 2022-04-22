@@ -20,6 +20,16 @@
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="random"
 
+ENABLE_CORRECTION="true"
+
+#plugins=(git)
+
+#source $ZSH/oh-my-zsh.sh
+
+export LANG=es_MX.UTF-8
+
+#==================================================
+
 #theme by powerlevel9k
 
 #https://github.com/Powerlevel9k/powerlevel9k
@@ -40,14 +50,6 @@
 #POWERLEVEL9K_CUSTOM_LINUX_ICON="echo "
 #POWERLEVEL9K_CUSTOM_LINUX_ICON_BACKGROUND=069
 #POWERLEVEL9K_CUSTOM_LINUX_ICON_FOREGROUND=015
-
-ENABLE_CORRECTION="true"
-
-#plugins=(git)
-
-#source $ZSH/oh-my-zsh.sh
-
-export LANG=es_MX.UTF-8
 
 #=========================History==========
 HISTFILE=~/.zsh_history
