@@ -31,12 +31,12 @@ window {
     border-color:                   @border-color;
 
     //for poly1 and poly3 theme
-    //x-offset:                       41.8%;
-    //y-offset:                       -4.3%;
+    x-offset:                       41.8%;
+    y-offset:                       -4.3%;
 
     //for poly2 theme
-     x-offset:                       37.4%;
-     y-offset:                       -4.3%;
+    //x-offset:                       37.4%;
+    //y-offset:                       -4.3%;
 }
 
 prompt {

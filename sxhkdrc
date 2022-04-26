@@ -16,7 +16,7 @@ super + Return
 
 # program launcher
 alt + d
-	rofi -show drun
+	rofi -show drun -theme $HOME/.config/rofi/themes/Windows11.rasi
 
 super + w
 	rofi -show window -theme $HOME/.config/rofi/themes/Preview.rasi
