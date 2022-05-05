@@ -27,6 +27,11 @@ ENABLE_CORRECTION="true"
 #source $ZSH/oh-my-zsh.sh
 
 export LANG=es_MX.UTF-8
+setopt autocd
+setopt magicequalsubst
+setopt nonomatch
+setopt notify
+setopt numericglobsort
 
 #==================================================
 
