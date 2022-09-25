@@ -39,3 +39,4 @@ fi
 
 #depending on the distro the path may vary
 #exmple: -> /usr/share/powerline/bash/powerline.sh
+#
