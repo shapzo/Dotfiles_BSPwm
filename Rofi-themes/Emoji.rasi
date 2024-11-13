@@ -45,7 +45,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "  Select an emoji ";
+    placeholder:                    "󰞅  Select an emoji ";
     blink:                          true;
 }
 
