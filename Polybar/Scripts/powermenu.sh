@@ -1,15 +1,14 @@
 #!/bin/bash
-#rofi_command="rofi -theme $HOME/.config/rofi/themes/dracula.rasi"
-rofi_command="rofi -theme $HOME/.config/rofi/themes/power.rasi"
+rofi_command="rofi -theme $HOME/.config/rofi/themes/Power.rasi"
 
 uptime="   Select an option  "
 
 # Options
-shutdown="  Shutdown"
-reboot="  Reboot"
-lock="  Lock"
-suspend="  Suspend"
-logout="  Logout"
+shutdown=" ⏼  Shutdown"
+reboot="   Reboot"
+lock="   Lock"
+suspend=" 󰤄 Suspend"
+logout="  Logout"
 
 # Variable passed to rofi
 options="$lock\n$logout\n$reboot\n$shutdown\n$suspend"
