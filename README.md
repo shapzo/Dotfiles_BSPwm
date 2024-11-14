@@ -37,7 +37,7 @@ If you want to copy my configuration, run the **`Install.sh`** script to copy my
 - sxhkdrc
 - picom
 - rofi
-- Polybar
+- polybar
 
 To run the script, give it execution permissions with the command:
 ```bash
