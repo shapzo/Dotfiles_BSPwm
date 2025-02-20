@@ -20,7 +20,7 @@ configuration {
 }
 
 window {
-    border-radius:                  15px;
+    border-radius:                  10px;
     transparency:                   "real";
     height:                         30%;
     width:                          16%;
@@ -30,13 +30,13 @@ window {
     border:                         3px;
     border-color:                   @border-color;
 
-    //for poly1 and poly3 theme
-    x-offset:                       41.8%;
-    y-offset:                       -4.3%;
-
-    //for poly2 theme
-    //x-offset:                       37.4%;
+    //for polybar's complete
+    //x-offset:                       41.8%;
     //y-offset:                       -4.3%;
+
+    //for polybar's reduced
+     x-offset:                       39.4%;
+     y-offset:                       -4.3%;
 }
 
 prompt {

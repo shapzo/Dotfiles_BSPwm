@@ -19,7 +19,7 @@ configuration {
 }
 
 * {
-    border-radius:                  15px;
+    border-radius:                  10px;
 }
 
 window {
@@ -30,9 +30,13 @@ window {
     background-color:               @background-color;
     text-color:                     @foreground;
     location:                       west;
-
-    x-offset:                       0.5%;
     border-color:                   @border-color;
+
+    //for polybar's complete
+     x-offset:                       2.6%;
+
+    //for mac version
+    //x-offset:                       0.5%;
 }
 
 prompt {

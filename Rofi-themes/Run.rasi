@@ -25,7 +25,7 @@ configuration {
 }
 
 * {
-    border-radius:                  15px;
+    border-radius:                  10px;
 }
 
 window {
@@ -36,9 +36,13 @@ window {
     background-color:               @background-color;
     text-color:                     @foreground;
     location:                       east;
-
-    x-offset:                       -0.5%;
     border-color:                   @border-color;
+
+    //for polybar's complete
+    //x-offset:                       -0.5%;
+
+    //for polybar's reduced
+    x-offset:                       -2.6%;
 }
 
 prompt {
