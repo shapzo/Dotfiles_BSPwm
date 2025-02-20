@@ -1,7 +1,7 @@
 #!/bin/bash
 rofi_command="rofi -theme $HOME/.config/rofi/themes/Power.rasi"
 
-uptime="   Select an option  "
+uptime="   Select an option  "
 
 # Options
 shutdown=" ⏼  Shutdown"
