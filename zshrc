@@ -150,21 +150,13 @@ rmf(){
 vi(){
     nvim $1
 }
-#Adjust the brightness of my screen, due to the driver XD and TLP because for the energy management of my laptop
-light(){
-    sudo chmod 777 /sys/class/backlight/amdgpu_bl0/brightness | sudo tlp start
-}
+
 #git functions
 clon(){
     git clone $1
 }
 commit(){
     git commit -m $1
-}
-gitbspwm(){
-    git add .
-    git commit -m "BSPwm"
-    git push origin main
 }
 
 #============================plugins========================
@@ -178,3 +170,12 @@ gitbspwm(){
 #zstyle ':autocomplete:*' min-input 2
 #bindkey $key[up] up-line-or-history
 #bindkey $key[down] down-line-or-history
+
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Sudo
+source /usr/share/zsh/plugins/sudo.plugin.zsh
+
+#pywal theme
+[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
