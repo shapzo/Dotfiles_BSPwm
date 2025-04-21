@@ -36,15 +36,13 @@ In the following files: **`power.rasi`**, **`emoji.rasi`** and **`run.rasi`**, u
 
 1. For poly1 and poly3 theme
 ```bash
-    x-offset:                       41.5%;
-    y-offset:                       -5%;
+    x-offset:                       41.8%;
+    y-offset:                       -4.3%;
 ```
 
 2. For poly2 theme
 ```bash
     
-    x-offset:                       37.4%;
-    y-offset:                       -5%;
+    x-offset:                       39.4%;
+    y-offset:                       -4.3%;
 ``` 
-
--------------------------------------------------------------------
