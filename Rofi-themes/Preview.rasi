@@ -20,7 +20,7 @@ configuration {
 }
 
 * {
-    border-radius:                  15px;
+    border-radius:                  10px;
 }
 
 window {
@@ -75,7 +75,7 @@ mainbox {
     children:                       [ inputbar, listview];
     spacing:                        10px;
     padding:                        45px 25px 45px 25px;
-    border:                         2px;
+    border:                         3px;
     border-color:                   @border-color;
 }
 
@@ -89,7 +89,6 @@ element {
 element-icon {
     background-color:               @background;
     size:                           3.5em;
-    border:                         0px;
 }
 
 element-text {
@@ -103,8 +102,7 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
-    border-color:                  	@background-color;
-    border-color:                  	@foreground;
+    border-color:                  	@foreground-selected;
     border:                         2px;
 }
 

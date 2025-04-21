@@ -17,11 +17,7 @@
 
 configuration {
     font:                           "Organo Regular 12";
-    show-icons:                     true;
-    drun-display-format:            "{name}";
-    threads:                        1;
     scroll-method:                  0;
-    disable-history:                false;
 }
 
 * {
@@ -29,10 +25,9 @@ configuration {
 }
 
 window {
-    border-radius:                  15px;
     transparency:                   "real";
     height:                         91.7%;
-    width:                          40%;
+    width:                          30%;
     background-color:               @background-color;
     text-color:                     @foreground;
     location:                       east;
@@ -55,7 +50,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "   Select a command ";
+    placeholder:                    "   Command's ";
     blink:                          true;
 }
 
@@ -69,7 +64,7 @@ inputbar {
     background-color:               #76787985;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0px 5% 0px 5%;
+    margin:                         0px 2% 0px 2%;
     padding:                        10px 40px 10px 40px;
     position:                       north;
 }
@@ -87,8 +82,7 @@ mainbox {
     children:                       [ inputbar, listview];
     spacing:                        5px;
     padding:                        10px 50px 10px 50px;
-    border:                         2px;
-    border-color:                   @border-color;
+    border:                         3px;
 }
 
 element {
@@ -108,8 +102,7 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
-    border-color:                  	@background-color;
-    border-color:                  	@foreground;
+    border-color:                  	@foreground-selected;
     border:                         2px;
 }
 
