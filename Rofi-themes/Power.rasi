@@ -22,7 +22,7 @@ configuration {
 window {
     border-radius:                  10px;
     transparency:                   "real";
-    height:                         30%;
+    height:                         31%;
     width:                          16%;
     background-color:               @background-color;
     text-color:                     @foreground-power;
@@ -35,13 +35,13 @@ window {
     //y-offset:                       -4.3%;
 
     //for polybar's reduced
-     x-offset:                       39.4%;
+     x-offset:                       41.8%;
      y-offset:                       -4.3%;
 }
 
 prompt {
     enabled: 						true;
-    padding:                        5px 10px 7px 10px;
+    padding:                        7px;
     position:                       north;
     background-color:               @background;
     text-color: 					@foreground-power;
@@ -49,35 +49,37 @@ prompt {
 
 listview {
     layout:                         vertical;
+    background-color:               @background;
+    spacing:                        5px;
 }
+
 
 mainbox {
     background-color:               @background-color;
     children:                       [ prompt, listview ];
+    spacing:                        5px;
+    padding:                        10px 25px 10px 25px;
 }
 
 element {
     background-color:               @background;
     orientation:                    horizontal;
-	padding: 						1px 1px 1px -30px;
-}
-
-element-icon {
-    background-color:               @background;
-    size:                           25px;
+	padding: 						5px;
+    children:                       [ element-text ];
 }
 
 element-text {
     expand:                         true;
-    vertical-align:                 0.5;
+    size:                           2.5em;
     margin:                         5px 5px 5px 5px;
     background-color:               @background;
-    
 }
 
 element selected {
     background-color:               @background-alt;
     border-radius:                  10px;
+    border-color:                  	@foreground-selected;
+    border:                         2px;
 }
 
 element-text selected {
