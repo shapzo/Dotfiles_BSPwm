@@ -9,9 +9,13 @@ These are Rofi's themes.
 ![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Rofi-themes/Screenshots/Rorfi-theme%20(2).png?raw=true)
 - The 2nd theme shows you the applications in the center, in a small square like in Windows 11.
 
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Rofi-themes/Screenshots/Rorfi-theme%20(6).png?raw=true)
+- Theme to preview
+
+-------------------------------------------------------------------
 -------------------------------------------------------------------
 
-- The theme power menu
+- Theme power menu
 
 ![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Rofi-themes/Screenshots/Rorfi-theme%20(3).png?raw=true)
 
@@ -26,7 +30,7 @@ These are Rofi's themes.
 ![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Rofi-themes/Screenshots/Rorfi-theme%20(5).png?raw=true)
 
 
-In the following files: **`power.rasi`**, **`emoji.rasi`** and **`run.rasi`**, uncomment the lines according to the theme that was previously selected.
+In the following files: **`power.rasi`**, **`emoji.rasi`** and **`run.rasi`**, uncomment the lines according to the polybar theme that was previously selected.
 
 ***Example***
 
@@ -44,8 +48,3 @@ In the following files: **`power.rasi`**, **`emoji.rasi`** and **`run.rasi`**, u
 ``` 
 
 -------------------------------------------------------------------
--------------------------------------------------------------------
-
-- Theme to preview
-
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Rofi-themes/Screenshots/Rorfi-theme%20(6).png?raw=true)
