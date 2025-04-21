@@ -22,7 +22,7 @@ configuration {
 window {
     border-radius:                  10px;
     transparency:                   "real";
-    height:                         31%;
+    height:                         39%;
     width:                          16%;
     background-color:               @background-color;
     text-color:                     @foreground-power;
@@ -41,7 +41,7 @@ window {
 
 prompt {
     enabled: 						true;
-    padding:                        7px;
+    padding:                        20px 20px 1px 5px;
     position:                       north;
     background-color:               @background;
     text-color: 					@foreground-power;
@@ -51,6 +51,7 @@ listview {
     layout:                         vertical;
     background-color:               @background;
     spacing:                        5px;
+    padding:                        10px 25px 10px 25px;
 }
 
 
@@ -58,7 +59,6 @@ mainbox {
     background-color:               @background-color;
     children:                       [ prompt, listview ];
     spacing:                        5px;
-    padding:                        10px 25px 10px 25px;
 }
 
 element {
