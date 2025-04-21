@@ -35,8 +35,8 @@ window {
     //y-offset:                       -4.3%;
 
     //for polybar's reduced
-     x-offset:                       41.8%;
-     y-offset:                       -4.3%;
+     x-offset:                       41.5%;
+     y-offset:                       -4.6%;
 }
 
 prompt {

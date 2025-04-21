@@ -21,7 +21,7 @@ configuration {
 window {
     border-radius:                  15px;
     transparency:                   "real";
-    height:                         91.7%;
+    height:                         91%;
     width:                          30%;
     background-color:               @background-color;
     text-color:                     @foreground;
