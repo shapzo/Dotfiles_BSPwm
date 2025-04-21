@@ -50,13 +50,14 @@ case-indicator {
 }
 
 inputbar {
+    inputbar {
     background-color:               #7c7c7c;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0% 25% 0% 25%;
+    margin:                         0% 30% 0% 30%;
     padding:                        10px 20px 10px 20px;
     position:                       north;
-    border-radius:                  15px;
+    border-radius:                  8px;
 }
 
 listview {
