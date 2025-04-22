@@ -28,6 +28,7 @@ case $chosen in
         mpc -q pause
         amixer set Master mute
         systemctl suspend
+        betterlockscreen -l dimblur
         ;;
     $logout)
         bspc quit
