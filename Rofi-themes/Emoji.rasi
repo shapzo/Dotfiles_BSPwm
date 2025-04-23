@@ -31,7 +31,7 @@ window {
     //for polybar's complete
      x-offset:                       2.6%;
 
-    //for mac version
+    //for polybar's reduced
     //x-offset:                       0.5%;
 }
 

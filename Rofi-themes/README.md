@@ -34,13 +34,13 @@ In the following files: **`power.rasi`**, **`emoji.rasi`** and **`run.rasi`**, u
 
 ***Example***
 
-1. For poly1 and poly3 theme
+1. For polybar's complete
 ```bash
     x-offset:                       41.8%;
     y-offset:                       -4.3%;
 ```
 
-2. For poly2 theme
+2. For polybar's reduced
 ```bash
     
     x-offset:                       39.4%;
