@@ -31,7 +31,7 @@ super + shift + w
 	$HOME/.config/polybar/Scripts/powermenu.sh &
 
 alt + c
-	code
+	nvim
 
 alt + b
 	firefox-developer-edition
