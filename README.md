@@ -23,12 +23,14 @@ You are free to use my configuration.
  5. [Rofi](https://github.com/davatorium/rofi) 📱
  6. [Betterlockscreen](https://github.com/betterlockscreen/betterlockscreen) 🏮
  7. [Feh](https://feh.finalrewind.org/) 🎴
- 8. [Urxvt terminal](#) 💊
- 9. [Kitty terminal](https://sw.kovidgoyal.net/kitty/) 💊
+ 8. [Urxvt terminal](#) ➤
+ 9. [Kitty terminal](https://sw.kovidgoyal.net/kitty/) </>
  10. [Zsh shell](#) 💋
- 11. [Nerd fonts](https://www.nerdfonts.com/#home) 🟥
- 12. [Awesome font](https://fontawesome.com/download) 🟨
- 13. [Powerline font](https://github.com/powerline/fonts) 🟪
+ 11. [Dunst](https://dunst-project.org/) 🔔
+ 12. [Lf](https://github.com/gokcehan/lf) 📁
+ 13. [Nerd fonts](https://www.nerdfonts.com/#home) 🟥
+ 14. [Awesome font](https://fontawesome.com/download) 🟨
+ 15. [Powerline font](https://github.com/powerline/fonts) 🟪
 
 
 ##  Do you like my setup?
