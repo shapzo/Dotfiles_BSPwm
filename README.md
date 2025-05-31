@@ -42,6 +42,8 @@ If you want to copy my configuration, run the **`Install.sh`** script to copy my
 - picom
 - rofi
 - polybar
+- lf (file manager)
+- dunst
 
 To run the script, give it execution permissions with the command:
 ```bash
