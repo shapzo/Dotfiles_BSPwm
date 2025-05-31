@@ -12,11 +12,11 @@ RTDIR="$HOME/.config/rofi/themes"
 PDIR="$HOME/.config/picom"
 PPDIR="$HOME/.config/polybar"
 DDIR="$HOME/.config/dunst"
+LDIR="$HOME/.config/lf"
 
 PP1DIR="$HOME/.config/polybar/poly1"
 PP2DIR="$HOME/.config/polybar/poly2"
 PP3DIR="$HOME/.config/polybar/poly3"
-
 PPSDIR="$HOME/.config/polybar/Scripts"
 
 KDIR="$HOME/.config/kitty"
@@ -76,14 +76,14 @@ install_picom(){
 install_dunst(){
     echo -e "\n [*] Installing dunst..."
     if [[ -d "$DDIR" ]]; then
-        cp $DIR/dunstrc "$PDIR"
+        cp $DIR/dunstrc "$DDIR"
     else
         mkdir -p "$DDIR"
         cp $DIR/dunstrc "$DDIR"
     fi
 }
 
-#install rofi-themes
+# Install rofi-themes
 install_rofi() {
 	echo -e "\n [*] Installing rofi-themes..."
 	if [[ -d "$RTDIR" ]]; then
@@ -94,7 +94,18 @@ install_rofi() {
 	fi
 }
 
-#installing polybar
+# Install lf
+install_lf() {
+    echo -e "\n [*] Installing Lf..."
+	if [[ -d "$LDIR" ]]; then
+		cp -rf $DIR/lf/* "$LDIR"
+	else
+		mkdir -p "$LDIR"
+		cp -rf $DIR/lf/* "$LDIR"
+	fi
+}
+
+# Installing polybar
 install_polybar() {
 	echo -e "\n [*] Installing polybar..."
 	if [[ -d "$PPDIR" ]]; then
@@ -165,8 +176,10 @@ main() {
         install_bspwm
         install_sxhkd
         install_picom
+        install_dunst
         install_rofi
         install_polybar
+        install_lf
 
         echo -e "\n"
 
