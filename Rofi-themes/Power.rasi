@@ -41,8 +41,11 @@ window {
 
 prompt {
     enabled: 						true;
-    padding:                        20px 20px 1px 5px;
+    padding:                        7px 15px 1px 7px;
     position:                       north;
+    margin:                         1%;
+    border-radius:                  10px;
+    border-color:                   @border-color;
     background-color:               @background;
     text-color: 					@foreground-power;
 }
@@ -73,6 +76,7 @@ element-text {
     size:                           2.5em;
     margin:                         5px 5px 5px 5px;
     background-color:               @background;
+    text-color:                     @text-icon;
 }
 
 element selected {
@@ -83,7 +87,7 @@ element selected {
 }
 
 element-text selected {
-    text-color: 					@foreground-selected-power;
+    text-color: 					@foreground-selected;
 }
 
 @import "Colors.rasi"

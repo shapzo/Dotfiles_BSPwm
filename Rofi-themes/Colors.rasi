@@ -20,11 +20,4 @@
     foreground-selected:            #000000;
     text-icon:                      #ffffff;
     border-color:                   #c70b58;
-    background-entry:               #ff0505;
-    
-    //colors for shutdown menu
-    foreground-power:                     #c7c7c7;
-    foreground-selected-power:            #ffffff;
-    background-entry-power:               #ff0505;
-
 }

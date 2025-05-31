@@ -11,6 +11,7 @@ RDIR="$HOME/.config/rofi"
 RTDIR="$HOME/.config/rofi/themes"
 PDIR="$HOME/.config/picom"
 PPDIR="$HOME/.config/polybar"
+DDIR="$HOME/.config/dunst"
 
 PP1DIR="$HOME/.config/polybar/poly1"
 PP2DIR="$HOME/.config/polybar/poly2"
@@ -68,6 +69,17 @@ install_picom(){
     else
         mkdir -p "$PDIR"
         cp $DIR/picom.conf "$PDIR"
+    fi
+}
+
+# Install dunst
+install_dunst(){
+    echo -e "\n [*] Installing dunst..."
+    if [[ -d "$DDIR" ]]; then
+        cp $DIR/dunstrc "$PDIR"
+    else
+        mkdir -p "$DDIR"
+        cp $DIR/dunstrc "$DDIR"
     fi
 }
 
