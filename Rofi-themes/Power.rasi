@@ -24,29 +24,30 @@ window {
     transparency:                   "real";
     height:                         39%;
     width:                          16%;
-    background-color:               @background-color;
-    text-color:                     @foreground-power;
+    text-color:                     @foreground-selected;
     location:                       south;
-    border:                         3px;
     border-color:                   @border-color;
+    border:                         3px;
+
+//Adjust as you see fit
 
     //for polybar's complete
-    //x-offset:                       41.8%;
-    //y-offset:                       -4.3%;
+    x-offset:                       41.5%;
+    y-offset:                       -4.6%;
 
     //for polybar's reduced
-    x-offset:                       39.4%;
-    y-offset:                       -4.3%;
+    //x-offset:                       39.4%;
+    //y-offset:                       -4.3%;
 }
 
 prompt {
     enabled: 						true;
-    padding:                        7px 15px 1px 7px;
     position:                       north;
     margin:                         1%;
     border-radius:                  10px;
     border-color:                   @border-color;
-    background-color:               @background;
+    padding:                        7px 15px 1px 7px;
+    background-color:               #76787985;
     text-color: 					@foreground-power;
 }
 
