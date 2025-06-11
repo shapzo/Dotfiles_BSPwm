@@ -39,7 +39,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "  Search ";
+    placeholder:                    "   Search ";
     blink:                          true;
 }
 
@@ -54,15 +54,15 @@ inputbar {
     background-color:               #7c7c7c;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0% 30% 0% 30%;
-    padding:                        10px 20px 10px 20px;
+    margin:                         0% 30%;
+    padding:                        10px 20px;
     position:                       north;
     border-radius:                  8px;
 }
 
 listview {
     background-color:               @background;
-    columns:                        6;
+    columns:                        7;
     spacing:                        0.5em;
     cycle:                          false;
     dynamic:                        true;
@@ -72,8 +72,8 @@ listview {
 mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview ];
-    spacing:                        40px;
-    padding:                        50px 50px 20px 50px;
+    spacing:                         5%;
+    padding:                         6% 7% 2% 7%;
 }
 
 element {
