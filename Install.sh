@@ -76,10 +76,10 @@ install_picom(){
 install_dunst(){
     echo -e "\n [*] Installing dunst..."
     if [[ -d "$DDIR" ]]; then
-        cp $DIR/dunstrc "$DDIR"
+        cp $DIR/duntsrc "$DDIR"
     else
         mkdir -p "$DDIR"
-        cp $DIR/dunstrc "$DDIR"
+        cp $DIR/duntsrc "$DDIR"
     fi
 }
 
@@ -98,10 +98,10 @@ install_rofi() {
 install_lf() {
     echo -e "\n [*] Installing Lf..."
 	if [[ -d "$LDIR" ]]; then
-		cp -rf $DIR/lf/* "$LDIR"
+		cp -rf $DIR/Lf/* "$LDIR"
 	else
 		mkdir -p "$LDIR"
-		cp -rf $DIR/lf/* "$LDIR"
+		cp -rf $DIR/Lf/* "$LDIR"
 	fi
 }
 
