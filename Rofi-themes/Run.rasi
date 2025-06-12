@@ -34,10 +34,10 @@ window {
     border-color:                   @border-color;
 
     //for polybar's complete
-    //x-offset:                       -0.5%;
+    x-offset:                       -0.5%;
 
     //for polybar's reduced
-    x-offset:                       -2.6%;
+    //x-offset:                       -2.6%;
 }
 
 prompt {
