@@ -16,7 +16,7 @@ super + Return
 
 # program launcher
 alt + d
-	rofi -show drun -theme $HOME/.config/rofi/themes/Windows11.rasi
+	rofi -show drun
 
 super + w
 	rofi -show window -theme $HOME/.config/rofi/themes/Preview.rasi
@@ -37,7 +37,7 @@ alt + b
 	firefox-developer-edition
 
 alt + e
-	urxvt -e 'ranger'
+	kitty -e 'lf'
 
 Print
 	gnome-screenshot  -d 2

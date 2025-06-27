@@ -61,8 +61,8 @@ inputbar {
     background-color:              #7c7c7c;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0px 5% 0px 5%;
-    padding:                        10px 20px 10px 20px;
+    margin:                         0px 5%;
+    padding:                        10px 20px;
     position:                       north;
     border:                         0 0 2px 0 solid;
     border-radius:                  3px;
@@ -71,8 +71,8 @@ inputbar {
 
 listview {
     background-color:               @background;
-    columns:                        4;
-    spacing:                        15px;
+    columns:                        4;  //select columns exaple: 4, 5, 6 etc
+    spacing:                        25px;
     cycle:                          false;
     dynamic:                        true;
     layout:                         vertical;
@@ -82,7 +82,7 @@ mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview];
     spacing:                        5%;
-    padding:                        5% 1% 0.5% 1%;
+    padding:                        3% 6%;
     border:                         3px;
     border-color:                   @border-color;
 }
@@ -90,13 +90,13 @@ mainbox {
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        30px;
+    padding:                        25px;
     children:                       [ element-icon, element-text ];
 }
 
 element-icon {
     background-color:               @background;
-    size:                           3.5em;
+    size:                           2.5em;
     border:                         0px;
 }
 
@@ -111,7 +111,6 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
-    border-color:                  	@background-color;
     border-color:                  	@foreground;
     border:                         2px;
 }
