@@ -54,7 +54,7 @@ inputbar {
     background-color:               #7c7c7c;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0% 30%;
+    margin:                         0% 25%;
     padding:                        10px 20px;
     position:                       north;
     border-radius:                  8px;
@@ -63,7 +63,7 @@ inputbar {
 listview {
     background-color:               @background;
     columns:                        7;
-    spacing:                        0.5em;
+    spacing:                        0.8em;
     cycle:                          false;
     dynamic:                        true;
     layout:                         vertical;
@@ -73,20 +73,20 @@ mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview ];
     spacing:                         5%;
-    padding:                         6% 7% 2% 7%;
+    padding:                         4% 10%;
 }
 
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        1.5em;
+    padding:                        1.1em;
     children:                       [ element-icon, element-text ];
-    border-radius:                  18px;
+    border-radius:                  15px;
 }
 
 element-icon {
     background-color:               @background;
-    size:                           3.5em;
+    size:                           2.8em;
 }
 
 element-text {
@@ -95,7 +95,7 @@ element-text {
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-    margin:                         2px 5px 5px 5px;
+    margin:                         2px 5px 5px;
 }
 
 element selected {
