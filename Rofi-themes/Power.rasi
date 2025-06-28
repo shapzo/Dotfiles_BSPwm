@@ -46,7 +46,7 @@ prompt {
     margin:                         1%;
     border-radius:                  10px;
     border-color:                   @border-color;
-    padding:                        7px 15px 1px 7px;
+    padding:                        0.8%;
     background-color:               #76787985;
     text-color: 					@foreground-power;
 }
@@ -54,15 +54,15 @@ prompt {
 listview {
     layout:                         vertical;
     background-color:               @background;
-    spacing:                        5px;
-    padding:                        10px 25px 10px 25px;
+    spacing:                        1%;
+    padding:                        1% 2%;
 }
 
 
 mainbox {
     background-color:               @background-color;
     children:                       [ prompt, listview ];
-    spacing:                        5px;
+    spacing:                        0.2%;
 }
 
 element {
