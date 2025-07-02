@@ -39,7 +39,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "   Search ";
+    placeholder:                    "   Search ";
     blink:                          true;
 }
 
@@ -51,7 +51,7 @@ case-indicator {
 
 inputbar {
     inputbar {
-    background-color:               #7c7c7c;
+    background-color:             #7c7c7c;
     text-color:                     @foreground;
     expand:                         false;
     margin:                         0% 25%;
@@ -73,7 +73,7 @@ mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview ];
     spacing:                         5%;
-    padding:                         4% 10%;
+    padding:                         4% 14%;
 }
 
 element {
@@ -92,7 +92,6 @@ element-icon {
 element-text {
     background-color:               @background;
     text-color:                     @text-icon;
-    expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
     margin:                         2px 5px 5px;
@@ -100,6 +99,8 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
+    border-color:                  	@foreground;
+    border:                         2px;
 }
 
 element-text selected {

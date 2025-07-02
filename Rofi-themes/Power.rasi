@@ -47,7 +47,7 @@ prompt {
     border-radius:                  10px;
     border-color:                   @border-color;
     padding:                        0.8%;
-    background-color:               #76787985;
+    background-color:             #76787985;
     text-color: 					@foreground-power;
 }
 

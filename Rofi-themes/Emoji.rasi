@@ -19,7 +19,6 @@ configuration {
 }
 
 window {
-    border-radius:                  15px;
     transparency:                   "real";
     height:                         91%;
     width:                          30%;
@@ -59,8 +58,8 @@ inputbar {
     background-color:               #76787985;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0px 2% 0px 2%;
-    padding:                        10px 40px 10px 40px;
+    margin:                         0% 2%;
+    padding:                        10px 40px;
     position:                       north;
 }
 
@@ -75,10 +74,9 @@ listview {
 mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview];
-    spacing:                        5px;
-    padding:                        10px 50px 10px 50px;
+    spacing:                        1%;
+    padding:                        1% 4%;
     border:                         3px;
-    border-color:                   @border-color;
 }
 
 element {
@@ -93,7 +91,7 @@ element-text {
     text-color:                     @text-icon;
     expand:                         true;
     size:                           3.5em;
-    margin:                         5px 5px 5px 5px;
+    margin:                         5px;
 }
 
 element selected {

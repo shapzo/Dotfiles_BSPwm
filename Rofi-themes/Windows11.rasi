@@ -31,7 +31,7 @@ configuration {
 window {
     transparency:                   "real";
     background-color:               @background;
-    height:                         91.7%;
+    height:                         91.5%;
     width:                          55%;
     location:                       center;
     anchor:                         center;
@@ -58,10 +58,10 @@ case-indicator {
 }
 
 inputbar {
-    background-color:              #7c7c7c;
+    background-color:             #7c7c7c;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0px 5%;
+    margin:                         0 5%;
     padding:                        10px 20px;
     position:                       north;
     border:                         0 0 2px 0 solid;
@@ -90,14 +90,13 @@ mainbox {
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        25px;
+    padding:                        1.3em;
     children:                       [ element-icon, element-text ];
 }
 
 element-icon {
     background-color:               @background;
     size:                           2.5em;
-    border:                         0px;
 }
 
 element-text {
@@ -106,7 +105,7 @@ element-text {
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-    margin:                         1px 5px 5px 5px;
+    margin:                         2px 1px 5px;
 }
 
 element selected {
