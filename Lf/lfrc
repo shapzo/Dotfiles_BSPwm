@@ -1,93 +1,29 @@
+# ~/.config/lf/lfrc
+
+# sets
 set shell zsh
-set shellopts '-eu'
-set scrolloff 10
 set icons
 set number
+set scrolloff 10
 set relativenumber
-#set hidden
-
 set drawbox true
 
-cmd open ${{
-	case "${f##*.}" in
-		kdenlive) setsid -f kdenlive "$f" >/dev/null 2>&1 ; exit ;;
-	esac
-	case $({ [ -L "$f" ] && f="$(readlink -f "$f")" ;} ; file --mime-type -b "$f") in
-		image/x-xcf) setsid -f gimp "$f" ;;
-		application/gzip) setsid -f xournalpp "$f" > /dev/null 2>&1 ;;
-    application/octet-stream) setsid -f gpg -dq "$f" ;;
+# Abrir archivos con xdg-open (para GUI)
+map <enter> $xdg-open $f
 
-		image/*) imgs="$(echo "$fx" | tr "\n" "'" | sed "s/'/' '/g" | sed "s/^/'/g" | sed "s/' '$/'/g")" ; eval "setsid -f imv $imgs >/dev/null 2>&1" ;;
-		text/*) echo "$fx" | tr "\n" '"' | sed 's/"/" "/g' | sed 's/^/"/g' | sed 's/" "$/"/g' | xargs $EDITOR ;; text/*|application/json) echo "$fx" | tr "\n" '|' | sed -e 's/|$/"/g' -e 's/|/|-c "tabe /g' -e 's/|-c/" -c/g' -e 's/^/"/' | xargs $EDITOR ;;
-
-		*) echo "$fx" | while read -r f ; do setsid -f xdg-open "$f" >/dev/null 2>&1 ; done ;;
-	esac
+# Abridores personalizados por extensión
+cmd open &{{
+    case "$f" in
+        *.pdf) evince "$f" &;;
+        *.jpg|*.jpeg|*.png|*.gif) eog "$f" &;;
+        *.mp4|*.mkv|.*wma) mpv "$f" &;;
+        *.mp3|*.flac) lollypop "$f" &;;
+        *.txt|*.md) gnome-text-editor "$f";;  # Neovim para textos
+        *) xdg-open "$f" &;;  # Fallback para otros tipos
+    esac
 }}
 
-cmd edit ${{
-	case $(file --mime-type -b "$f") in
-		text/*) setsid -f $TERMINAL -e $EDITOR "$fx" > /dev/null 2>&1 ;;
-		application/pdf) setsid -f xournalpp "$f" > /dev/null 2>&1 ;;
-		application/gzip) setsid -f xournalpp "$f" > /dev/null 2>&1 ;;
-		application/epub+zip) setsid -f xournalpp "$f" > /dev/null 2>&1 ;;
-		image/*) setsid -f gimp "$f" > /dev/null 2>&1 ;;
-	esac
-}}
-
-cmd extract ${{
-	case $(file --mime-type -b "$f") in
-		application/zip) unzip "$f" ;;
-		application/gzip) tar -xvf "$f" ;;
-		application/x-rar) unrar x "$f" ;;
-		application/x-bzip2) tar -xvf "$f" ;;
-	esac
-}}
-
-#cmd trash ${{
-#    [ ! -d "$XDG_DATA_HOME/Trash" ] && mkdir -p "$XDG_DATA_HOME/Trash" > /dev/null 2>&1
-#    echo "$fx" | while read -r l ; do { t="$(echo "$l" | sed 's/^.*\///g')" ; { { [ -f "$XDG_DATA_HOME/Trash/$t" ] || [ -d "$XDG_DATA_HOME/Trash/$t" ] ;} && t="${t}-$(head -n 1 /dev/*random* | md5sum | cut -c 1-4)" ;} ; mv "$l" "$XDG_DATA_HOME/Trash/$t" ;} ; done
-#}}
-
-cmd trash push $[<space>!<space>-d<space>"$TRASH_DIR"<space>]<space>&&<space>mkdir<space>-p<space>"$TRASH_DIR"<space>><space>/dev/null<space>2>&1<space>;<space>echo<space>"$fx"<space>|<space>while<space>read<space>-r<space>l<space>;<space>do<space>{<space>t="$(echo<space>"$l"<space>|<space>sed<space>'s/^.*\///g')"<space>;<space>{<space>{<space>[<space>-f<space>"$TRASH_DIR/$t"<space>]<space>||<space>[<space>-d<space>"$TRASH_DIR/$t"<space>]<space>;}<space>&&<space>t="${t}_$(date<space>"+%Y%m%d-%H%M%S")_$(head<space>-n<space>1<space>/dev/*random*<space>|<space>md5sum<space>|<space>cut<space>-c<space>1-4)"<space>;}<space>;<space>mv<space>"$l"<space>"$TRASH_DIR/$t"<space>;}<space>;<space>done<space>#
-
-cmd file-type ${{
-    file -i "$f" ; read a
-    #file "$f" ; read a
-		clear
-}}
-
-# Creates an empty text file
-cmd touch-file ${{
-    printf "File name: "
-    read name
-    touch "$name"
-    #[ ! -f "$name" ] && printf "\n\n" > "$name"
-		clear
-}}
-
-cmd zip-files ${{
-    printf "Enter zip archive name: "
-    read name
-    unset files
-    echo "$fx" | while read -r l ; do { file="$(echo "$l" | rev | cut -d '/' -f 1 | rev)" ; zip -r "$name" "$file" ;} ; done
-		clear
-}}
-
-cmd move-to-new-dir push $temp="$(date<space>'+%c<space>%N'<space>|<space>md5sum<space>|<space>cut<space>-c<space>1-7)"<space>;<space>mkdir<space>"$temp"<space>;<space>echo<space>"$fx"<space>|<space>while<space>read<space>-r<space>file<space>;<space>do<space>mv<space>"$file"<space>"$temp"<space>;<space>done<space>;<space>mv<space>"$temp"<space>
-
-cmd copy-to-new-dir push $temp="$(date<space>'+%c<space>%N'<space>|<space>md5sum<space>|<space>cut<space>-c<space>1-7)"<space>;<space>mkdir<space>"$temp"<space>;<space>echo<space>"$fx"<space>|<space>while<space>read<space>-r<space>file<space>;<space>do<space>cp<space>-r<space>"$file"<space>"$temp"<space>;<space>done<space>;<space>mv<space>"$temp"<space>
-
-cmd on-cd &{{
-    printf "\033]0;lf $PWD\007" > /dev/tty
-}}
-
-cmd create-symlink ${{
-    ln -s "$(readlink -f "$f")" "$f.link"
-}}
-
-cmd share-file ${{
-		share "$f"
-}}
+# functions
 
 cmd rename-file ${{
 	dir="${f%/*}"
@@ -105,51 +41,34 @@ cmd mkdir ${{
 		clear
 }}
 
-on-cd
+# Creates an empty text file
+cmd touch-file ${{
+    printf "File name: "
+    read name
+    touch "$name"
+    #[ ! -f "$name" ] && printf "\n\n" > "$name"
+		clear
+}}
 
+
+# shortcuts
 cmd q quit
-#cmd setbg $setbg "$f"
 
-#map o open
-map se
+map space $open $f
+
 map e edit
-map <enter> shell
-map <c-r> reload
-#map D delete
-#map r rename-file
-map PD delete
-map D trash
-map H set hidden!
-map <c-n> push $mkdir<space>
+map s delete
+map d trash
 map a mkdir
-map m
+map r rename-file
 map md move-to-new-dir
 map mcd copy-to-new-dir
-map <c-v> push $$EDITOR<space>
 map x extract
-map zip zip-files
-#map sh push $curl<space>-F<space>"file=@$f"<space>0x0.st<space>2>/dev/null<space>|<space>tr<space>-d<space>"\n"<space>|<space>xclip<space>-sel<space>c<enter>
-map sh share-file
-map Y file-type
-map T touch-file
-map st ${{ unset LF_LEVEL ; setsid -f $TERMINAL >/dev/null 2>&1 }}
-map sv ${{ setsid -f code "$f" >/dev/null 2>&1 }}
-map ol ${{ setsid -f $TERMINAL -e lf >/dev/null 2>&1 }}
-map of ${{ setsid -f firefox-developer-edition "$f" >/dev/null 2>&1 }}
-map L create-symlink
+map H set hidden!
+map <c-r> reload
+
 map V ${{ "$EDITOR" . }}
-map sn ${{ setsid -f nautilus . ; clear }}
-map sd ${{ gnome-photos * }}
-map setbg ${{ setbg "$f" }}
-map mkx ${{ chmod u+x "$f" }}
 
+# 
+set previewer ~/.config/lf/preview.sh
 
-#set previewer ~/.config/lf/previewer.sh
-#set cleaner ~/.config/lf/clear_img.sh
-
-set previewer ~/.config/lf/preview
-set cleaner ~/.config/lf/cleaner
-
-
-# Source shortcuts
-source "~/.config/lf/shortcutrc"
