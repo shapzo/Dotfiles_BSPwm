@@ -50,7 +50,6 @@ case-indicator {
 }
 
 inputbar {
-    inputbar {
     background-color:             #7c7c7c;
     text-color:                     @foreground;
     expand:                         false;
