@@ -15,7 +15,7 @@
 //Rofi theme macApps   
 
 configuration {
-    font:                           "Organo Regular 11";
+    font:                           "Comfortaa 9";
     show-icons:                     true;
     drun-display-format:            "{name}";
     threads:                        1;
@@ -40,6 +40,7 @@ entry {
     expand:                         true;
     horizontal-align:               0.5;
     placeholder:                    "   Search ";
+    font:                           "Comfortaa bold 11";
     blink:                          true;
 }
 
@@ -71,29 +72,28 @@ listview {
 mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview ];
-    spacing:                         5%;
-    padding:                         4% 14%;
+    spacing:                         4%;
+    padding:                         3% 10%;
 }
 
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        1.1em;
+    padding:                        0.5em;
     children:                       [ element-icon, element-text ];
     border-radius:                  15px;
 }
 
 element-icon {
     background-color:               @background;
-    size:                           2.8em;
+    size:                           3.5em;
+    padding:                        1.5em;
 }
 
 element-text {
     background-color:               @background;
     text-color:                     @text-icon;
     horizontal-align:               0.5;
-    vertical-align:                 0.5;
-    margin:                         2px 5px 5px;
 }
 
 element selected {
