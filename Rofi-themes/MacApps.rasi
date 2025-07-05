@@ -15,7 +15,7 @@
 //Rofi theme macApps   
 
 configuration {
-    font:                           "Comfortaa 9";
+    font:                           "Comfortaa bold 9";
     show-icons:                     true;
     drun-display-format:            "{name}";
     threads:                        1;
@@ -79,21 +79,22 @@ mainbox {
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        0.5em;
+    padding:                        1.5em;
     children:                       [ element-icon, element-text ];
     border-radius:                  15px;
 }
 
 element-icon {
     background-color:               @background;
-    size:                           3.5em;
-    padding:                        1.5em;
+    size:                           3.8em;
 }
 
 element-text {
     background-color:               @background;
     text-color:                     @text-icon;
     horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    margin:                         9px 9px 2px;
 }
 
 element selected {

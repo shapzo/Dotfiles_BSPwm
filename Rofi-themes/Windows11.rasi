@@ -16,7 +16,7 @@
 //Rofi theme Windows 11
 
 configuration {
-    font:                           "Comfortaa 9";
+    font:                           "Comfortaa bold 9";
     show-icons:                     true;
     drun-display-format:            "{name}";
     threads:                        1;
@@ -73,7 +73,7 @@ inputbar {
 listview {
     background-color:               @background;
     columns:                        4;  //select columns exaple: 4, 5, 6 etc
-    spacing:                        1.5em;
+    spacing:                        1.1em;
     cycle:                          false;
     dynamic:                        true;
     layout:                         vertical;
@@ -90,14 +90,13 @@ mainbox {
 element {
     background-color:               @background;
     orientation:                    vertical;
-    padding:                        1.4em;
+    padding:                        1.9em;
     children:                       [ element-icon, element-text ];
 }
 
 element-icon {
     background-color:               @background;
     size:                           2.5em;
-    padding:                        0.4em;
 }
 
 element-text {
