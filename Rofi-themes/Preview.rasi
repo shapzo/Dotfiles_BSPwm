@@ -42,7 +42,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "  Select an app ";
+    placeholder:                    " 󰀻 Select an app ";
     blink:                          true;
 }
 
@@ -56,15 +56,14 @@ inputbar {
     background-color:               #76787985;
     text-color:                     @foreground;
     expand:                         false;
-    margin:                         0px 10% 0px 10%;
-    padding:                        10px 20px 10px 20px;
+    margin:                         0% 15%;
+    padding:                        10px 40px;
     position:                       north;
 }
 
 listview {
     background-color:               @background;
     columns:                        4;
-    spacing:                        15px;
     cycle:                          false;
     dynamic:                        true;
     layout:                         vertical;
@@ -73,8 +72,8 @@ listview {
 mainbox {
     background-color:               @background-color;
     children:                       [ inputbar, listview];
-    spacing:                        10px;
-    padding:                        45px 25px 45px 25px;
+    spacing:                        3%;
+    padding:                        1% 5%;
     border:                         3px;
     border-color:                   @border-color;
 }
@@ -97,7 +96,7 @@ element-text {
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-    margin:                         1px 5px 5px 5px;
+    margin:                         1px 5px 5px;
 }
 
 element selected {
