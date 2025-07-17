@@ -1,17 +1,7 @@
 
 # My BSPwm 🎼 configuration
 
-This is my BSPwm configuration, which has the configuration files that I use in the GNU Arch Linux distro.
-You are free to use my configuration. 
-
-
-## Screenshots
-
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(3).png?raw=true)
-
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(2).png)
-
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(1).png?raw=true)
+This is my BSPwm configuration, which contains the configuration files I use on GNU/Linux distributions. Feel free to use my configuration.
 
 
 ## Requirements
@@ -31,6 +21,15 @@ You are free to use my configuration.
  13. [Nerd fonts](https://www.nerdfonts.com/#home) 🟥
  14. [Awesome font](https://fontawesome.com/download) 🟨
  15. [Powerline font](https://github.com/powerline/fonts) 🟪
+ 
+
+## Screenshots
+
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(3).png?raw=true)
+
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(2).png)
+
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(1).png?raw=true)
 
 
 ##  Do you like my setup?
