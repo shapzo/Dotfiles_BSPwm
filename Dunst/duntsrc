@@ -62,10 +62,10 @@
 	height = 500
 
 	# Position of the notification
-	origin = top-right
+	origin = bottom-right
 
 	# Offset from the origin
-	offset = 10x12
+	offset = 15x40
 
     # Turn on the progess bar. It appears when a progress hint is passed with
     # for example dunstify -h int:value:12
@@ -86,11 +86,11 @@
 
 	# Frame
 	frame_width = 3
-	frame_color = "#1C2325"
+	frame_color = "#122227"
 
 	# The transparency of the window. range: [0; 100]
 	# This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
-	transparency = 50
+	transparency = 70
 
 	# Don't remove messages, if the user is idle (no mouse or keyboard input)
 	# for longer than idle_threshold seconds.
@@ -176,3 +176,8 @@
 	mouse_middle_click = do_action, close_current
 	mouse_right_click = close_all
 
+[urgency_critical]
+    background = "#900000"
+    foreground = "#ffffff"
+    frame_color = "#ff0000"
+    timeout = 10

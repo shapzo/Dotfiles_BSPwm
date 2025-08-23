@@ -11,8 +11,11 @@ RDIR="$HOME/.config/rofi"
 RTDIR="$HOME/.config/rofi/themes"
 PDIR="$HOME/.config/picom"
 PPDIR="$HOME/.config/polybar"
-DDIR="$HOME/.config/dunst"
 LDIR="$HOME/.config/lf"
+
+DDIR="$HOME/.config/dunst"
+DDIR1="$HOME/.config/dunst/Scripts/baterry_alert.sh"
+DDIR2="$HOME/.config/dunst/Scripts/songArtLogger.sh"
 
 PP1DIR="$HOME/.config/polybar/poly1"
 PP2DIR="$HOME/.config/polybar/poly2"
@@ -76,10 +79,10 @@ install_picom(){
 install_dunst(){
     echo -e "\n [*] Installing dunst..."
     if [[ -d "$DDIR" ]]; then
-        cp $DIR/duntsrc "$DDIR"
+        cp -rf $DIR/Dunts/* "$DDIR" && chmod +x "DDIR1" "DDIR2"
     else
         mkdir -p "$DDIR"
-        cp $DIR/duntsrc "$DDIR"
+        cp -rf $DIR/Dunts/* "$DDIR" && chmod +x "DDIR1" "DDIR2"
     fi
 }
 
