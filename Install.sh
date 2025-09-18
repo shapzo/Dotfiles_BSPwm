@@ -20,6 +20,7 @@ DDIR2="$HOME/.config/dunst/Scripts/songArtLogger.sh"
 PP1DIR="$HOME/.config/polybar/poly1"
 PP2DIR="$HOME/.config/polybar/poly2"
 PP3DIR="$HOME/.config/polybar/poly3"
+PP4DIR="$HOME/.config/polybar/poly4"
 PPSDIR="$HOME/.config/polybar/Scripts"
 
 KDIR="$HOME/.config/kitty"
@@ -112,10 +113,10 @@ install_lf() {
 install_polybar() {
 	echo -e "\n [*] Installing polybar..."
 	if [[ -d "$PPDIR" ]]; then
-		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PPSDIR"/powermenu.sh
+		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PPSDIR"/powermenu.sh
 	else
 		mkdir -p "$PPDIR"
-		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PPSDIR"/powermenu.sh
+		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PPSDIR"/powermenu.sh
 	fi
 }
 
