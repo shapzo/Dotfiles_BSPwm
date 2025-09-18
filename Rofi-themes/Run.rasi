@@ -16,7 +16,7 @@
 // Run
 
 configuration {
-    font:                           "Organo Regular 12";
+    font:                           "Organo Regular 11";
     scroll-method:                  0;
 }
 
@@ -82,7 +82,7 @@ mainbox {
     children:                       [ inputbar, listview];
     spacing:                        1%;
     padding:                        1% 4%;
-    border:                         3px;
+    border:                         2px;
 }
 
 element {

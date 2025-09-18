@@ -1,17 +1,22 @@
 # ~/.config/lf/lfrc
 
-# sets
+# Sets
 set shell zsh
 set icons
 set number
 set scrolloff 10
 set relativenumber
 set drawbox true
+set dircounts true
+set dircounts_size 1000000
+set dirfirst true
+set ignorecase true
+set incsearch true
 
-# Abrir archivos con xdg-open (para GUI)
+# Open file's (GUI)
 map <enter> $xdg-open $f
 
-# Abridores personalizados por extensión
+# Opne file's
 cmd open &{{
     case "$f" in
         *.pdf) evince "$f" &;;
@@ -23,44 +28,60 @@ cmd open &{{
     esac
 }}
 
-# functions
+# Functions
 
-cmd rename-file ${{
-	dir="${f%/*}"
-	name="${f##*/}"
-	printf "Rename: " ; xdotool type "$name" ; read new
-	[ "$name" = "$new" ] && clear && exit
-	mv "${dir}/${name}" "${dir}/${new}" || read a
-	clear
+# Rename
+cmd rename &{{
+    old_name="$f"
+    new_name=$(mktemp)
+    echo "$old_name" > "$new_name"
+    "$EDITOR" "$new_name"
+    new_name=$(cat "$new_name")
+    rm "$new_name"
+    if [ -n "$new_name" ] && [ "$old_name" != "$new_name" ]; then
+        mv "$old_name" "$new_name"
+    fi
+    clear
 }}
 
-cmd mkdir ${{
+# Make dir's
+cmd mkdir &{{
     printf "Directory name: "
     read name
-    mkdir "$name"
-		clear
+    mkdir -p "$name"
+    lf -remote "send $id cd \"$name\""
+    clear
 }}
 
-# Creates an empty text file
-cmd touch-file ${{
-    printf "File name: "
-    read name
-    touch "$name"
-    #[ ! -f "$name" ] && printf "\n\n" > "$name"
-		clear
+# Paste
+cmd yank-path &{{
+    echo -n "$PWD/$f" | xclip -selection clipboard
+    echo "Ruta copiada: $PWD/$f"
 }}
 
+# Seacrh fzf
+cmd search &{{
+    file=$(find . -type f | fzf --preview 'bat --color=always {}')
+    [ -n "$file" ] && lf -remote "send $id select \"$file\""
+}}
 
 # shortcuts
-cmd q quit
 
+# Sistema
+cmd q quit
 map space $open $f
 
+#navegation
+map j up
+map k down
+map gg go-to-first
+map G go-to-last
+
 map e edit
-map s delete
-map d trash
+map d delete
+map D trash
 map a mkdir
-map r rename-file
+map r rename
 map md move-to-new-dir
 map mcd copy-to-new-dir
 map x extract
@@ -69,6 +90,23 @@ map <c-r> reload
 
 map V ${{ "$EDITOR" . }}
 
-# 
-set previewer ~/.config/lf/preview.sh
+# Theme
+set color dir "#7940e4"        # Directorios (púrpura)
+set color link "#65518c"       # Enlaces simbólicos (púrpura oscuro)
+set color exe "#BF616A"        # Ejecutables (rojo)
+set color archive "#EBCB8B"    # Archivos comprimidos (amarillo)
+set color media "#A3BE8C"      # Multimedia (verde)
+set color text "#D8DEE9"       # Texto (gris claro)
+set color border "#3B4252"     # Borde (gris oscuro)
 
+# Temporal file's
+set tmpdir ~/.cache/lf
+
+# Zsh integration
+cmd on-cd &{{
+    echo "$PWD" > ~/.cache/lf/lastdir
+}}
+
+# confis
+set previewer ~/.config/lf/preview.sh
+set cleaner ~/.config/lf/cleaner.sh 

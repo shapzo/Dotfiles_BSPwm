@@ -76,7 +76,7 @@ mainbox {
     children:                       [ inputbar, listview];
     spacing:                        1%;
     padding:                        1% 4%;
-    border:                         3px;
+    border:                         2px;
 }
 
 element {

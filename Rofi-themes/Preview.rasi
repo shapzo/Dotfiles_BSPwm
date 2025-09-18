@@ -74,7 +74,7 @@ mainbox {
     children:                       [ inputbar, listview];
     spacing:                        3%;
     padding:                        1% 5%;
-    border:                         3px;
+    border:                         2px;
     border-color:                   @border-color;
 }
 

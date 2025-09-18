@@ -67,7 +67,7 @@ inputbar {
     position:                       north;
     border:                         0 0 2px 0 solid;
     border-radius:                  3px;
-    border-color:                 #0083fd;
+    border-color:                   #0083fd;
 }
 
 listview {

@@ -18,8 +18,8 @@ configuration {
     font:                           "Comfortaa bold 9";
     show-icons:                     true;
     drun-display-format:            "{name}";
-    threads:                        1;
-    scroll-method:                  0;
+    threads:                        0;
+    scroll-method:                  1;
     disable-history:                false;
 }
 

@@ -27,7 +27,7 @@ window {
     text-color:                     @foreground-selected;
     location:                       south;
     border-color:                   @border-color;
-    border:                         3px;
+    border:                         2px;
 
 //Adjust as you see fit
 
@@ -43,7 +43,7 @@ window {
 prompt {
     enabled: 						true;
     position:                       north;
-    margin:                         1%;
+    margin:                         0.9%;
     border-radius:                  10px;
     border-color:                   @border-color;
     padding:                        0.8%;
