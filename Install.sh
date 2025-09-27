@@ -2,7 +2,7 @@
 
 # Install script for my BSPwm configuration
 
-#Dirs
+# Dirs
 DIR=`pwd`
 FDIR="$HOME/.local/share/fonts"
 BDIR="$HOME/.config/bspwm"
@@ -113,16 +113,16 @@ install_lf() {
 install_polybar() {
 	echo -e "\n [*] Installing polybar..."
 	if [[ -d "$PPDIR" ]]; then
-		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PPSDIR"/powermenu.sh
+		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PPSDIR"/*
 	else
 		mkdir -p "$PPDIR"
-		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PP4DIR"/workspaces.sh "$PPSDIR"/powermenu.sh
+		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PPSDIR"/*
 	fi
 }
 
 #==============additional configuration files==========
 
-#install kitty conf
+# Install kitty conf
 install_kitty() {
 	echo -e "\n [*] Installing kitty.conf..."
 	if [[ -d "$KDIR" ]]; then
@@ -133,7 +133,7 @@ install_kitty() {
 	fi
 }
 
-#install neofetch conf
+# Install neofetch conf
 install_neofetch() {
 	echo -e "\n [*] Installing neofetch..."
 	if [[ -d "$NEODIR" ]]; then
@@ -144,7 +144,7 @@ install_neofetch() {
 	fi
 }
 
-#install nanorc
+# Install nanorc
 install_nano() {
 	echo -e "\n [*] Installing nanorc..."
 	if [[ -d "$NANZDIR" ]]; then
@@ -154,7 +154,7 @@ install_nano() {
 	fi
 }
 
-#install zshrc
+# Install zshrc
 install_zsh() {
 	echo -e "\n [*] Installing zshrc..."
 	if [[ -d "$NANZDIR" ]]; then
@@ -164,7 +164,7 @@ install_zsh() {
 	fi
 }
 
-#main
+# Main
 main() {
     clear
 
@@ -187,7 +187,7 @@ main() {
 
         echo -e "\n"
 
-        echo -e "Additional configuration, which contains: neofetch, kitty config, zshrc and nanorc"
+        echo -e "Additional configuration, which contains: neofetch, kitty config, zsh and nano"
 
         echo -e "chosse an option - "
         echo -e "
