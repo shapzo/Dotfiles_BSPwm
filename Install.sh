@@ -14,8 +14,7 @@ PPDIR="$HOME/.config/polybar"
 LDIR="$HOME/.config/lf"
 
 DDIR="$HOME/.config/dunst"
-DDIR1="$HOME/.config/dunst/Scripts/baterry_alert.sh"
-DDIR2="$HOME/.config/dunst/Scripts/songArtLogger.sh"
+DDIRS="$HOME/.config/dunst/Scripts"
 
 PP1DIR="$HOME/.config/polybar/poly1"
 PP2DIR="$HOME/.config/polybar/poly2"
@@ -80,10 +79,10 @@ install_picom(){
 install_dunst(){
     echo -e "\n [*] Installing dunst..."
     if [[ -d "$DDIR" ]]; then
-        cp -rf $DIR/Dunts/* "$DDIR" && chmod +x "DDIR1" "DDIR2"
+        cp -rf $DIR/Dunts/* "$DDIR" && chmod +x "$DDIRS"/*
     else
         mkdir -p "$DDIR"
-        cp -rf $DIR/Dunts/* "$DDIR" && chmod +x "DDIR1" "DDIR2"
+        cp -rf $DIR/Dunts/* "$DDIR" && chmod +x "$DDIRS"/*
     fi
 }
 
