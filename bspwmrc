@@ -40,6 +40,7 @@ $HOME/.config/polybar/poly1/launch.sh &
 #bspc monitor -d I II III IV V VI VII VIII IX
 bspc monitor -d 一 二 三 四 五 六 七 八 九
 #bscp monitor -d 1 2 3 4 5 6 7 8 9
+#bspc monitor -d 󰎦 󰎩 󰎬 󰎮 󰎰 󰎵 󰎸 󰎻 󰎾
 
 # Monitor's
 #bscp monitor eDP-1 center
