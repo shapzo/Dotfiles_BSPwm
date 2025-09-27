@@ -27,7 +27,7 @@ This is my BSPwm configuration, which contains the configuration files I use on 
 
 ![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(3).png?raw=true)
 
-![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(2).png)
+![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(2).png?raw=true)
 
 ![App Screenshot](https://github.com/shapzo/Dotfiles_BSPwm/blob/main/Screeshot/Arch-BSPwm%20(1).png?raw=true)
 

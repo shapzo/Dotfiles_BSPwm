@@ -37,7 +37,7 @@ install_fonts() {
 	fi
 }
 
-# Install BSPwmrc
+# Install BSPwm conf
 install_bspwm(){
     echo -e "\n [*] Installing bspwmrc..."
     if [[ -d "$BDIR" ]]; then
@@ -53,7 +53,7 @@ install_bspwm(){
 
 }
 
-# Install sxhkdrc
+# Install sxhkdrc conf
 install_sxhkd(){
     echo -e "\n [*] Installing sxhkdrc..."
     if [[ -d "$SDIR" ]]; then
@@ -64,7 +64,7 @@ install_sxhkd(){
     fi
 }
 
-# Install picom
+# Install picom conf
 install_picom(){
     echo -e "\n [*] Installing picom..."
     if [[ -d "$PDIR" ]]; then
@@ -75,7 +75,7 @@ install_picom(){
     fi
 }
 
-# Install dunst
+# Install dunst conf
 install_dunst(){
     echo -e "\n [*] Installing dunst..."
     if [[ -d "$DDIR" ]]; then
@@ -143,7 +143,7 @@ install_neofetch() {
 	fi
 }
 
-# Install nanorc
+# Install nano conf
 install_nano() {
 	echo -e "\n [*] Installing nanorc..."
 	if [[ -d "$NANZDIR" ]]; then
@@ -153,7 +153,7 @@ install_nano() {
 	fi
 }
 
-# Install zshrc
+# Install zsh conf
 install_zsh() {
 	echo -e "\n [*] Installing zshrc..."
 	if [[ -d "$NANZDIR" ]]; then
