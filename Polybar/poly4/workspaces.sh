@@ -1,7 +1,6 @@
 #!/bin/bash
 
 bspc subscribe desktop_focus node_add node_remove | while read -r _; do
-  # Obtiene todos los desktops activos (con ventanas o el actual)
   desktops=$(bspc query -D --names --desktop focused --desktop .occupied)
 
   output=""
