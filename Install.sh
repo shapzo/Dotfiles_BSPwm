@@ -116,7 +116,7 @@ install_polybar() {
 		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PPSDIR"/powermenu.sh
 	else
 		mkdir -p "$PPDIR"
-		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PPSDIR"/powermenu.sh
+		cp -rf $DIR/Polybar/* "$PPDIR" && chmod +x "$PP1DIR"/launch.sh "$PP2DIR"/launch.sh "$PP3DIR"/launch.sh "$PP4DIR"/launch.sh "$PP4DIR"/workspaces.sh "$PPSDIR"/powermenu.sh
 	fi
 }
 

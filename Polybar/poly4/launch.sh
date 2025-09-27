@@ -7,12 +7,6 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch the bar's
-polybar -q app -c "$DIR"/config.ini &
-
 polybar -q workspaces -c "$DIR"/config.ini &
 
-polybar -q center -c "$DIR"/config.ini &
-
 polybar -q cosmic -c "$DIR"/config.ini &
-
-polybar -q power -c "$DIR"/config.ini &
