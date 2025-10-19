@@ -24,6 +24,7 @@ PPSDIR="$HOME/.config/polybar/Scripts"
 
 KDIR="$HOME/.config/kitty"
 NEODIR="$HOME/.config/neofetch"
+FASDIR="$HOME/.config/fastfetch"
 NANZDIR="$HOME"
 
 # Install Fonts
@@ -143,6 +144,17 @@ install_neofetch() {
 	fi
 }
 
+# Install fastfecth conf
+isntall_fast() {
+    echo e "\n [*] Installing fastfech..."
+	if [[ -d "$FASDIR" ]]; then
+		cp $DIR/fastfetch "$FASDIR" && mv "$FASDIR"/fastfetch "$FASDIR"/config.json
+	else
+		mkdir -p "$FASDIR"
+		cp $DIR/fastfetch "$FASDIR" && mv "$FASDIR"/fastfetch "$FASDIR"/config.json
+	fi
+}
+
 # Install nano conf
 install_nano() {
 	echo -e "\n [*] Installing nanorc..."
@@ -186,7 +198,7 @@ main() {
 
         echo -e "\n"
 
-        echo -e "Additional configuration, which contains: neofetch, kitty config, zsh and nano"
+        echo -e "Additional configuration, which contains: neofetch, kitty config, zsh, fastfecth and nano"
 
         echo -e "chosse an option - "
         echo -e "
@@ -201,6 +213,7 @@ main() {
             install_kitty
             install_nano
             install_zsh
+            istall_fastfetch
 
             echo -e "\n"
 

@@ -101,6 +101,7 @@ alias \
         nau='nautilus' \
         nf='neofetch' \
         nfl='neofetch | lolcat' \
+        fa='fastfetch --config ~/.config/fastfetch/config.json' \
         clock='tty-clock -C 5 -b -t -c' \
         clockl='tty-clock -b -t -c | lolcat' \
         pdf='evince' \
