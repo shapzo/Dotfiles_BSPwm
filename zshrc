@@ -152,6 +152,14 @@ vi(){
     nvim $1
 }
 
+#Asciinema
+rec(){
+        asciinema rec $1
+}
+play(){
+        asciinema play $1
+}
+
 #git functions
 clon(){
     git clone $1
@@ -169,8 +177,7 @@ commit(){
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
 #zstyle ':autocomplete:tab:*' widget-style menu-select
 #zstyle ':autocomplete:*' min-input 2
-#bindkey $key[up] up-line-or-history
-#bindkey $key[down] down-line-or-history
+
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -180,3 +187,6 @@ source /usr/share/zsh/plugins/sudo.plugin.zsh
 
 #pywal theme
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
+
+# java jdbc
+export CLASSPATH=$CLASSPATH:/usr/share/java/mariadb-jdbc.jar:/usr/share/java/jaybird-jdbc.jar

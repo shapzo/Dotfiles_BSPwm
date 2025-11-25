@@ -149,6 +149,14 @@ XF86AudioRaiseVolume
 XF86AudioMute
     amixer set Master toggle
 
+# Pamixer
+XF86AudioLowerVolume
+	pamixer -d 5
+XF86AudioRaiseVolume
+	pamixer -i 5
+XF86AudioMute
+	pamixer -t
+
 #Brightness control
 XF86MonBrightnessDown
 	xbacklight -dec 5
