@@ -168,6 +168,10 @@ commit(){
     git commit -m $1
 }
 
+tree(){
+        ls --tree $1
+}
+
 #============================plugins========================
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 #source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
