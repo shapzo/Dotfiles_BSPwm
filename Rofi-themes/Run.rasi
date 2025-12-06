@@ -61,12 +61,13 @@ case-indicator {
 }
 
 inputbar {
-    background-color:               #76787985;
+    background-color:               @input-color;
     text-color:                     @foreground;
     expand:                         false;
     margin:                         0% 2%;
     padding:                        10px 40px;
     position:                       north;
+    border-radius:                  8px;
 }
 
 listview {
@@ -107,7 +108,7 @@ element selected {
 }
 
 element-text selected {
-    text-color: 					@foreground-selected;
+    text-color: 					@foreground;
 }
 
 @import "Colors.rasi"

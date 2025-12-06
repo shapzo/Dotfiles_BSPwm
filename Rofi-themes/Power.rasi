@@ -44,10 +44,10 @@ prompt {
     enabled: 						true;
     position:                       north;
     margin:                         0.9%;
-    border-radius:                  10px;
+    border-radius:                  8px;
     border-color:                   @border-color;
     padding:                        0.8%;
-    background-color:             #76787985;
+    background-color:               @input-color;
     text-color: 					@foreground-power;
 }
 
@@ -88,7 +88,7 @@ element selected {
 }
 
 element-text selected {
-    text-color: 					@foreground-selected;
+    text-color: 					@foreground;
 }
 
 @import "Colors.rasi"

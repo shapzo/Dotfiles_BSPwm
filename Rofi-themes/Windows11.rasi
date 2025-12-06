@@ -18,14 +18,15 @@
 configuration {
     font:                           "Comfortaa bold 9";
     show-icons:                     true;
-    drun-display-format:            "{name}";
+    drun-display-format:            "{icon} {name}";
+//    icon-theme:                     "Reversal-dark";
     threads:                        1;
     scroll-method:                  0;
     disable-history:                false;
 }
 
 * {
-    border-radius:                  10px;
+    border-radius:                  16px;
 }
 
 window {
@@ -59,7 +60,7 @@ case-indicator {
 }
 
 inputbar {
-    background-color:             #7c7c7c;
+    background-color:               @input-color;
     text-color:                     @foreground;
     expand:                         false;
     margin:                         0 5%;
@@ -110,12 +111,12 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
-    border-color:                  	@foreground;
+    border-color:                  	@foreground-selected;
     border:                         2px;
 }
 
 element-text selected {
-    text-color: 					@foreground-selected;
+    text-color: 					@foreground;
 }
 
 @import "Colors.rasi"

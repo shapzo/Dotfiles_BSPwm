@@ -20,4 +20,5 @@
     foreground-selected:            #000000;
     text-icon:                      #ffffff;
     border-color:                   #c70b58;
+    input-color:                    #a59b9b;
 }

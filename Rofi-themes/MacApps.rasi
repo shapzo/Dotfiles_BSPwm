@@ -17,7 +17,8 @@
 configuration {
     font:                           "Comfortaa bold 9";
     show-icons:                     true;
-    drun-display-format:            "{name}";
+    drun-display-format:            "{icon} {name}";
+//    icon-theme:                     "Reversal-dark";
     threads:                        0;
     scroll-method:                  1;
     disable-history:                false;
@@ -51,7 +52,7 @@ case-indicator {
 }
 
 inputbar {
-    background-color:             #7c7c7c;
+    background-color:               @input-color;
     text-color:                     @foreground;
     expand:                         false;
     margin:                         0% 25%;
@@ -99,12 +100,12 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
-    border-color:                  	@foreground;
+    border-color:                  	@foreground-selected;
     border:                         2px;
 }
 
 element-text selected {
-    text-color: 					@foreground-selected;
+    text-color: 					@foreground;
 }
 
 @import "Colors.rasi"
