@@ -110,17 +110,18 @@ alias \
 
 # ls for lsd
  alias \
-        ll='lsd -lh --group-dirs=first' \
+        ls='lsd --group-dirs=first' \
         l='lsd -l --group-dirs=first' \
-        la='lsd -a --group-dirs=first' \
-        lla='lsd -lha --group-dirs=first' \
-        ls='lsd --group-dirs=first'
+        ll='lsd -a --group-dirs=first' \
+        la='lsd -lha --group-dirs=first' \
+        lh='lsd -lh --group-dirs=first'
 
 # alias for eza
 alias \
         e='eza --icons --group-directories-first' \
-        ee='eza --icons --group-directories-first -lh' \
-        eee='eza --icons --group-directories-first -alh'
+        ee='eza --icons --group-directories-first -l' \
+        eee='eza --icons --group-directories-first -a' \
+        ea='eza --icons --group-directories-first -alh'
 
 # config
 alias \
