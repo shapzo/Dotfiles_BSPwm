@@ -116,11 +116,11 @@ alias \
         lla='lsd -lha --group-dirs=first' \
         ls='lsd --group-dirs=first'
 
-# alias for exa
+# alias for eza
 alias \
-    e='exa' \
-    ee='exa -lh --group-directories-first' \
-    eee='exa -alh --group-directories-first'
+        e='eza --icons --group-directories-first' \
+        ee='eza --icons --group-directories-first -lh' \
+        eee='eza --icons --group-directories-first -alh'
 
 # config
 alias \
@@ -160,16 +160,25 @@ play(){
         asciinema play $1
 }
 
+#Funcion tree using lsd
+tree(){
+        ls --tree $1
+}
+
+#Function using eza
+et(){
+        eza --icons --group-directories-first -T $1
+}
+eth(){
+        eza --icons --group-directories-first -al -T $1
+}
+
 #git functions
 clon(){
     git clone $1
 }
 commit(){
     git commit -m $1
-}
-
-tree(){
-        ls --tree $1
 }
 
 #============================plugins========================
