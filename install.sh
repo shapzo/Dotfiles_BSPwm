@@ -2,9 +2,11 @@
 
 # Install script for my BSPwm configuration
 
+set -e
+
 # Dirs
-DIR=`pwd`
-NANZDIR="$HOME"
+DIR=$(pwd)
+HOME_DIR="$HOME"
 FDIR="$HOME/.local/share/fonts"
 BDIR="$HOME/.config/bspwm"
 SDIR="$HOME/.config/sxhkd"
@@ -32,9 +34,11 @@ install_fonts() {
 	echo -e "\n [*] Installing fonts..."
 	if [[ -d "$FDIR" ]]; then
 		cp -rf $DIR/Fonts/* "$FDIR"
+        fc-cache -fv > /dev/null 2>&1
 	else
 		mkdir -p "$FDIR"
 		cp -rf $DIR/Fonts/* "$FDIR"
+        fc-cache -fv > /dev/null 2>&1
 	fi
 }
 
@@ -145,8 +149,8 @@ install_neofetch() {
 }
 
 # Install fastfecth conf
-isntall_fast() {
-    echo e "\n [*] Installing fastfech..."
+install_fast() {
+    echo -e "\n [*] Installing fastfech..."
 	if [[ -d "$FASDIR" ]]; then
 		cp $DIR/fastfetch "$FASDIR" && mv "$FASDIR"/fastfetch "$FASDIR"/config.json
 	else
@@ -158,8 +162,8 @@ isntall_fast() {
 # Install nano conf
 install_nano() {
 	echo -e "\n [*] Installing nanorc..."
-	if [[ -d "$NANZDIR" ]]; then
-        cp $DIR/nanorc "$NANZDIR" && mv "$NANZDIR"/nanorc "$NANZDIR"/.nanorc
+	if [[ -d "$HOME_DIR" ]]; then
+        cp $DIR/nanorc "$HOME_DIR" && mv "$HOME_DIR"/nanorc "$HOME_DIR"/.nanorc
 	else
 		echo -e "error"
 	fi
@@ -168,8 +172,8 @@ install_nano() {
 # Install zsh conf
 install_zsh() {
 	echo -e "\n [*] Installing zshrc..."
-	if [[ -d "$NANZDIR" ]]; then
-		cp $DIR/zshrc "$NANZDIR" && mv "$NANZDIR"/zshrc "$NANZDIR"/.zshrc
+	if [[ -d "$HOME_DIR" ]]; then
+		cp $DIR/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc
 	else
 		echo -e "error"
 	fi
@@ -213,7 +217,7 @@ main() {
             install_kitty
             install_nano
             install_zsh
-            isntall_fast
+            install_fast
 
             echo -e "\n"
 

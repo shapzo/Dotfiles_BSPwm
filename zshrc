@@ -21,6 +21,8 @@
 #ZSH_THEME="random"
 
 ENABLE_CORRECTION="true"
+export EDITOR=nvim
+export VISUAL=nvim
 
 #plugins=(git)
 
@@ -33,8 +35,16 @@ setopt nonomatch
 setopt notify
 setopt numericglobsort
 
+#autoload -Uz compinit
+#compinit -d ~/.cache/zcompdump
+
 autoload -Uz compinit
-compinit -d ~/.cache/zcompdump
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
+
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
@@ -74,9 +84,18 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 #=========================History==========
 HISTFILE=~/.zsh_history
-HISTZISE=10000
+HISTSIZE=10000
 SAVEHIST=10000
-setopt appendhistory
+
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY
 
 #=========================Aliases======================
 #----------------pacman / paru administration-----------------
@@ -174,6 +193,43 @@ eth(){
         eza --icons --group-directories-first -al -T $1
 }
 
+# function extract
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2) tar xjf "$1" ;;
+            *.tar.gz) tar xzf "$1" ;;
+            *.bz2) bunzip2 "$1" ;;
+            *.rar) unrar x "$1" ;;
+            *.gz) gunzip "$1" ;;
+            *.tar) tar xf "$1" ;;
+            *.tbz2) tar xjf "$1" ;;
+            *.tgz) tar xzf "$1" ;;
+            *.zip) unzip "$1" ;;
+            *.Z) uncompress "$1" ;;
+            *.7z) 7z x "$1 " ;;
+            *) echo "'$1' Cannot be extracted" ;;
+        esac
+    else
+        echo "'$1' t is not a valid file"
+    fi
+}
+
+# History search
+hist() {
+    grep -r "$1" ~/.zsh_history | tail -20
+}
+
+# Search files by name
+f() {
+    find . -type f -name "*$1*" 2>/dev/null
+}
+
+# Search in files by content
+grepf() {
+    grep -r "$1" . --include="*.$2" 2>/dev/null
+}
+
 #git functions
 clon(){
     git clone $1
@@ -183,21 +239,40 @@ commit(){
 }
 
 #============================plugins========================
-#source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-#source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+plugins=(
+    "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    "source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+    "/usr/share/zsh/plugins/sudo.plugin.zsh"
+)
 
-#hot keys
-#zstyle ':autocomplete:tab:*' insert-unambiguous yes
-#zstyle ':autocomplete:tab:*' widget-style menu-select
-#zstyle ':autocomplete:*' min-input 2
+for plugin in "${plugins[@]}"; do
+    if [[ -f "$plugin" ]]; then
+        source "$plugin"
+    fi
+done
+
+# Configs plugins autosuggestion and autocomplete
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+
+zstyle ':autocomplete:tab:*' insert-unambiguous yes
+zstyle ':autocomplete:tab:*' widget-style menu-select
+zstyle ':autocomplete:*' min-input 2
+zstyle ':autocomplete:*' list-lines 16
+zstyle ':autocomplete:*' groups enabled
+zstyle ':autocomplete:history:*' list-lines 16
+zstyle ':autocomplete:history:*' remove-all-dups yes
+zstyle ':autocomplete:files:*' list-lines 16
+zstyle ':autocomplete:files:*' hidden all 
 
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Sudo
-source /usr/share/zsh/plugins/sudo.plugin.zsh
+# FZF shortcuts
+alias cdfz='cd $(find . -type d 2>/dev/null | fzf)'
+alias cdfg='git log --oneline | fzf | cut -d" " -f1 | xargs git show'
 
 #pywal theme
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
