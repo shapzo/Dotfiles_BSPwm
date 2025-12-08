@@ -4,28 +4,28 @@
 
 # Dirs
 DIR=`pwd`
+NANZDIR="$HOME"
 FDIR="$HOME/.local/share/fonts"
 BDIR="$HOME/.config/bspwm"
 SDIR="$HOME/.config/sxhkd"
-RDIR="$HOME/.config/rofi"
-RTDIR="$HOME/.config/rofi/themes"
 PDIR="$HOME/.config/picom"
-PPDIR="$HOME/.config/polybar"
 LDIR="$HOME/.config/lf"
+KDIR="$HOME/.config/kitty"
+NEODIR="$HOME/.config/neofetch"
+FASDIR="$HOME/.config/fastfetch"
 
 DDIR="$HOME/.config/dunst"
 DDIRS="$HOME/.config/dunst/Scripts"
 
+RDIR="$HOME/.config/rofi"
+RTDIR="$HOME/.config/rofi/themes"
+
+PPDIR="$HOME/.config/polybar"
 PP1DIR="$HOME/.config/polybar/poly1"
 PP2DIR="$HOME/.config/polybar/poly2"
 PP3DIR="$HOME/.config/polybar/poly3"
 PP4DIR="$HOME/.config/polybar/poly4"
 PPSDIR="$HOME/.config/polybar/Scripts"
-
-KDIR="$HOME/.config/kitty"
-NEODIR="$HOME/.config/neofetch"
-FASDIR="$HOME/.config/fastfetch"
-NANZDIR="$HOME"
 
 # Install Fonts
 install_fonts() {
