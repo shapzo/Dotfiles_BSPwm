@@ -213,7 +213,7 @@ main() {
             install_kitty
             install_nano
             install_zsh
-            istall_fastfetch
+            isntall_fast
 
             echo -e "\n"
 
