@@ -34,7 +34,7 @@ This is my BSPwm configuration, which contains the configuration files I use on 
 
 ##  Do you like my setup?
 
-If you want to copy my configuration, run the **`Install.sh`** script to copy my files:
+If you want to copy my configuration, run the **`install.sh`** script to copy my files:
 
 - bspwmrc
 - sxhkdrc
@@ -46,11 +46,11 @@ If you want to copy my configuration, run the **`Install.sh`** script to copy my
 
 To run the script, give it execution permissions with the command:
 ```bash
-    chmod +x Install.sh
+    chmod +x install.sh
 ``` 
 to later execute it with: 
 ```bash
-    ./Install.sh
+    ./install.sh
 ``` 
 
 So that you don't have problems in the **`sxhkd`** file found in the path ***`~/.config/sxhkd/sxhkdrc`***, open it with the editor of your choice and change the default terminal.
