@@ -20,11 +20,17 @@ alias ~='cd ~'
 alias vi='nvim'
 
 #lsd 
-alias ll='lsd -lh --group-dirs=first'
-alias l='lsd -l --group-dirs=first'
-alias la='lsd -a --group-dirs=first'
-alias lla='lsd -lha --group-dirs=first'
-alias ls='lsd --group-dirs=first'
+ls='lsd --group-dirs=first'
+l='lsd -l --group-dirs=first'
+ll='lsd -a --group-dirs=first'
+la='lsd -lha --group-dirs=first'
+lh='lsd -lh --group-dirs=first'
+
+#eza / exa
+e='eza --icons --group-directories-first'
+ee='eza --icons --group-directories-first -l'
+eee='eza --icons --group-directories-first -a'
+ea='eza --icons --group-directories-first -alh'
 
 #functions
 luz(){
