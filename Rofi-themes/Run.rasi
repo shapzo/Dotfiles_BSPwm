@@ -22,16 +22,19 @@ configuration {
 
 * {
     border-radius:                  10px;
+    transparency:                   "real";
+}
+
+prompt {
+    enabled: false;
 }
 
 window {
-    transparency:                   "real";
     height:                         91%;
     width:                          30%;
-    background-color:               @background-color;
-    text-color:                     @foreground;
     location:                       east;
     border-color:                   @border-color;
+    border:                         2px;
 
     //for polybar's complete
     x-offset:                       -0.5%;
@@ -40,29 +43,22 @@ window {
     //x-offset:                       -2.6%;
 }
 
-prompt {
-    enabled: false;
-}
-
 entry {
     background-color:               @background;
     text-color:                     @text-icon;
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "   Command's ";
+    placeholder:                    "   Commands ";
     blink:                          true;
 }
 
 case-indicator {
     background-color:               @background;
-    text-color:                     @foreground;
-    spacing:                        0;
 }
 
 inputbar {
     background-color:               @input-color;
-    text-color:                     @foreground;
     expand:                         false;
     margin:                         0% 2%;
     padding:                        10px 40px;
@@ -83,7 +79,6 @@ mainbox {
     children:                       [ inputbar, listview];
     spacing:                        1%;
     padding:                        1% 4%;
-    border:                         2px;
 }
 
 element {
@@ -96,7 +91,6 @@ element {
 element-text {
     background-color:               @background;
     text-color:                     @text-icon;
-    expand:                         true;
     size:                           3.5em;
     margin:                         5px;
 }

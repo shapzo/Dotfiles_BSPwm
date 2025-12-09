@@ -21,28 +21,27 @@ configuration {
 
 * {
     border-radius:                  10px;
-}
-
-window {
     transparency:                   "real";
-    background-color:               @background;
-    height:                         91%;
-    width:                          80%;
-    location:                       center;
-    anchor:                         center;
 }
 
 prompt {
     enabled: false;
 }
 
+window {
+    border-color:                   @border-color;
+    height:                         91%;
+    width:                          80%;
+    location:                       center;
+    anchor:                         center;
+}
+
 entry {
     background-color:               @background;
-    text-color:                     @text-icon;
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    " 󰀻 Select an app ";
+    placeholder:                    " 󰀻 Select app ";
     blink:                          true;
 }
 
@@ -54,7 +53,6 @@ case-indicator {
 
 inputbar {
     background-color:               @input-color;
-    text-color:                     @foreground;
     expand:                         false;
     margin:                         0% 15%;
     padding:                        10px 40px;
@@ -76,7 +74,6 @@ mainbox {
     spacing:                        3%;
     padding:                        1% 5%;
     border:                         2px;
-    border-color:                   @border-color;
 }
 
 element {
@@ -97,7 +94,7 @@ element-text {
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-    margin:                         1px 5px 5px;
+   margin:                         2px 1px 5px;
 }
 
 element selected {

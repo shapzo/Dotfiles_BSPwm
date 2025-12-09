@@ -36,7 +36,6 @@ prompt {
 
 entry {
     background-color:               @background;
-    text-color:                     @text-icon;
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
@@ -53,7 +52,6 @@ case-indicator {
 
 inputbar {
     background-color:               @input-color;
-    text-color:                     @foreground;
     expand:                         false;
     margin:                         0% 25%;
     padding:                        10px 20px;

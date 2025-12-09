@@ -19,12 +19,14 @@ configuration {
     scroll-method:                  0;
 }
 
-window {
-    border-radius:                  10px;
+* {
+    border-radius:                  16px;
     transparency:                   "real";
+}
+
+window {
     height:                         39%;
     width:                          16%;
-    text-color:                     @foreground-selected;
     location:                       south;
     border-color:                   @border-color;
     border:                         2px;
@@ -45,7 +47,6 @@ prompt {
     position:                       north;
     margin:                         0.9%;
     border-radius:                  8px;
-    border-color:                   @border-color;
     padding:                        0.8%;
     background-color:               @input-color;
     text-color: 					@foreground-power;
@@ -73,7 +74,6 @@ element {
 }
 
 element-text {
-    expand:                         true;
     size:                           2.5em;
     margin:                         5px;
     background-color:               @background;
@@ -82,9 +82,9 @@ element-text {
 
 element selected {
     background-color:               @background-alt;
-    border-radius:                  10px;
     border-color:                  	@foreground-selected;
     border:                         2px;
+    border-radius:                  10px;
 }
 
 element-text selected {
