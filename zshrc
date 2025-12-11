@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # __/\\\\\\\\\\\\\\\_____/\\\\\\\\\\\____/\\\________/\\\____/\\\\\\\\\____________/\\\\\\\\\_        
 #  _\////////////\\\____/\\\/////////\\\_\/\\\_______\/\\\__/\\\///////\\\_______/\\\////////__       
 #   ___________/\\\/____\//\\\______\///__\/\\\_______\/\\\_\/\\\_____\/\\\_____/\\\/___________      
@@ -20,7 +21,6 @@
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="random"
 
-ENABLE_CORRECTION="true"
 export EDITOR=nvim
 export VISUAL=nvim
 
@@ -28,7 +28,7 @@ export VISUAL=nvim
 
 #source $ZSH/oh-my-zsh.sh
 
-export LANG=es_MX.UTF-8
+#export LANG=es_MX.UTF-8
 setopt prompt_subst
 setopt autocd
 setopt magicequalsubst
@@ -60,6 +60,8 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*' use-cache on
+#zstyle ':completion:*' cache-path "${HOME}/.zsh/cache"
 
 #==================================================
 
@@ -200,7 +202,7 @@ extract() {
     if command -v dtrx &> /dev/null; then
         dtrx "$@"
     else
-        echo "usan método manual..."
+        echo "Extract using manual method..."
     fi
 }
 
