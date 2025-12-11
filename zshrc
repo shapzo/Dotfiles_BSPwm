@@ -29,14 +29,12 @@ export VISUAL=nvim
 #source $ZSH/oh-my-zsh.sh
 
 export LANG=es_MX.UTF-8
+setopt prompt_subst
 setopt autocd
 setopt magicequalsubst
 setopt nonomatch
 setopt notify
 setopt numericglobsort
-
-#autoload -Uz compinit
-#compinit -d ~/.cache/zcompdump
 
 autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
@@ -44,6 +42,9 @@ if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
 else
     compinit -C
 fi
+
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
 
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -58,6 +59,7 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 #==================================================
 
