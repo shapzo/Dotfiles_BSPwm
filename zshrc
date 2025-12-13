@@ -11,7 +11,7 @@
 
 #change to shell: chsh user -s /bin/zsh
 
-#   if you use the themes of oh-my-zsh
+# If you use the themes of oh-my-zsh
 # Path to your oh-my-zsh installation.
 #export ZSH="$HOME/.oh-my-zsh"
 
