@@ -16,7 +16,7 @@ toggle() {
   fi
 }
 
-# toggle click
+# toggle con click
 if [[ "$1" == "toggle" ]]; then
   toggle
   exit 0
@@ -25,7 +25,7 @@ fi
 # ---------- Ethernet ----------
 if ip link show "$ETH" 2>/dev/null | grep -q "state UP"; then
   if [[ "$MODE" == "icon" ]]; then
-    echo "%{F#ffffff A1:$0 toggle:}%{A F-}"
+    echo "%{F#ffffff A1:$0 toggle:} %{A F-}"
   else
     echo "%{F#ffffff A1:$0 toggle:}  Ethernet%{A F-}"
   fi
@@ -52,5 +52,5 @@ if ip link show "$WIFI" 2>/dev/null | grep -q "state UP"; then
   exit 0
 fi
 
-# ---------- Not network ----------
+# ---------- Sin red ----------
 echo "%{F#ed245c A1:$0 toggle:}󰤮  Sin red%{A F-}"
