@@ -4,7 +4,7 @@ ETH="enp2s0"
 WIFI="wlp3s0"
 STATE="/tmp/polybar-network-state"
 
-# estado por defecto
+# default state
 [[ ! -f $STATE ]] && echo "icon" > "$STATE"
 MODE=$(cat "$STATE")
 
@@ -16,7 +16,7 @@ toggle() {
   fi
 }
 
-# toggle con click
+# toggle with click
 if [[ "$1" == "toggle" ]]; then
   toggle
   exit 0
@@ -25,9 +25,9 @@ fi
 # ---------- Ethernet ----------
 if ip link show "$ETH" 2>/dev/null | grep -q "state UP"; then
   if [[ "$MODE" == "icon" ]]; then
-    echo "%{F#ffffff A1:$0 toggle:} %{A F-}"
+    echo "%{A1:$0 toggle:} %{A}"
   else
-    echo "%{F#ffffff A1:$0 toggle:}  Ethernet%{A F-}"
+    echo "%{A1:$0 toggle:}  Ethernet%{A}"
   fi
   exit 0
 fi
@@ -45,12 +45,12 @@ if ip link show "$WIFI" 2>/dev/null | grep -q "state UP"; then
   fi
 
   if [[ "$MODE" == "icon" ]]; then
-    echo "%{F#ffffff A1:$0 toggle:}$ICON  %{A F-}"
+    echo "%{A1:$0 toggle:}$ICON  %{A}"
   else
-    echo "%{F#ffffff A1:$0 toggle:}$ICON  $ESSID%{A F-}"
+    echo "%{A1:$0 toggle:}$ICON  $ESSID%{A}"
   fi
   exit 0
 fi
 
-# ---------- Sin red ----------
-echo "%{F#ed245c A1:$0 toggle:}󰤮  Sin red%{A F-}"
+# ---------- No network ----------
+echo "%{F#ed245c A1:$0 toggle:}󰤮  No network%{A F-}"
