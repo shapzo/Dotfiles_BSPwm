@@ -206,6 +206,41 @@ extract() {
     fi
 }
 
+extrac() {
+    local file="$1"
+
+    if [[ ! -f "$file" ]]; then
+        echo "'$file' no file" >&2
+        return 1
+    fi
+
+    local filename="${file##*/}"
+    local dirname="${filename%%.*}"
+
+    mkdir -p "$dirname" || return 1
+
+    case "$file" in
+        *.tar.bz2|*.tbz2) tar xjf "$file" -C "$dirname" ;;
+        *.tar.gz|*.tgz)   tar xzf "$file" -C "$dirname" ;;
+        *.tar.xz|*.txz)   tar xJf "$file" -C "$dirname" ;;
+        *.tar.zst|*.tzst) tar -I zstd -xf "$file" -C "$dirname" ;;
+        *.tar)            tar xf "$file" -C "$dirname" ;;
+        *.zip|*.ZIP)      unzip "$file" -d "$dirname" ;;
+        *.rar)            unrar x "$file" "$dirname/" ;;
+        *.7z)             7z x "$file" -o"$dirname" ;;
+        *.gz)             gunzip -k "$file" ;;
+        *.bz2)            bunzip2 -k "$file" ;;
+        *.xz)             unxz -k "$file" ;;
+        *.zst)            unzstd -k "$file" ;;
+        *)
+            echo "no soported: $file" >&2
+            return 1
+            ;;
+    esac
+
+    [[ $? -eq 0 ]] && echo "Extract in ./$dirname"
+}
+
 # History search
 hist() {
     grep -r "$1" ~/.zsh_history | tail -20
@@ -231,16 +266,14 @@ commit(){
 
 #============================plugins========================
 plugins=(
-    "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-    "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    "source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+    "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    "/usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
     "/usr/share/zsh/plugins/sudo.plugin.zsh"
 )
 
 for plugin in "${plugins[@]}"; do
-    if [[ -f "$plugin" ]]; then
-        source "$plugin"
-    fi
+    _zshrc_source "$plugin" && break
 done
 
 # Configs plugins autosuggestion and autocomplete
