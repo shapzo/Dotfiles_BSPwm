@@ -35,14 +35,6 @@ setopt magicequalsubst
 setopt nonomatch
 setopt notify
 setopt numericglobsort
-
-autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C
-fi
-
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
@@ -268,20 +260,34 @@ commit(){
 plugins=(
     "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    "/usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+    "/usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
     "/usr/share/zsh/plugins/sudo.plugin.zsh"
+    "/usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 )
 
 for plugin in "${plugins[@]}"; do
-    _zshrc_source "$plugin" && break
+    if [[ -f "$plugin" ]]; then
+        source "$plugin"
+    else
+        echo "Error $plugin"
+    fi
 done
 
-# Configs plugins autosuggestion and autocomplete
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
+
+# autosuggestion
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-zstyle ':autocomplete:tab:*' insert-unambiguous yes
-zstyle ':autocomplete:tab:*' widget-style menu-select
+# autocomplete
+#zstyle ':autocomplete:tab:*' insert-unambiguous yes
+#zstyle ':autocomplete:tab:*' widget-style menu-select
 zstyle ':autocomplete:*' min-input 2
 zstyle ':autocomplete:*' list-lines 16
 zstyle ':autocomplete:*' groups enabled
@@ -290,16 +296,31 @@ zstyle ':autocomplete:history:*' remove-all-dups yes
 zstyle ':autocomplete:files:*' list-lines 16
 zstyle ':autocomplete:files:*' hidden all 
 
-
 # FZF
+zstyle ':fzf-tab:*' fzf-flags --style=full --height=90% --pointer '>' \
+                --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
+                --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
+                --list-label ' Results ' --color 'list-border:green,list-label:green:bold' \
+                --preview-label ' Preview ' --color 'preview-border:magenta,preview-label:magenta:bold'
+
+zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza -1 --icons --color -a $realpath'
+zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color $realpath'
+zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# FZF shortcuts
-alias cdfz='cd $(find . -type d 2>/dev/null | fzf)'
-alias cdfg='git log --oneline | fzf | cut -d" " -f1 | xargs git show'
+# fzf shortcuts
+alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
+alias fzfg='git log --oneline | fzf | cut -d" " -f1 | xargs git show'
 
 #pywal theme
-[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
+#[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
+
+#powerline promt
+#if [ -f /usr/share/powerline/bindings/zsh/powerline.zsh ];
+#         then
+#                source /usr/share/powerline/bindings/zsh/powerline.zsh
+#fi
 
 # java jdbc
 export CLASSPATH=$CLASSPATH:/usr/share/java/mariadb-jdbc.jar:/usr/share/java/jaybird-jdbc.jar
