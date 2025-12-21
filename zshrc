@@ -257,6 +257,13 @@ commit(){
 }
 
 #============================plugins========================
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
+
 plugins=(
     "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -273,18 +280,6 @@ for plugin in "${plugins[@]}"; do
     fi
 done
 
-autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C
-fi
-
-# autosuggestion
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
-ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
 # autocomplete
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
 #zstyle ':autocomplete:tab:*' widget-style menu-select
@@ -295,6 +290,11 @@ zstyle ':autocomplete:history:*' list-lines 16
 zstyle ':autocomplete:history:*' remove-all-dups yes
 zstyle ':autocomplete:files:*' list-lines 16
 zstyle ':autocomplete:files:*' hidden all 
+
+# autosuggestion
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # FZF
 zstyle ':fzf-tab:*' fzf-flags --style=full --height=90% --pointer '>' \
