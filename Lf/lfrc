@@ -108,5 +108,5 @@ cmd on-cd &{{
 }}
 
 # confis
-set previewer ~/.config/lf/preview.sh
-set cleaner ~/.config/lf/cleaner.sh 
+set previewer ~/.config/lf/scrips/preview.sh
+set cleaner ~/.config/lf/scrips/cleaner.sh 

@@ -11,10 +11,12 @@ FDIR="$HOME/.local/share/fonts"
 BDIR="$HOME/.config/bspwm"
 SDIR="$HOME/.config/sxhkd"
 PDIR="$HOME/.config/picom"
-LDIR="$HOME/.config/lf"
 KDIR="$HOME/.config/kitty"
 NEODIR="$HOME/.config/neofetch"
 FASDIR="$HOME/.config/fastfetch"
+
+LDIR="$HOME/.config/lf"
+LSDIR="$HOME/.config/lf/scrips"
 
 DDIR="$HOME/.config/dunst"
 DDIRS="$HOME/.config/dunst/Scripts"
@@ -106,10 +108,10 @@ install_rofi() {
 install_lf() {
     echo -e "\n [*] Installing lf..."
 	if [[ -d "$LDIR" ]]; then
-		cp -rf $DIR/Lf/* "$LDIR"
+		cp -rf $DIR/Lf/* "$LDIR" && chmod +x "$LSDIR"/*
 	else
 		mkdir -p "$LDIR"
-		cp -rf $DIR/Lf/* "$LDIR"
+		cp -rf $DIR/Lf/* "$LDIR" && chmod +x "$LSDIR"/*
 	fi
 }
 
