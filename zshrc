@@ -264,7 +264,7 @@ else
     compinit -C
 fi
 
-plugins=(
+plug=(
     "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
     "/usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
@@ -272,7 +272,7 @@ plugins=(
     "/usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 )
 
-for plugin in "${plugins[@]}"; do
+for plugin in "${plug[@]}"; do
     if [[ -f "$plugin" ]]; then
         source "$plugin"
     else
@@ -297,16 +297,18 @@ ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # FZF
-zstyle ':fzf-tab:*' fzf-flags --style=full --height=90% --pointer '>' \
+zstyle ':fzf-tab:*' fzf-flags --style=full --height=90% --pointer '' \
                 --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
                 --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
                 --list-label ' Results ' --color 'list-border:green,list-label:green:bold' \
                 --preview-label ' Preview ' --color 'preview-border:magenta,preview-label:magenta:bold'
 
-zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza -1 --icons --color -a $realpath'
+zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'exa -1 --icons --color -a $realpath'
 zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color $realpath'
+
 zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
 
+# Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # fzf shortcuts

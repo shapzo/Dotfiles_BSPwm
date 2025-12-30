@@ -31,8 +31,8 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 feh --bg-fill $HOME/.config/bspwm/img_1.jpg
 
 # Set polybar
-$HOME/.config/polybar/poly1/launch.sh &
-#$HOME/.config/polybar/poly2/launch.sh &
+#$HOME/.config/polybar/poly1/launch.sh &
+$HOME/.config/polybar/poly2/launch.sh &
 #$HOME/.config/polybar/poly3/launch.sh &
 #$HOME/.config/polybar/poly4/launch.sh &
 
