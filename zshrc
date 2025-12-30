@@ -265,11 +265,11 @@ else
 fi
 
 plug=(
-    "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    #"/usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
     "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    "/usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
+    #"/usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
     "/usr/share/zsh/plugins/sudo.plugin.zsh"
-    "/usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+    "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 )
 
 for plugin in "${plug[@]}"; do
