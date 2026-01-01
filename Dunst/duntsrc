@@ -1,7 +1,6 @@
 [global]
-    # Typography
+    # Tipografía
     font = "Organo Regular 10, Symbols Nerd Font 10"
-    allow_markup = yes
     format = "<b>%s</b>\n<span font='9'>%b</span>"
     alignment = left
     vertical_alignment = center
@@ -9,15 +8,15 @@
     word_wrap = yes
     ellipsize = middle
     
-    # Geometry and Position
+    # Geometría y posición
     width = 320
-    height = 400
+    height = (0,400)
     origin = top-right
-    offset = 7x33
+    offset = (7,33)
     monitor = 0
     follow = keyboard
     
-    # Appearance
+    # Apariencia
     frame_width = 2
     frame_color = "#dc0b30"
     corner_radius = 16
@@ -25,7 +24,7 @@
     background = "#232346"
     foreground = "#e7edff"
     
-    # Spacing
+    # Espaciado
     padding = 20
     horizontal_padding = 16
     text_icon_padding = 12
@@ -33,12 +32,12 @@
     separator_height = 2
     separator_color = "#585b70"
     
-    # Icons
+    # Iconos
     icon_position = left
     max_icon_size = 48
     min_icon_size = 32
     
-    # Behavior
+    # Comportamiento
     idle_threshold = 120
     ignore_newline = no
     indicate_hidden = yes
@@ -46,33 +45,39 @@
     sticky_history = yes
     always_run_script = true
     
-    # Progress Bar
+    # Barra de progreso
     progress_bar = true
     progress_bar_height = 6
     progress_bar_frame_width = 1
     progress_bar_min_width = 200
     progress_bar_max_width = 320
-    progress_bar_color = "#0bdcdc"
     
-    # Mouse Actions
+    # Acciones del ratón
     mouse_left_click = close_current
     mouse_middle_click = do_action, close_current
     mouse_right_click = context_all
 
+[song_alert]
+    script = $HOME/.config/dunst/scripts/song_alert.sh
+    background = "#294b2e89"
+    foreground = "#e2e8fc"
+    frame_color = "#8d9b9b"        #color del borde
+    timeout = 8
+
 [urgency_low]
     background = "#1e1e2e"
     foreground = "#a6adc8"
-    frame_color = "#dc0b30"
+    frame_color = "#dc0b30"       #color del borde
     timeout = 5
 
 [urgency_normal]
-    background = "#2c4e41"
+    background = "#2b1e2e89"
     foreground = "#e2e8fc"
-    frame_color = "#dc0b30
+    frame_color = "#8d9b9b"        #color del borde
     timeout = 8
 
 [urgency_critical]
     background = "#900000"
     foreground = "#ffffff"
-    frame_color = "#ff0000"
-    timeout = 0
+    frame_color = "#ff0000"       #color del borde
+    timeout = 10
