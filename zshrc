@@ -55,6 +55,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #zstyle ':completion:*' use-cache on
 #zstyle ':completion:*' cache-path "${HOME}/.zsh/cache"
 
+#
+eval "$(zoxide init zsh)"
 #==================================================
 
 #theme by powerlevel9k
@@ -178,7 +180,7 @@ play(){
 
 #Funcion tree using lsd
 tree(){
-        ls --tree $1
+        lsd --group-dirs=first --tree $1
 }
 
 #Function using eza
