@@ -21,7 +21,7 @@ configuration {
 }
 
 * {
-    border-radius:                  10px;
+    border-radius:                  16px;
     transparency:                   "real";
 }
 
@@ -30,14 +30,14 @@ prompt {
 }
 
 window {
-    height:                         91%;
+    height:                         92%;
     width:                          30%;
     location:                       east;
     border-color:                   @border-color;
     border:                         2px;
 
     //for polybar's complete
-    x-offset:                       -0.5%;
+    x-offset:                       -0.6%;
 
     //for polybar's reduced
     //x-offset:                       -2.6%;

@@ -27,9 +27,12 @@ configuration {
 window {
     height:                         39%;
     width:                          16%;
-    location:                       south;
     border-color:                   @border-color;
     border:                         2px;
+
+    // location depending on the polybar
+    location:                       north;
+    //location:                       south;
 
 //Adjust as you see fit
 

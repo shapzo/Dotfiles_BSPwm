@@ -20,7 +20,7 @@ configuration {
 }
 
 * {
-    border-radius:                  10px;
+    border-radius:                  16px;
     transparency:                   "real";
 }
 
@@ -30,7 +30,7 @@ prompt {
 
 window {
     border-color:                   @border-color;
-    height:                         91%;
+    height:                         92%;
     width:                          80%;
     location:                       center;
     anchor:                         center;
@@ -94,7 +94,7 @@ element-text {
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-   margin:                         2px 1px 5px;
+    margin:                         2px 1px 5px;
 }
 
 element selected {

@@ -12,7 +12,7 @@ BDIR="$HOME/.config/bspwm"
 SDIR="$HOME/.config/sxhkd"
 PDIR="$HOME/.config/picom"
 KDIR="$HOME/.config/kitty"
-NEODIR="$HOME/.config/neofetch"
+
 FASDIR="$HOME/.config/fastfetch"
 
 LDIR="$HOME/.config/lf"
@@ -139,17 +139,6 @@ install_kitty() {
 	fi
 }
 
-# Install neofetch conf
-install_neofetch() {
-	echo -e "\n [*] Installing neofetch..."
-	if [[ -d "$NEODIR" ]]; then
-		cp $DIR/Neofetch/config.conf "$NEODIR"
-	else
-		mkdir -p "$NEODIR"
-		cp $DIR/Neofetch/config.conf "$NEODIR"
-	fi
-}
-
 # Install fastfecth conf
 install_fast() {
     echo -e "\n [*] Installing fastfech..."
@@ -204,7 +193,7 @@ main() {
 
         echo -e "\n"
 
-        echo -e "Additional configuration, which contains: neofetch, kitty config, zsh, fastfecth and nano"
+        echo -e "Additional configuration, which contains: kitty config, zsh, fastfecth and nano"
 
         echo -e "chosse an option - "
         echo -e "
@@ -215,7 +204,6 @@ main() {
 
         if [[ $REPLY == "1" ]]; then
 
-            install_neofetch
             install_kitty
             install_nano
             install_zsh
