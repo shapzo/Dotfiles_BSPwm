@@ -7,7 +7,7 @@ VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -n1 | 
 MUTED=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
 
 if [[ "$MUTED" == "yes" ]]; then
-  ICON=""
+  ICON=""
   echo "%{F#db0303}$ICON%{F-}"
 elif [[ "$PORT" == *"headphones"* ]]; then
   ICON=""

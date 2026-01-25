@@ -63,13 +63,6 @@
     mouse_middle_click = do_action, close_current
     mouse_right_click = context_all
 
-[song_alert]
-    script = $HOME/.config/dunst/scripts/song_alert.sh
-    background = "#294b2e89"
-    foreground = "#e2e8fc"
-    frame_color = "#8d9b9b"        #color del borde
-    timeout = 8
-
 [urgency_low]
     background = "#1e1e2e"
     foreground = "#a6adc8"

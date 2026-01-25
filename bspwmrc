@@ -38,7 +38,10 @@ $HOME/.config/polybar/poly2/launch.sh &
 #$HOME/.config/polybar/poly4/launch.sh &
 
 # Dunst notification
+#battery
 $HOME/.config/dunst/scripts/baterry_alert.sh &
+#spotify
+$HOME/.config/dunst/scripts/song_alert.sh &
 
 # Monitor's
 #bspc monitor -d I II III IV V VI VII VIII IX
