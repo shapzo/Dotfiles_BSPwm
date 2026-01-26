@@ -43,7 +43,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "󰞅  Emojis ";
+    placeholder:                    " 😊 Emojis ";
     blink:                          true;
 }
 

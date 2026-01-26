@@ -11,6 +11,13 @@
 #=====================================================================================
 
 # Start
+
+run() {
+  if ! pgrep -f "$1" ; then
+    "$@" &
+  fi
+}
+
 sxhkd &
 #picom -b &
 dunst &
@@ -38,6 +45,7 @@ $HOME/.config/polybar/poly2/launch.sh &
 #$HOME/.config/polybar/poly4/launch.sh &
 
 # Dunst notification
+killall -q baterry_alert.sh song_alert.sh
 #battery
 $HOME/.config/dunst/scripts/baterry_alert.sh &
 #spotify
@@ -50,8 +58,8 @@ $HOME/.config/dunst/scripts/song_alert.sh &
 bspc monitor -d 󰎦 󰎩 󰎬 󰎮 󰎰 󰎵 󰎸 󰎻 󰎾
 
 # Monitor's
-#bscp monitor eDP-1 center
-#bscp monitor HDMI-A-0 left
+#bspc monitor eDP-1 center
+#bspc monitor HDMI-A-0 left
 #bspc monitor left -d 1 2 3 4 5 6 7 8 9
 
 # Theme for bspwm -Custom-
@@ -84,15 +92,15 @@ bspc config normal_frame_opacity  1
 bspc config border_radius         16.0
 
 # Rules
-#bscp rule -a polybar manage=off
-#bscp rule -a firefoxdeveloperedition desktop='^3'
+#bspc rule -a polybar manage=off
+#bspc rule -a firefoxdeveloperedition desktop='^3'
 bspc rule -a "spotify" desktop='^9'
 
 # -- float's --
-bspc rule -a "WM_CLASS=gnome-calculator" state=floating
-bspc rule -a "gnome-calculator" state=floating
-bspc rule -a "WM_CLASS=Gnome-screenshot" state=floating
-bspc rule -a "Gnome-screenshot" state=floating
+bspc rule -a "WM_CLASS=gnome-calculator" state=floating center=on
+bspc rule -a "gnome-calculator" state=floating center=on
+bspc rule -a "WM_CLASS=Gnome-screenshot" state=floating center=on
+bspc rule -a "Gnome-screenshot" state=floating center=on
 
 # Touchpad
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1

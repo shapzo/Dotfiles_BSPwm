@@ -14,7 +14,7 @@
 
 [global]
     font = "Organo Regular 10, Symbols Nerd Font 10"
-    format = "<b>%s</b>\n<span font='9'>%b</span>"
+    format = "<span size='large' weight='bold'>%s</span>\n%b"
     alignment = left
     vertical_alignment = center
     show_age_threshold = 60
@@ -22,9 +22,9 @@
     ellipsize = middle
     
     width = 320
-    height = (0,400)
+    height = 400
     origin = top-right
-    offset = (7,33)
+    offset = 7x33
     monitor = 0
     follow = keyboard
     
@@ -35,16 +35,16 @@
     background = "#232346"
     foreground = "#e7edff"
     
-    padding = 20
-    horizontal_padding = 16
+    padding = 25
+    horizontal_padding = 15
     text_icon_padding = 12
     line_height = 4
     separator_height = 2
     separator_color = "#585b70"
     
     icon_position = left
-    max_icon_size = 48
-    min_icon_size = 32
+    max_icon_size = 50
+    min_icon_size = 50
     
     idle_threshold = 120
     ignore_newline = no
@@ -80,3 +80,6 @@
     foreground = "#ffffff"
     frame_color = "#ff0000"       #color del borde
     timeout = 10
+
+[mouse_left_click]
+    action = close_current

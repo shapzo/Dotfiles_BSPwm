@@ -41,7 +41,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    " 󰀻 Select app ";
+    placeholder:                    " 💠 Select app ";
     blink:                          true;
 }
 

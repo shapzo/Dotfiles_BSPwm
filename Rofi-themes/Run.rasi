@@ -49,7 +49,7 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0.5;
-    placeholder:                    "   Commands ";
+    placeholder:                    " 💻 Commands ";
     blink:                          true;
 }
 
