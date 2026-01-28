@@ -55,10 +55,32 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #zstyle ':completion:*' use-cache on
 #zstyle ':completion:*' cache-path "${HOME}/.zsh/cache"
 
-#
+# tool for learning routes
 eval "$(zoxide init zsh)"
-#==================================================
 
+#=========================keybindings====================
+bindkey '^U' backward-kill-line     # Ctrl + U
+bindkey '^[[3;5~' kill-word         # Ctrl + Delete
+bindkey '^[[3~' delete-char         # Delete
+bindkey '^[[1;3D' backward-word     # Move backward word by word (Ctrl + Left Arrow)
+bindkey '^[[1;3C' forward-word      # Move forward word by word (Ctrl + Right Arrow)
+
+#=========================History==========
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY
+
+#==================================================
 #theme by powerlevel9k
 
 #https://github.com/Powerlevel9k/powerlevel9k
@@ -80,21 +102,6 @@ eval "$(zoxide init zsh)"
 #POWERLEVEL9K_CUSTOM_LINUX_ICON_BACKGROUND=069
 #POWERLEVEL9K_CUSTOM_LINUX_ICON_FOREGROUND=015
 
-#=========================History==========
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-
-setopt EXTENDED_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_REDUCE_BLANKS
-setopt INC_APPEND_HISTORY
-
 #=========================Aliases======================
 #----------------pacman / paru administration-----------------
 alias cate='paru -Sg | sort -u'
@@ -111,7 +118,7 @@ alias cach='sudo paccache -rvk 2'
 alias vaccache='sudo pacman -Scc'
 alias rmcahe='sudo paccache -r'
 
-#-----------------------utilities----------------------
+#-----------------------aliases----------------------
 alias \
         cls='clear' \
         csl='clear' \
@@ -123,7 +130,9 @@ alias \
         clockl='tty-clock -b -t -c | lolcat' \
         pdf='evince' \
         img='eog' \
-        video='mplayer'
+        video='mplayer' \
+        dm='mdcat' \
+        na='nano -0 -l -m -t' \
 
 # ls for lsd
  alias \
@@ -136,9 +145,9 @@ alias \
 # alias for eza
 alias \
         e='eza --icons --group-directories-first' \
-        ee='eza --icons --group-directories-first -l' \
+        ee='eza --icons --group-directories-first -hlg' \
         eee='eza --icons --group-directories-first -a' \
-        ea='eza --icons --group-directories-first -alh'
+        ea='eza --icons --group-directories-first -ahlg'
 
 # config
 alias \
@@ -188,7 +197,7 @@ et(){
         eza --icons --group-directories-first -T $1
 }
 eth(){
-        eza --icons --group-directories-first -al -T $1
+        eza --icons --group-directories-first -ahlg -T $1
 }
 
 # function extract
@@ -282,7 +291,74 @@ for plugin in "${plug[@]}"; do
     fi
 done
 
-# autocomplete
+#========================== FZF =================================
+# --- FZF load ---
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+zstyle ':fzf-tab:*' fzf-flags --style=full --height=95% --pointer '' \
+                --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
+                --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
+                --list-label ' Results ' --color 'list-border:green,list-label:green:bold' \
+                --preview-label ' Preview ' --color 'preview-border:magenta,preview-label:magenta:bold'
+
+# --- Shortcuts and Behavior ---
+
+# Preview for specific commands
+zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza -1 --icons --color=always -a $realpath'
+zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --line-range :500 $realpath 2>/dev/null || eza -1 --icons --color=always $realpath 2>/dev/null'
+
+# For environment variables
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-):*' fzf-preview 'echo ${(P)word}'
+
+# For the kill command (See processes)
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers'
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
+
+# To accept with spaces
+zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
+
+# Disable auto-completion for groups if there is only one option
+zstyle ':fzf-tab:*' group-colors A=92 B=93 C=94 D=95
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
+# Preview the help for the flags/options of the commands
+zstyle ':fzf-tab:complete:*:options' fzf-preview 'zsh -c "man $word" 2>/dev/null | col -bx | bat -l man -p --color=always'
+
+# Preview contents of .zip, .tar, etc.
+zstyle ':fzf-tab:complete:*:*' fzf-preview '
+  case $realpath in
+    *.tar*|*.tgz) tar -tvf "$realpath" ;;
+    *.zip) unzip -l "$realpath" ;;
+    *.rar) unrar l "$realpath" ;;
+    *) bat --color=always --line-range :500 "$realpath" 2>/dev/null || eza -1 --icons --color=always "$realpath" ;;
+  esac'
+
+# fzf shortcuts
+alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
+alias fzfg='git log --oneline | fzf --preview "git show --color=always {1}" | cut -d" " -f1 | xargs -r git show'
+
+# Jump to frequently used directories with content preview
+unalias z 2>/dev/null
+cdf() {
+    local dir
+    dir=$(zoxide query -l | fzf --height 70% --layout=reverse --preview 'eza -T -L 2 --icons --color=always {} | head -20') && cd "$dir"
+}
+
+#============================== autosuggestion =================
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+#============================== highlight ==========================
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[command]='fg=#bc9dee,bold'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=#89b4fa,bold'
+ZSH_HIGHLIGHT_STYLES[path]='fg=#f080ff,underline'
+ZSH_HIGHLIGHT_STYLES[error]='fg=#f38ba8,bold'
+ZSH_HIGHLIGHT_STYLES[function]='fg=#89dceb'
+
+#===================== autocomplete ==================
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
 #zstyle ':autocomplete:tab:*' widget-style menu-select
 zstyle ':autocomplete:*' min-input 2
@@ -292,30 +368,6 @@ zstyle ':autocomplete:history:*' list-lines 16
 zstyle ':autocomplete:history:*' remove-all-dups yes
 zstyle ':autocomplete:files:*' list-lines 16
 zstyle ':autocomplete:files:*' hidden all 
-
-# autosuggestion
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
-ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
-# FZF
-zstyle ':fzf-tab:*' fzf-flags --style=full --height=90% --pointer '' \
-                --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
-                --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
-                --list-label ' Results ' --color 'list-border:green,list-label:green:bold' \
-                --preview-label ' Preview ' --color 'preview-border:magenta,preview-label:magenta:bold'
-
-zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'exa -1 --icons --color -a $realpath'
-zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color $realpath'
-
-zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
-
-# Fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# fzf shortcuts
-alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
-alias fzfg='git log --oneline | fzf | cut -d" " -f1 | xargs git show'
 
 #pywal theme
 #[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh

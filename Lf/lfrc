@@ -18,13 +18,13 @@ map <enter> $xdg-open $f
 
 # Opne file's
 cmd open &{{
-    case "$f" in
+    case $(printf "%s" "$f" | tr '[:upper:]' '[:lower:]') in
         *.pdf) evince "$f" &;;
         *.jpg|*.jpeg|*.png|*.gif) eog "$f" &;;
-        *.mp4|*.mkv|.*wma) mpv "$f" &;;
+        *.mp4|*.mkv|*.webm) mpv "$f" &;;
         *.mp3|*.flac) lollypop "$f" &;;
-        *.txt|*.md) gnome-text-editor "$f";;  # Neovim para textos
-        *) xdg-open "$f" &;;  # Fallback para otros tipos
+        *.zip|*.tar.gz|*.tgz|*.7z) atool -x "$f" ;; # Extraer
+        *) xdg-open "$f" &>/dev/null &;;
     esac
 }}
 
@@ -55,25 +55,39 @@ cmd mkdir &{{
 
 # Paste
 cmd yank-path &{{
-    echo -n "$PWD/$f" | xclip -selection clipboard
-    echo "Ruta copiada: $PWD/$f"
+    echo -n "$fx" | xclip -selection clipboard
+    lf -remote "send $id echo Ruta copiada al portapapeles"
 }}
 
 # Seacrh fzf
-cmd search &{{
-    file=$(find . -type f | fzf --preview 'bat --color=always {}')
-    [ -n "$file" ] && lf -remote "send $id select \"$file\""
+cmd search ${{
+    res=$(find . -maxdepth 2 | fzf --reverse --header='Saltar a:')
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            lf -remote "send $id cd \"$res\""
+        else
+            lf -remote "send $id select \"$res\""
+        fi
+    fi
 }}
 
 # shortcuts
 
 # Sistema
 cmd q quit
-map space $open $f
+map <enter> open
 
 #navegation
-map j up
-map k down
+map k up
+map j down
+map l open
+map h updir
+
+map v toggle
+
+map yp yank-path
+map f search
+
 map gg go-to-first
 map G go-to-last
 
@@ -91,13 +105,13 @@ map <c-r> reload
 map V ${{ "$EDITOR" . }}
 
 # Theme
-set color dir "#7940e4"        # Directorios (púrpura)
-set color link "#65518c"       # Enlaces simbólicos (púrpura oscuro)
-set color exe "#BF616A"        # Ejecutables (rojo)
-set color archive "#EBCB8B"    # Archivos comprimidos (amarillo)
-set color media "#A3BE8C"      # Multimedia (verde)
-set color text "#D8DEE9"       # Texto (gris claro)
-set color border "#3B4252"     # Borde (gris oscuro)
+set color dir "#7940e4"
+set color link "#65518c"
+set color exe "#BF616A"
+set color archive "#EBCB8B"
+set color media "#A3BE8C"
+set color text "#D8DEE9"
+set color border "#3B4252"
 
 # Temporal file's
 set tmpdir ~/.cache/lf
