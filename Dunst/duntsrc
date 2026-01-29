@@ -38,7 +38,7 @@
     padding = 25
     horizontal_padding = 15
     text_icon_padding = 12
-    line_height = 4
+    line_height = 2
     separator_height = 2
     separator_color = "#585b70"
     
@@ -80,6 +80,3 @@
     foreground = "#ffffff"
     frame_color = "#ff0000"       #color del borde
     timeout = 10
-
-[mouse_left_click]
-    action = close_current

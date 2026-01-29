@@ -236,7 +236,7 @@ extrac() {
         *.xz)             unxz -k "$file" ;;
         *.zst)            unzstd -k "$file" ;;
         *)
-            echo "no soported: $file" >&2
+            echo "no supported: $file" >&2
             return 1
             ;;
     esac
@@ -338,7 +338,7 @@ alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find .
 alias fzfg='git log --oneline | fzf --preview "git show --color=always {1}" | cut -d" " -f1 | xargs -r git show'
 
 # Jump to frequently used directories with content preview
-unalias z 2>/dev/null
+#unalias z 2>/dev/null
 cdf() {
     local dir
     dir=$(zoxide query -l | fzf --height 70% --layout=reverse --preview 'eza -T -L 2 --icons --color=always {} | head -20') && cd "$dir"
