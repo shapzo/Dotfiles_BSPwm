@@ -3,9 +3,11 @@
     "logo": {
     	"source": "$HOME/.config/bspwm/img_1.jpg",
     	"type": "kitty",
-    	"height": 13,
+    	"height": 10,
+        "width": 25,
     	"padding": {
-    		"top": 0
+    		"top": 1,
+            "left": 2
     	}
     },
     "display": {
@@ -29,7 +31,7 @@
         },
         {
             "type": "packages",
-            "format": "{} (pacman)",
+            "format": "{} ({all})",
             "key": " ",
             "keyColor": "34"
         },
