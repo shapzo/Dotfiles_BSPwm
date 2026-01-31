@@ -304,8 +304,8 @@ zstyle ':fzf-tab:*' fzf-flags --style=full --height=95% --pointer '' \
 # --- Shortcuts and Behavior ---
 
 # Preview for specific commands
-zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza -1 --icons --color=always -a $realpath'
-zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --line-range :500 $realpath 2>/dev/null || eza -1 --icons --color=always $realpath 2>/dev/null'
+zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza --icons --group-directories-first --color=always -alh $realpath'
+zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --line-range :500 $realpath 2>/dev/null || eza -1 --icons --group-directories-first --color=always -alh $realpath 2>/dev/null'
 
 # For environment variables
 zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-):*' fzf-preview 'echo ${(P)word}'
@@ -334,20 +334,34 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview '
   esac'
 
 # fzf shortcuts
-alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
-alias fzfg='git log --oneline | fzf --preview "git show --color=always {1}" | cut -d" " -f1 | xargs -r git show'
+#alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
+alias gitfz='git log --oneline | fzf --preview "git show --color=always {1}" | cut -d" " -f1 | xargs -r git show'
 
 # Jump to frequently used directories with content preview
 #unalias z 2>/dev/null
-cdf() {
+zfz_zoxide() {
     local dir
-    dir=$(zoxide query -l | fzf --height 70% --layout=reverse --preview 'eza -T -L 2 --icons --color=always {} | head -20') && cd "$dir"
+    dir=$(zoxide query -l | fzf --height 70% \
+        --layout=reverse \
+        --preview '
+            if [ -d {} ]; then
+                eza --group-directories-first -T -L 2 --icons --color=always {} | head -50
+            else
+                bat --color=always {}
+            fi' \
+        )
+
+    if [[ -n "$dir" ]]; then
+        cd "$dir"
+        zle reset-prompt
+    fi
 }
+zle -N zfz_zoxide
+bindkey '^o' zfz_zoxide
 
 #============================== autosuggestion =================
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 #============================== highlight ==========================
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
