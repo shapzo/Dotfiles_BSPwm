@@ -123,8 +123,6 @@ alias \
         cls='clear' \
         csl='clear' \
         nau='nautilus' \
-        nf='neofetch' \
-        nfl='neofetch | lolcat' \
         fa='fastfetch --config ~/.config/fastfetch/config.json' \
         clock='tty-clock -C 5 -b -t -c' \
         clockl='tty-clock -b -t -c | lolcat' \
@@ -304,7 +302,7 @@ zstyle ':fzf-tab:*' fzf-flags --style=full --height=95% --pointer '' \
 # --- Shortcuts and Behavior ---
 
 # Preview for specific commands
-zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza --icons --group-directories-first --color=always -alh $realpath'
+zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza -1 --icons --group-directories-first --color=always -alh $realpath'
 zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --line-range :500 $realpath 2>/dev/null || eza -1 --icons --group-directories-first --color=always -alh $realpath 2>/dev/null'
 
 # For environment variables
@@ -324,13 +322,21 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # Preview the help for the flags/options of the commands
 zstyle ':fzf-tab:complete:*:options' fzf-preview 'zsh -c "man $word" 2>/dev/null | col -bx | bat -l man -p --color=always'
 
-# Preview contents of .zip, .tar, etc.
+# Preview contents of .zip, .odt, etc.
 zstyle ':fzf-tab:complete:*:*' fzf-preview '
   case $realpath in
     *.tar*|*.tgz) tar -tvf "$realpath" ;;
     *.zip) unzip -l "$realpath" ;;
     *.rar) unrar l "$realpath" ;;
-    *) bat --color=always --line-range :500 "$realpath" 2>/dev/null || eza -1 --icons --color=always "$realpath" ;;
+    *.docx|*.odt) pandoc "$realpath" ;;
+    *.md) mdcat --columns=50 -p "$realpath" ;;
+    *)
+
+    if [[ -d $realpath ]]; then
+        eza -1 --icons --group-directories-first --color=always -alh "$realpath"
+    else
+        bat --color=always --line-range :500 "$realpath" 2>/dev/null || cat "$realpath"
+    fi ;;
   esac'
 
 # fzf shortcuts

@@ -15,16 +15,16 @@ super + Return
 	kitty
 
 # program launcher
-alt + d
+super + a
 	rofi -show drun
 
 super + w
 	rofi -show window -theme $HOME/.config/rofi/themes/Preview.rasi
 
-super + e
+alt + e
 	rofi -show emoji -modi emoji -theme $HOME/.config/rofi/themes/Emoji.rasi
 
-super + r
+alt + r
 	rofi -show run -theme ~/.config/rofi/themes/Run.rasi
 
 super + shift + w
@@ -36,7 +36,7 @@ alt + c
 alt + b
 	firefox-developer-edition
 
-alt + e
+super + e
 	kitty -e 'lf'
 
 Print
@@ -62,8 +62,8 @@ super + alt + {Up,Down}
 super + alt + n
 	bspc node -s biggest
 
-super + {a,s,d,f}
-	bspc node -t {pseudo_tiled,floating,tiled,fullscreen}
+super + {d,f}
+	bspc node -t {tiled,fullscreen}
 
 alt + space
 	bspc node -t "~"{floating,tiled}
