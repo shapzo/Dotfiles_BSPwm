@@ -31,7 +31,7 @@
     frame_width = 2
     frame_color = "#dc0b30"
     corner_radius = 16
-    transparency = 10
+    transparency = 0
     background = "#232346"
     foreground = "#e7edff"
     
@@ -64,19 +64,19 @@
     mouse_right_click = context_all
 
 [urgency_low]
-    background = "#1e1e2e"
+    background = "#1e1e2e89"
     foreground = "#a6adc8"
-    frame_color = "#dc0b30"       #color del borde
+    frame_color = "#0bdcc0"
     timeout = 5
 
 [urgency_normal]
     background = "#2b1e2e89"
     foreground = "#e2e8fc"
-    frame_color = "#8d9b9b"        #color del borde
+    frame_color = "#8d9b9b"
     timeout = 8
 
 [urgency_critical]
     background = "#900000"
     foreground = "#ffffff"
-    frame_color = "#ff0000"       #color del borde
+    frame_color = "#ff0000"
     timeout = 10
