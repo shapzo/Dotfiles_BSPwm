@@ -55,6 +55,4 @@ source ~/.zshrc
 
 ![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/zsh_theme/Screenshot-zsh_theme/Screen(1).png)
 
-![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/zsh_theme/Screenshot-zsh_theme/Screen(2).png)
-
 ![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/zsh_theme/Screenshot-zsh_theme/Screen(3).png)
