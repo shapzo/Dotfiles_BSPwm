@@ -1,4 +1,4 @@
-# 󰮯 󰊠 󰊠 󰊠 Pacman ZSH Theme
+# 🟡 Pacman ZSH Theme
 
 A custom Oh My Zsh theme inspired by Pacman aesthetics, featuring dynamic segments, Git integration, and Nerd Font icons.
 
