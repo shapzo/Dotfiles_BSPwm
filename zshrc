@@ -35,35 +35,26 @@ setopt magicequalsubst
 setopt nonomatch
 setopt notify
 setopt numericglobsort
+setopt correct
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
-zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' special-dirs true
 #zstyle ':completion:*' use-cache on
 #zstyle ':completion:*' cache-path "${HOME}/.zsh/cache"
-
-# tool for learning routes
-eval "$(zoxide init zsh)"
-
-#=========================keybindings====================
-bindkey '^U' backward-kill-line     # Ctrl + U
-bindkey '^[[3;5~' kill-word         # Ctrl + Delete
-bindkey '^[[3~' delete-char         # Delete
-bindkey '^[[1;3D' backward-word     # Move backward word by word (Ctrl + Left Arrow)
-bindkey '^[[1;3C' forward-word      # Move forward word by word (Ctrl + Right Arrow)
 
 #=========================History==========
 HISTFILE=~/.zsh_history
@@ -102,175 +93,12 @@ setopt INC_APPEND_HISTORY
 #POWERLEVEL9K_CUSTOM_LINUX_ICON_BACKGROUND=069
 #POWERLEVEL9K_CUSTOM_LINUX_ICON_FOREGROUND=015
 
-#=========================Aliases======================
-#----------------pacman / paru administration-----------------
-alias cate='paru -Sg | sort -u'
-alias cate1='paru -Sgg | sort -u'
-alias search='paru -Sg | grep'
-alias search1='paru -Sgg | grep'
-
-alias dowpkg='pacman -Sw'
-alias rem='paru -R'
-alias rem1='paru -Rs'
-alias rem2='paru -Rsc'
-
-alias cach='sudo paccache -rvk 2'
-alias vaccache='sudo pacman -Scc'
-alias rmcahe='sudo paccache -r'
-
-#-----------------------aliases----------------------
-alias \
-        cls='clear' \
-        csl='clear' \
-        nau='nautilus' \
-        fa='fastfetch --config ~/.config/fastfetch/config.json' \
-        clock='tty-clock -C 5 -b -t -c' \
-        clockl='tty-clock -b -t -c | lolcat' \
-        pdf='evince' \
-        img='eog' \
-        video='mplayer' \
-        dm='mdcat' \
-        na='nano -0 -l -m -t' \
-
-# ls for lsd
- alias \
-        ls='lsd --group-dirs=first' \
-        l='lsd -l --group-dirs=first' \
-        ll='lsd -a --group-dirs=first' \
-        la='lsd -lha --group-dirs=first' \
-        lh='lsd -lh --group-dirs=first'
-
-# alias for eza
-alias \
-        e='eza --icons --group-directories-first' \
-        ee='eza --icons --group-directories-first -hlg' \
-        eee='eza --icons --group-directories-first -a' \
-        ea='eza --icons --group-directories-first -ahlg'
-
-# config
-alias \
-        z='vi ~/.zshrc' \
-        b='vi ~/.config/bspwm' \
-        s='vi ~/.config/sxhkd/sxhkdrc' \
-        p1='vi ~/.config/polybar/poly1' \
-        p2='vi ~/.config/polybar/poly2' \
-        p3='vi ~/.config/polybar/poly3' \
-        p4='vi ~/.config/polybar/poly4' \
-        r='vi ~/.config/rofi/themes' \
-        k='vi ~/.config/kitty'
-
-# git
-alias \
-        status='git status' \
-        add='git add .' \
-        push='git push origin main' \
-        pull='git pull origin' \
-        remote='git remote add origin'
-
-#===========================function's=================
-#Delete files permanently
-rmf(){
-    scrub -p dod $1; shred -zun 10 -v $1
-}
-#Open neovim
-vi(){
-    nvim $1
-}
-
-#Asciinema
-rec(){
-        asciinema rec $1
-}
-play(){
-        asciinema play $1
-}
-
-#Funcion tree using lsd
-tree(){
-        lsd --group-dirs=first --tree $1
-}
-
-#Function using eza
-et(){
-        eza --icons --group-directories-first -T $1
-}
-eth(){
-        eza --icons --group-directories-first -ahlg -T $1
-}
-
-# function extract
-extract() {
-    if command -v dtrx &> /dev/null; then
-        dtrx "$@"
-    else
-        echo "Extract using manual method..."
-    fi
-}
-
-extrac() {
-    local file="$1"
-
-    if [[ ! -f "$file" ]]; then
-        echo "'$file' no file" >&2
-        return 1
-    fi
-
-    local filename="${file##*/}"
-    local dirname="${filename%%.*}"
-
-    mkdir -p "$dirname" || return 1
-
-    case "$file" in
-        *.tar.bz2|*.tbz2) tar xjf "$file" -C "$dirname" ;;
-        *.tar.gz|*.tgz)   tar xzf "$file" -C "$dirname" ;;
-        *.tar.xz|*.txz)   tar xJf "$file" -C "$dirname" ;;
-        *.tar.zst|*.tzst) tar -I zstd -xf "$file" -C "$dirname" ;;
-        *.tar)            tar xf "$file" -C "$dirname" ;;
-        *.zip|*.ZIP)      unzip "$file" -d "$dirname" ;;
-        *.rar)            unrar x "$file" "$dirname/" ;;
-        *.7z)             7z x "$file" -o"$dirname" ;;
-        *.gz)             gunzip -k "$file" ;;
-        *.bz2)            bunzip2 -k "$file" ;;
-        *.xz)             unxz -k "$file" ;;
-        *.zst)            unzstd -k "$file" ;;
-        *)
-            echo "no supported: $file" >&2
-            return 1
-            ;;
-    esac
-
-    [[ $? -eq 0 ]] && echo "Extract in ./$dirname"
-}
-
-# History search
-hist() {
-    grep -r "$1" ~/.zsh_history | tail -20
-}
-
-# Search files by name
-f() {
-    find . -type f -name "*$1*" 2>/dev/null
-}
-
-# Search in files by content
-grepf() {
-    grep -r "$1" . --include="*.$2" 2>/dev/null
-}
-
-#git functions
-clon(){
-    git clone $1
-}
-commit(){
-    git commit -m $1
-}
-
 #============================plugins========================
 autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
     compinit
 else
-    compinit -C
+    compinit -C -d "${ZDOTDIR:-$HOME}/.zcompdump"
 fi
 
 plug=(
@@ -343,28 +171,6 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview '
 #alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
 alias gitfz='git log --oneline | fzf --preview "git show --color=always {1}" | cut -d" " -f1 | xargs -r git show'
 
-# Jump to frequently used directories with content preview
-#unalias z 2>/dev/null
-zfz_zoxide() {
-    local dir
-    dir=$(zoxide query -l | fzf --height 70% \
-        --layout=reverse \
-        --preview '
-            if [ -d {} ]; then
-                eza --group-directories-first -T -L 2 --icons --color=always {} | head -50
-            else
-                bat --color=always {}
-            fi' \
-        )
-
-    if [[ -n "$dir" ]]; then
-        cd "$dir"
-        zle reset-prompt
-    fi
-}
-zle -N zfz_zoxide
-bindkey '^o' zfz_zoxide
-
 #============================== autosuggestion =================
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
@@ -389,6 +195,199 @@ zstyle ':autocomplete:history:*' remove-all-dups yes
 zstyle ':autocomplete:files:*' list-lines 16
 zstyle ':autocomplete:files:*' hidden all 
 
+#=============tool for learning routes=========================
+eval "$(zoxide init zsh)"
+
+# Jump to frequently used directories with content preview
+#unalias z 2>/dev/null
+zfz_zoxide() {
+    local dir
+    dir=$(zoxide query -l | fzf --height 70% \
+        --layout=reverse \
+        --preview '
+            if [ -d {} ]; then
+                eza --group-directories-first -T -L 2 --icons --color=always {} | head -50
+            else
+                bat --color=always {}
+            fi' \
+        )
+
+    if [[ -n "$dir" ]]; then
+        cd "$dir"
+        zle reset-prompt
+    fi
+}
+zle -N zfz_zoxide
+bindkey '^o' zfz_zoxide
+
+#=========================keybindings====================
+bindkey '^U' backward-kill-line     # Ctrl + U
+bindkey '^[[3;5~' kill-word         # Ctrl + Delete
+bindkey '^[[3~' delete-char         # Delete
+bindkey '^[[1;3D' backward-word     # Move backward word by word (Ctrl + Left Arrow)
+bindkey '^[[1;3C' forward-word      # Move forward word by word (Ctrl + Right Arrow)
+
+#=========================Aliases======================
+#----------------pacman / paru administration-----------------
+alias cate='paru -Sg | sort -u'
+alias cate1='paru -Sgg | sort -u'
+alias search='paru -Sg | grep'
+alias search1='paru -Sgg | grep'
+
+alias dowpkg='pacman -Sw'
+alias rem='paru -R'
+alias rem1='paru -Rs'
+alias rem2='paru -Rsc'
+
+alias cach='sudo paccache -rvk 2'
+alias vaccache='sudo pacman -Scc'
+alias rmcahe='sudo paccache -r'
+
+#-----------------------aliases----------------------
+alias \
+        cls='clear' \
+        csl='clear' \
+        nau='nautilus' \
+        fa='fastfetch --config ~/.config/fastfetch/config.json' \
+        clock='tty-clock -C 5 -b -t -c' \
+        clockl='tty-clock -b -t -c | lolcat' \
+        pdf='evince' \
+        img='eog' \
+        video='mplayer' \
+        dm='mdcat' \
+        na='nano -0 -l -m -t' \
+        alias j='zi'
+
+if command -v lsd >/dev/null 2>&1; then
+    # ls for lsd
+    alias \
+            ls='lsd --group-dirs=first' \
+            l='lsd -l --group-dirs=first' \
+            ll='lsd -a --group-dirs=first' \
+            la='lsd -lha --group-dirs=first' \
+            lh='lsd -lh --group-dirs=first'
+
+elif command -v eza >/dev/null 2>&1; then
+    # alias for eza
+    alias \
+            e='eza --icons --group-directories-first' \
+            ee='eza --icons --group-directories-first -hlg' \
+            eee='eza --icons --group-directories-first -a' \
+            ea='eza --icons --group-directories-first -ahlg'
+
+else
+    # alias for ls
+    alias \
+            ls='ls --color=auto' \
+            l='ls -lh' \
+            ll='ls -rtlh' \
+            la='ls -A'
+fi
+
+# config
+alias \
+        z='vi ~/.zshrc' \
+        b='vi ~/.config/bspwm' \
+        s='vi ~/.config/sxhkd/sxhkdrc' \
+        p1='vi ~/.config/polybar/poly1' \
+        p2='vi ~/.config/polybar/poly2' \
+        p3='vi ~/.config/polybar/poly3' \
+        p4='vi ~/.config/polybar/poly4' \
+        r='vi ~/.config/rofi/themes' \
+        k='vi ~/.config/kitty'
+
+# git
+alias \
+        status='git status' \
+        add='git add .' \
+        push='git push origin main' \
+        pull='git pull origin' \
+        remote='git remote add origin' \
+        clon='git clone' \
+        commit='git commit -m'
+
+#===========================function's=================
+#Delete files permanently
+rmf(){
+    scrub -p dod $1; shred -zun 10 -v $1
+}
+#Open neovim
+vi(){
+    nvim $1
+}
+#Asciinema
+rec(){
+        asciinema rec $1
+}
+play(){
+        asciinema play $1
+}
+#Funcion tree using lsd
+tree(){
+        lsd --group-dirs=first --tree $1
+}
+#Function using eza
+et(){
+        eza --icons --group-directories-first -T $1
+}
+eth(){
+        eza --icons --group-directories-first -ahlg -T $1
+}
+# function extract
+extract() {
+    if command -v dtrx &> /dev/null; then
+        dtrx "$@"
+    else
+        echo "Extract using manual method..."
+    fi
+}
+extrac() {
+    local file="$1"
+
+    if [[ ! -f "$file" ]]; then
+        echo "'$file' no file" >&2
+        return 1
+    fi
+
+    local filename="${file##*/}"
+    local dirname="${filename%%.*}"
+
+    mkdir -p "$dirname" || return 1
+
+    case "$file" in
+        *.tar.bz2|*.tbz2) tar xjf "$file" -C "$dirname" ;;
+        *.tar.gz|*.tgz)   tar xzf "$file" -C "$dirname" ;;
+        *.tar.xz|*.txz)   tar xJf "$file" -C "$dirname" ;;
+        *.tar.zst|*.tzst) tar -I zstd -xf "$file" -C "$dirname" ;;
+        *.tar)            tar xf "$file" -C "$dirname" ;;
+        *.zip|*.ZIP)      unzip "$file" -d "$dirname" ;;
+        *.rar)            unrar x "$file" "$dirname/" ;;
+        *.7z)             7z x "$file" -o"$dirname" ;;
+        *.gz)             gunzip -k "$file" ;;
+        *.bz2)            bunzip2 -k "$file" ;;
+        *.xz)             unxz -k "$file" ;;
+        *.zst)            unzstd -k "$file" ;;
+        *)
+            echo "no supported: $file" >&2
+            return 1
+            ;;
+    esac
+    [[ $? -eq 0 ]] && echo "Extract in ./$dirname"
+}
+# History search
+hist() {
+    grep -r "$1" ~/.zsh_history | tail -20
+}
+# Search files by name
+f() {
+    find . -type f -name "*$1*" 2>/dev/null
+}
+# Search in files by content
+grepf() {
+    grep -r "$1" . --include="*.$2" 2>/dev/null
+}
+
+#===========others configurations========================
 #pywal theme
 #[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 
