@@ -270,10 +270,10 @@ if command -v lsd >/dev/null 2>&1; then
 elif command -v eza >/dev/null 2>&1; then
     # alias for eza
     alias \
-            e='eza --icons --group-directories-first' \
-            ee='eza --icons --group-directories-first -hlg' \
-            eee='eza --icons --group-directories-first -a' \
-            ea='eza --icons --group-directories-first -ahlg'
+            ls='eza --icons --group-directories-first' \
+            l='eza --icons --group-directories-first -hlg' \
+            ll='eza --icons --group-directories-first -a' \
+            la='eza --icons --group-directories-first -ahlg'
 
 else
     # alias for ls
