@@ -309,7 +309,11 @@ alias \
 #===========================function's=================
 #Delete files permanently
 rmf(){
-    scrub -p dod $1; shred -zun 10 -v $1
+    if [[ -d $1 ]]; then
+        echo "Error: $1 it is a directory."
+        return 1
+    fi
+    scrub -p dod "$1" && shred -zun 10 -v "$1"
 }
 #Open neovim
 vi(){
