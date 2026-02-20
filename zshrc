@@ -218,8 +218,11 @@ zfz_zoxide() {
     fi
 }
 zle -N zfz_zoxide
-bindkey '^o' zfz_zoxide
+bindkey '^z' zfz_zoxide
 
+# normal zoxide
+alias zii='zi'
+bindkey -s '^o' 'zii\n'
 #=========================keybindings====================
 bindkey '^U' backward-kill-line     # Ctrl + U
 bindkey '^[[3;5~' kill-word         # Ctrl + Delete
@@ -255,8 +258,7 @@ alias \
         img='eog' \
         video='mplayer' \
         dm='mdcat' \
-        na='nano -0 -l -m -t' \
-        alias j='zi'
+        na='nano -0 -l -m -t'
 
 if command -v lsd >/dev/null 2>&1; then
     # ls for lsd

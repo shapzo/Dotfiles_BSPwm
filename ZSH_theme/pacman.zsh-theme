@@ -4,25 +4,20 @@
 #
 #
 
+#Exit if not an interactive shell
+[[ $- == *i* ]] || return
+
 # To avoid double echo
 # This basically helps Zsh render everything properly: it first reads
 # and then tells the prompt what to display
 setopt prompt_subst
-
-# Hyperlink support in the terminal
-autoload -Uz url-quote-magic
-autoload -Uz vcs_info
-zle -N self-insert url-quote-magic
-
-# Colors for autocompletion
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # -------------------------------------------------
 # Function that shows if a command failed
 # -------------------------------------------------
 prompt_exit_status() {
   # Only show the error if the command failed
-  echo "%(?..%F{red}%K{red}%F{white}✘ %?%f%k%F{red}%f )"
+  print -nr -- "%(?..%F{red}%K{red}%F{white}✘ %?%f%k%F{red}%f )"
 }
 
 # -------------------------------------------------
@@ -30,12 +25,11 @@ prompt_exit_status() {
 # -------------------------------------------------
 prompt_editor_indicator() {
   if [[ -n $NVIM ]]; then
-    echo "%F{green} %f "
+    print -nP "%F{green} %f "
   elif [[ -n $VIM ]]; then
-    echo "%F{red} %f "
+    print -nP "%F{red} %f "
   elif [[ $TERM_PROGRAM == "vscode" || -n $VSCODE_PID ]]; then
-    echo "%F{blue}󰨞 %f "
-  fi
+    print -nP "%F{blue}󰨞 %f "
 }
 
 # -------------------------------------------------
@@ -56,11 +50,11 @@ prompt_current_dir() {
 
   if [[ "$PWD" == "$HOME" ]]; then
     # Home: Only Pacman and dots
-    echo "$SEP_OPEN$PACMAN%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
+    print -nP "$SEP_OPEN$PACMAN%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
   else
     # Outside Home: Includes the current directory (%2c) to show the last 2 directories
     local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}%F{black}  %U%B%2c%b%u %F{$BG_PATH}%K{$BG_GHOSTS}"
-    echo "$SEP_OPEN$PACMAN$DIR_BLOCK $GHOST_1 $GHOST_2 $GHOST_3 $SEP_CLOSE"
+    print -nP "$SEP_OPEN$PACMAN$DIR_BLOCK $GHOST_1 $GHOST_2 $GHOST_3 $SEP_CLOSE"
   fi
 }
 
@@ -86,6 +80,6 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{#00e7b5} ✭"  # cyan
 # Prompt function
 # -------------------------------------------------
 
-PROMPT='$(prompt_exit_status)$(prompt_editor_indicator)$(prompt_current_dir) $(git_prompt_info)
+readonly PROMPT='$(prompt_exit_status)$(prompt_editor_indicator)$(prompt_current_dir) $(git_prompt_info)
 %F{blue}  %f'
 RPROMPT='$(git_prompt_status)'
