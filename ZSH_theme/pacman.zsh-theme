@@ -30,6 +30,7 @@ prompt_editor_indicator() {
     print -nP "%F{red} %f "
   elif [[ $TERM_PROGRAM == "vscode" || -n $VSCODE_PID ]]; then
     print -nP "%F{blue}󰨞 %f "
+  fi
 }
 
 # -------------------------------------------------

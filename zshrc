@@ -42,7 +42,7 @@ zle -N self-insert url-quote-magic
 zstyle ':completion:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
-zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' format '%B%F{yellow}--- %d ---%f%b'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
@@ -58,8 +58,8 @@ zstyle ':completion:*' special-dirs true
 
 #=========================History==========
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -130,8 +130,8 @@ zstyle ':fzf-tab:*' fzf-flags --style=full --height=95% --pointer '' \
 # --- Shortcuts and Behavior ---
 
 # Preview for specific commands
-zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza -1 --icons --group-directories-first --color=always -alh $realpath'
-zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --line-range :500 $realpath 2>/dev/null || eza -1 --icons --group-directories-first --color=always -alh $realpath 2>/dev/null'
+zstyle ':fzf-tab:complete:cd:*'  fzf-preview 'eza -1 --icons --group-directories-first --color=always -hl --smart-group --no-filesize $realpath'
+zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --line-range :500 $realpath 2>/dev/null || eza -1 --icons --group-directories-first --color=always -hl --smart-group --no-filesize $realpath 2>/dev/null'
 
 # For environment variables
 zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-):*' fzf-preview 'echo ${(P)word}'
@@ -161,7 +161,7 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview '
     *)
 
     if [[ -d $realpath ]]; then
-        eza -1 --icons --group-directories-first --color=always -alh "$realpath"
+        eza -1 --icons --group-directories-first --color=always -hl --smart-group --no-filesize "$realpath"
     else
         bat --color=always --line-range :500 "$realpath" 2>/dev/null || cat "$realpath"
     fi ;;
@@ -183,6 +183,9 @@ ZSH_HIGHLIGHT_STYLES[alias]='fg=#89b4fa,bold'
 ZSH_HIGHLIGHT_STYLES[path]='fg=#f080ff,underline'
 ZSH_HIGHLIGHT_STYLES[error]='fg=#f38ba8,bold'
 ZSH_HIGHLIGHT_STYLES[function]='fg=#89dceb'
+ZSH_HIGHLIGHT_STYLES[comment]='fg=#6c7086,italic'
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#f9e2af'
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#fab387'
 
 #===================== autocomplete ==================
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
@@ -273,9 +276,9 @@ elif command -v eza >/dev/null 2>&1; then
     # alias for eza
     alias \
             ls='eza --icons --group-directories-first' \
-            l='eza --icons --group-directories-first -hlg' \
+            l='eza --icons --group-directories-first -hl --smart-group' \
             ll='eza --icons --group-directories-first -a' \
-            la='eza --icons --group-directories-first -ahlg'
+            la='eza --icons --group-directories-first -ahlG --smart-group'
 
 else
     # alias for ls
