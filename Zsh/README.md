@@ -1,3 +1,8 @@
+# 🟡 file zshrc
+
+## Features
+##  Requirements
+
 # 🟡 Pacman ZSH Theme
 
 A custom theme inspired by Pacman aesthetics, featuring dynamic segments, Git integration, and Nerd Font icons.
@@ -19,10 +24,9 @@ A custom theme inspired by Pacman aesthetics, featuring dynamic segments, Git in
 ##  Requirements
 
 - A Nerd Font (for icons to display properly)
-
+- [async.zsh](https://github.com/mafredri/zsh-async)
 
 ##  Screenshots
-
 
 ![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/ZSH_theme/Screenshot-zsh_theme/Screen(1).png)
 
