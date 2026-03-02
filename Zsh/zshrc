@@ -69,6 +69,21 @@ setopt HIST_REDUCE_BLANKS
 setopt INC_APPEND_HISTORY
 
 #==================================================
+#theme pacman
+#source /path
+
+#==================================================
+#pywal theme
+#[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
+
+#==================================================
+#powerline promt
+#if [ -f /usr/share/powerline/bindings/zsh/powerline.zsh ];
+#         then
+#                source /usr/share/powerline/bindings/zsh/powerline.zsh
+#fi
+
+#==================================================
 #theme by powerlevel9k
 
 #https://github.com/Powerlevel9k/powerlevel9k
@@ -394,14 +409,5 @@ grepf() {
 }
 
 #===========others configurations========================
-#pywal theme
-#[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
-
-#powerline promt
-#if [ -f /usr/share/powerline/bindings/zsh/powerline.zsh ];
-#         then
-#                source /usr/share/powerline/bindings/zsh/powerline.zsh
-#fi
-
 # java jdbc
 export CLASSPATH=$CLASSPATH:/usr/share/java/mariadb-jdbc.jar:/usr/share/java/jaybird-jdbc.jar

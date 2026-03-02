@@ -28,6 +28,6 @@ A custom theme inspired by Pacman aesthetics, featuring dynamic segments, Git in
 
 ##  Screenshots
 
-![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/ZSH_theme/Screenshot-zsh_theme/Screen(1).png)
+![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/Zsh/Screenshot-zsh_theme/Screen(1).png)
 
-![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/ZSH_theme/Screenshot-zsh_theme/Screen(3).png)
+![App Screenshot](https://raw.githubusercontent.com/shapzo/Dotfiles_BSPwm/refs/heads/main/Zsh/Screenshot-zsh_theme/Screen(3).png)
