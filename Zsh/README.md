@@ -1,6 +1,6 @@
 # 🟡 Pacman ZSH Theme
 
-A custom Oh My Zsh theme inspired by Pacman aesthetics, featuring dynamic segments, Git integration, and Nerd Font icons.
+A custom theme inspired by Pacman aesthetics, featuring dynamic segments, Git integration, and Nerd Font icons.
 
 ## Features
 
@@ -18,37 +18,8 @@ A custom Oh My Zsh theme inspired by Pacman aesthetics, featuring dynamic segmen
 
 ##  Requirements
 
-- Oh My Zsh installed
-
 - A Nerd Font (for icons to display properly)
 
-- Git plugin enabled in your .zshrc file for full Git integration
-
-### Make sure you have this in your .zshrc:
-
-```bash
-    plugins=(git)
-``` 
-
-##  Installation
-
-1️⃣ Copy the theme file into your Oh My Zsh themes directory:
-
-```bash
-    mv pacman.zsh-theme ~/.oh-my-zsh/themes
-```
-
-2️⃣ Open your .zshrc file and set the theme:
-
-```bash
-   ZSH_THEME="pacman"
-```
-
-3️⃣ Reload your configuration:
-
-```bash
-source ~/.zshrc
-```
 
 ##  Screenshots
 
