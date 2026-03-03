@@ -142,6 +142,14 @@ prompt_lang_indicator() {
   if [[ -n *.rb(#qN[1]) || -f "Gemfile" ]]; then
     lang_indicator+="%F{#CC342D} %f"
   fi
+   # SQL
+  if [[ -n *.sql(#qN[1]) ]]; then
+    lang_indicator+="%F{#33679} %f"
+  fi
+  # SQLite
+  if [[ -n *.(db|sqlite|sqlite3)(#qN[1]) ]]; then
+    lang_indicator+="%F{#003b57} %f"
+  fi
   # Docker
   if [[ -f "Dockerfile" || -f "docker-compose.yml" ]]; then
     lang_indicator+="%F{#2496ED} %f"
