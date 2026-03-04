@@ -277,4 +277,4 @@ add-zsh-hook preexec git_preexec_refresh
 # 'readonly' is used to cache so it doesn't reload colors constantly
 readonly PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
 %F{blue}  %f'
-RPROMPT='${lang_indicator}${ssh_indicator}'
+readonly RPROMPT='${lang_indicator}${ssh_indicator}'
