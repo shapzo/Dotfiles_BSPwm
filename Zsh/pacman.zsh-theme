@@ -251,7 +251,6 @@ prompt_trigger_async() {
     git_async=""
     return
   }
-
   # Dispatch job to worker
   async_job git_worker git_worker_task "$PWD"
 }
