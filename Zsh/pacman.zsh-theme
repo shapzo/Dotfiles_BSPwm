@@ -160,8 +160,8 @@ prompt_lang_indicator() {
 # Main Prompt Function
 # -------------------------------------------------
 prompt_current_dir() {
-  if [[  -z ${PWD#$HOME}  ]]; then
-  #[[ $PWD == $HOME ]] -> this would be another way but I like this one for now
+  if [[ "$PWD" == "$HOME" ]]; then
+  #[[  -z ${PWD#$HOME}  ]] -> this would be another way but I like this one for now
     # Home: Pacman and dots only
     current_dir="$SEP_OPEN$PACMAN%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
   else
@@ -174,74 +174,91 @@ prompt_current_dir() {
 # -------------------------------------------------
 # Git Function
 # -------------------------------------------------
-# Git "Worker" Function
+# Git "Worker" Function: Runs heavy Git operations in the background
 git_worker_task() {
-  # We use -C to run git in the directory without using 'cd'
   local target_dir="$1"
   
-  # 1. Get branch fast
+  # 1. Fetch branch name or short hash (detached HEAD)
   local ref=$(git -C "$target_dir" symbolic-ref --short HEAD 2>/dev/null || git -C "$target_dir" rev-parse --short HEAD 2>/dev/null)
-  [[ -z $ref ]] && return 
+  [[ -z $ref ]] && return # Bail if not a git repo
 
   local status_info=""
   local state_icon="$GIT_ICON_CLEAN"
+  
+  # 2. Get status in porcelain format (script-friendly)
+  # Ignore submodules for maximum performance
+  local git_status_output=$(git -C "$target_dir" status --porcelain --ignore-submodules 2>/dev/null)
 
-  # 2. "Dirty" detection
-  if ! git -C "$target_dir" diff --quiet --ignore-submodules HEAD 2>/dev/null; then
+  if [[ -n "$git_status_output" ]]; then
     state_icon="$GIT_ICON_DIRTY"
     
-    # If dirty, we look for specific details to maintain manual logic or simplify
-    status_info+="$GIT_ICON_MODIFIED"
+    # Use an associative array to track unique states
+    # This prevents icon duplication when multiple files share the same status
+    local -A seen=()
+    local line
+    while IFS= read -r line; do
+      local xy="${line[1,2]}"   # Extract first two characters (X & Y status codes)
+      case "$xy" in
+        \?\?) seen[untracked]=1 ;; # ?? code
+        A?)   seen[added]=1     ;; # A code (Staged)
+        M?)   seen[staged_mod]=1;; # M code (Staged)
+        \ M)  seen[wt_mod]=1    ;; # _M code (Working Tree)
+        D?)   seen[staged_del]=1;; # D code (Staged)
+        \ D)  seen[wt_del]=1    ;; # _D code (Working Tree)
+      esac
+    done <<< "$git_status_output"
+
+    # 3. Assemble status icons based on discovered flags
+    [[ -n ${seen[untracked]} ]] && status_info+="$GIT_ICON_UNTRACKED"
+    [[ -n ${seen[added]} ]]     && status_info+="$GIT_ICON_ADDED"
+    [[ -n ${seen[staged_mod]} || -n ${seen[wt_mod]} ]] && status_info+="$GIT_ICON_MODIFIED"
+    [[ -n ${seen[staged_del]} || -n ${seen[wt_del]} ]] && status_info+="$GIT_ICON_DELETED"
   fi
 
-  # 3. Detect Untracked (New files)
-  if git -C "$target_dir" ls-files --others --exclude-standard | read; then
-    state_icon="$GIT_ICON_DIRTY"
-    status_info+="$GIT_ICON_UNTRACKED"
-  fi
-
-  # Assembly using global variables
+  # Output the final Git string
   echo "${GIT_PREFIX}${ref}${state_icon}${status_info}${GIT_SUFFIX}"
 }
 
-# Callback (When the worker finishes)
+# Callback: Triggered when the async worker finishes
 git_callback() {
   local output="$3"
-
-  # If worker failed or returned nothing
-  [[ -z $output ]] && return
-
-  # Only update if it changed
-  if [[ "$git_async" != " $output" ]]; then
-    git_async=" $output"
+  
+  # Clear variable and reset prompt if output is empty
+  if [[ -z $output ]]; then
+    [[ -n $git_async ]] && { git_async=""; zle && zle reset-prompt; }
+    return
+  fi
+  
+  # Only reset prompt if the Git status string has actually changed
+  if [[ "$git_async" != "$output" ]]; then
+    git_async="$output"
     zle && zle reset-prompt
   fi
 }
 
-# Setup the Worker
+# Initialize Async Worker
 async_start_worker git_worker -n
 async_register_callback git_worker git_callback
 
-# Hook to trigger the search
+# Trigger Hook: Decides when to spawn a new async job
 prompt_trigger_async() {
-  # If directory hasn't changed → do nothing
-  [[ "$PWD" == "$Last_git_dir" ]] && return
-  Last_git_dir="$PWD"
+  # Skip if directory hasn't changed to save resources
+  [[ "$PWD" == "$LAST_GIT_DIR" ]] && return
+  LAST_GIT_DIR="$PWD"
 
-  # Fast check if it is a repo
+  # Check if we are inside a Git work tree
   git -C "$PWD" rev-parse --is-inside-work-tree &>/dev/null || {
     git_async=""
     return
   }
 
+  # Dispatch job to worker
   async_job git_worker git_worker_task "$PWD"
 }
 
-# Refresh git if a git command is executed
+# Pre-execution Hook: Forces a refresh after running any command (like 'git add')
 git_preexec_refresh() {
-  if [[ "$1" == git* ]]; then
-    Last_git_dir=""
-  fi
+  LAST_GIT_DIR=""
 }
 
 # -------------------------------------------------
