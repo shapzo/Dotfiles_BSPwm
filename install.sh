@@ -48,10 +48,10 @@ install_fonts() {
 install_bspwm(){
     echo -e "\n [*] Installing bspwmrc..."
     if [[ -d "$BDIR" ]]; then
-        cp $DIR/bspwmrc "$BDIR" && cd "$BDIR" && chmod +x bspwmrc
+        cp $DIR/bspwmrc "$BDIR" && chmod +x "$BDIR/bspwmrc"
     else
         mkdir -p "$BDIR"
-        cp $DIR/bspwmrc "$BDIR" && cd "$BDIR" && chmod +x bspwmrc
+        cp $DIR/bspwmrc "$BDIR" && chmod +x "$BDIR/bspwmrc"
     fi 
 
     if [[ -d "$BDIR" ]]; then
@@ -64,10 +64,10 @@ install_bspwm(){
 install_sxhkd(){
     echo -e "\n [*] Installing sxhkdrc..."
     if [[ -d "$SDIR" ]]; then
-        cp $DIR/sxhkdrc "$SDIR" && cd "$SDIR" && chmod +x sxhkdrc
+        cp $DIR/sxhkdrc "$SDIR" && chmod +x "$SDIR/sxhkdrc"
     else
         mkdir -p "$SDIR"
-        cp $DIR/sxhkdrc "$SDIR" && cd "$SDIR" && chmod +x sxhkdrc
+        cp $DIR/sxhkdrc "$SDIR" && chmod +x "$SDIR/sxhkdrc"
     fi
 }
 
@@ -164,7 +164,7 @@ install_nano() {
 install_zsh() {
 	echo -e "\n [*] Installing zshrc..."
 	if [[ -d "$HOME_DIR" ]]; then
-		cp $DIR/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc
+		cp $DIR/Zsh/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc
 	else
 		echo -e "error"
 	fi
