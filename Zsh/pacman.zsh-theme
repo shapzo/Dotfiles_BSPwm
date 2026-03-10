@@ -26,7 +26,7 @@ typeset -g privilege_indicator=""
 typeset -g lang_indicator=""
 typeset -g current_dir=""
 typeset -g git_async=""
-typeset -g Last_git_dir=""
+typeset -g LAST_GIT_DIR=""
 
 # ---- Git Icons ----
 typeset -gr GIT_ICON_ADDED="%F{#00db12} ✚ %f"
@@ -83,7 +83,7 @@ prompt_ssh_indicator() {
 prompt_privilege_indicator() {
   # If user ID is 0 (root)
   if [[ $UID -eq 0 ]]; then
-    privilege_indicator="%F{yellow}󱐋%F{red}   %f"
+    privilege_indicator="%F{red}%K{red}%F{white} 󰯆 root %f%k%F{red}%f "
   else
     privilege_indicator=""
   fi
@@ -144,7 +144,7 @@ prompt_lang_indicator() {
   fi
    # SQL
   if [[ -n *.sql(#qN[1]) ]]; then
-    lang_indicator+="%F{#33679} %f"
+    lang_indicator+="%F{#336791} %f"
   fi
   # SQLite
   if [[ -n *.(db|sqlite|sqlite3)(#qN[1]) ]]; then
@@ -199,24 +199,24 @@ git_worker_task() {
     while IFS= read -r line; do
       local xy="${line[1,2]}"   # Extract first two characters (X & Y status codes)
       case "$xy" in
-        \?\?) seen[untracked]=1 ;; # ?? code
-        A?)   seen[added]=1     ;; # A code (Staged)
-        M?)   seen[staged_mod]=1;; # M code (Staged)
-        \ M)  seen[wt_mod]=1    ;; # _M code (Working Tree)
-        D?)   seen[staged_del]=1;; # D code (Staged)
-        \ D)  seen[wt_del]=1    ;; # _D code (Working Tree)
+        \?\?) seen[untracked]=1                      ;;
+        A?)   seen[added]=1                          ;;
+        M?)   seen[staged_mod]=1                     ;;
+        MM)   seen[staged_mod]=1; seen[wt_mod]=1     ;;
+        \ M)  seen[wt_mod]=1                         ;;
+        D?)   seen[staged_del]=1                     ;;
+        \ D)  seen[wt_del]=1                         ;;
+        R?)   seen[renamed]=1                        ;; #file renamed
       esac
     done <<< "$git_status_output"
 
     # 3. Assemble status icons based on discovered flags
     [[ -n ${seen[untracked]} ]] && status_info+="$GIT_ICON_UNTRACKED"
     [[ -n ${seen[added]} ]]     && status_info+="$GIT_ICON_ADDED"
+    [[ -n ${seen[renamed]} ]]   && status_info+="%F{#f9e2af} ➜ %f"
     [[ -n ${seen[staged_mod]} || -n ${seen[wt_mod]} ]] && status_info+="$GIT_ICON_MODIFIED"
     [[ -n ${seen[staged_del]} || -n ${seen[wt_del]} ]] && status_info+="$GIT_ICON_DELETED"
   fi
-
-  # Output the final Git string
-  echo "${GIT_PREFIX}${ref}${state_icon}${status_info}${GIT_SUFFIX}"
 }
 
 # Callback: Triggered when the async worker finishes
@@ -274,7 +274,6 @@ add-zsh-hook preexec git_preexec_refresh
 # -------------------------------------------------
 # Prompt Function
 # -------------------------------------------------
-# 'readonly' is used to cache so it doesn't reload colors constantly
-readonly PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
+PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
 %F{blue}  %f'
-readonly RPROMPT='${lang_indicator}${ssh_indicator}'
+RPROMPT='${lang_indicator}${ssh_indicator}'

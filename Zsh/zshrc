@@ -33,6 +33,7 @@ setopt nonomatch
 setopt notify
 setopt numericglobsort
 setopt correct
+autoload -Uz zmv
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
@@ -271,6 +272,7 @@ alias \
         clockl='tty-clock -b -t -c | lolcat' \
         pdf='evince' \
         img='eog' \
+        alias vi='nvim' \
         video='mplayer' \
         dm='mdcat' \
         na='nano -0 -l -m -t'
@@ -332,27 +334,23 @@ rmf(){
     fi
     scrub -p dod "$1" && shred -zun 10 -v "$1"
 }
-#Open neovim
-vi(){
-    nvim $1
-}
 #Asciinema
 rec(){
-        asciinema rec $1
+        asciinema rec "$@"
 }
 play(){
-        asciinema play $1
+        asciinema play "$@"
 }
 #Funcion tree using lsd
 tree(){
-        lsd --group-dirs=first --tree $1
+        lsd --group-dirs=first --tree "$@"
 }
 #Function using eza
 et(){
-        eza --icons --group-directories-first -T $1
+        eza --icons --group-directories-first -T "$@"
 }
 eth(){
-        eza --icons --group-directories-first -ahlg -T $1
+        eza --icons --group-directories-first -ahlg -T "$@"
 }
 # function extract
 extract() {
@@ -406,6 +404,29 @@ f() {
 # Search in files by content
 grepf() {
     grep -r "$1" . --include="*.$2" 2>/dev/null
+}
+# Make directoris an cd
+mkcd() {
+    mkdir -p "$@" && cd "$_"
+}
+# Renamed files
+rena() {
+    local name="$1"
+    local i=1
+
+    if [[ -z "$name" ]]; then
+        echo "Use: rena <nom>"
+        return 1
+    fi
+
+    for f in *; do
+        [[ -f "$f" ]] || continue
+        local ext="${f##*.}"
+        mv "$f" "${name} (${i}).${ext}"
+        ((i++))
+    done
+
+    echo "✅ ${i-1} as '${name} (N).ext'"
 }
 
 #===========others configurations========================
