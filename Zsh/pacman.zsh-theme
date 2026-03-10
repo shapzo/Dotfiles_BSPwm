@@ -199,14 +199,14 @@ git_worker_task() {
     while IFS= read -r line; do
       local xy="${line[1,2]}"   # Extract first two characters (X & Y status codes)
       case "$xy" in
-        \?\?) seen[untracked]=1                      ;;
-        A?)   seen[added]=1                          ;;
-        M?)   seen[staged_mod]=1                     ;;
-        MM)   seen[staged_mod]=1; seen[wt_mod]=1     ;;
-        \ M)  seen[wt_mod]=1                         ;;
-        D?)   seen[staged_del]=1                     ;;
-        \ D)  seen[wt_del]=1                         ;;
-        R?)   seen[renamed]=1                        ;; #file renamed
+        \?\?) seen[untracked]=1                      ;; # untracked file 
+        A?)   seen[added]=1                          ;; # file added/staged for commit
+        M?)   seen[staged_mod]=1                     ;; # file modified and staged
+        MM)   seen[staged_mod]=1; seen[wt_mod]=1     ;; # modified in staging AND also modified in working tree
+        \ M)  seen[wt_mod]=1                         ;; # modified only in working tree
+        D?)   seen[staged_del]=1                     ;; # file deleted and staged
+        \ D)  seen[wt_del]=1                         ;; # file deleted only in working tree
+        R?)   seen[renamed]=1                        ;; # file renamed
       esac
     done <<< "$git_status_output"
 

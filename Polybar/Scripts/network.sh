@@ -36,6 +36,7 @@ fi
 if ip link show "$WIFI" 2>/dev/null | grep -q "state UP"; then
   ESSID=$(iw dev "$WIFI" link | awk -F': ' '/SSID/ {print $2}')
   SIGNAL=$(grep "$WIFI" /proc/net/wireless | awk '{print int($3)}')
+  SIGNAL=$(( (SIGNAL + 100) * 2 ))
 
   if [[ $SIGNAL -gt 70 ]]; then ICON="󰤨"
   elif [[ $SIGNAL -gt 55 ]]; then ICON="󰤥"

@@ -8,7 +8,6 @@ set scrolloff 10
 set relativenumber
 set drawbox true
 set dircounts true
-set dircounts_size 1000000
 set dirfirst true
 set ignorecase true
 set incsearch true
@@ -33,24 +32,22 @@ cmd open &{{
 # Rename
 cmd rename &{{
     old_name="$f"
-    new_name=$(mktemp)
-    echo "$old_name" > "$new_name"
-    "$EDITOR" "$new_name"
-    new_name=$(cat "$new_name")
-    rm "$new_name"
+    tmp=$(mktemp)
+    echo "$old_name" > "$tmp"
+    "$EDITOR" "$tmp"
+    new_name=$(cat "$tmp")
+    rm "$tmp"
     if [ -n "$new_name" ] && [ "$old_name" != "$new_name" ]; then
         mv "$old_name" "$new_name"
     fi
-    clear
 }}
 
 # Make dir's
-cmd mkdir &{{
+cmd mkdir ${{
     printf "Directory name: "
     read name
     mkdir -p "$name"
     lf -remote "send $id cd \"$name\""
-    clear
 }}
 
 # Paste
@@ -74,8 +71,8 @@ cmd search ${{
 # shortcuts
 
 # Sistema
+map <enter> open  
 cmd q quit
-map <enter> open
 
 #navegation
 map k up
@@ -90,6 +87,9 @@ map f search
 
 map gg go-to-first
 map G go-to-last
+
+map c copy
+map P paste
 
 map e edit
 map d delete
