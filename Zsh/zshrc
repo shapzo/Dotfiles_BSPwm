@@ -426,7 +426,7 @@ rena() {
         ((i++))
     done
 
-    echo "✅ ${i-1} as '${name} (N).ext'"
+    echo "${i-1} as '${name} (N).ext'"
 }
 
 #===========others configurations========================
