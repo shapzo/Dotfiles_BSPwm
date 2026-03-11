@@ -95,69 +95,39 @@ prompt_privilege_indicator() {
 # Function to detect Languages in the Directory
 # -------------------------------------------------
 prompt_lang_indicator() {
-  [[ "$PWD"=="$last_lang_dir" ]] && return
+  [[ "$PWD" == "$last_lang_dir" ]] && return
   last_lang_dir="$PWD"
   lang_indicator=""
-  # Python
-  if [[ -n *.py(#qN[1]) || -f "requirements.txt" || -f "pyproject.toml" ]]; then
-    lang_indicator+="%F{#3776AB} %f"
-  fi
+   # Python
+  [[ -n *.py(#qN[1]) || -f "requirements.txt" || -f "pyproject.toml" ]] && lang_indicator+="%F{#3776AB} %f"
   # Rust
-  if [[ -n *.rs(#qN[1]) || -f "Cargo.toml" ]]; then
-    lang_indicator+="%F{#363636} %f"
-  fi
+  [[ -n *.rs(#qN[1]) || -f "Cargo.toml" ]] && lang_indicator+="%F{#363636} %f"
   # C / C++
-  if [[ -n *.(c|cpp|h|hpp)(#qN[1]) ]]; then
-    lang_indicator+="%F{#00599C} %f"
-  fi
+  [[ -n *.(c|cpp|h|hpp)(#qN[1]) ]] && lang_indicator+="%F{#00599C} %f"
   # JavaScript / TypeScript / Node
-  if [[ -n *.(js|ts|jsx|tsx)(#qN[1]) || -f "package.json" ]]; then
-    lang_indicator+="%F{#F7DF1E} %f"
-  fi
-    # Shell scripts
-  if [[ -n *.sh(#qN[1]) ]]; then
-    lang_indicator+="%F{#8F726F} %f"
-  fi
+  [[ -n *.(js|ts|jsx|tsx)(#qN[1]) || -f "package.json" ]] && lang_indicator+="%F{#F7DF1E} %f"
+  # Shell scripts
+  [[ -n *.sh(#qN[1]) ]] && lang_indicator+="%F{#8F726F} %f"
   # HTML
-  if [[ -n *.(html|htm)(#qN[1]) ]]; then
-    lang_indicator+="%F{#E34F26} %f"
-  fi
+  [[ -n *.(html|htm)(#qN[1]) ]] && lang_indicator+="%F{#E34F26} %f"
   # CSS
-  if [[ -n *.css(#qN[1]) ]]; then
-    lang_indicator+="%F{#1572B6} %f"
-  fi
+  [[ -n *.css(#qN[1]) ]] && lang_indicator+="%F{#1572B6} %f"
   # PHP
-  if [[ -n *.php(#qN[1]) ]]; then
-    lang_indicator+="%F{#9877B4} %f"
-  fi
+  [[ -n *.php(#qN[1]) ]] && lang_indicator+="%F{#9877B4} %f"
   # Java
-  if [[ -n *.java(#qN[1]) ]]; then
-    lang_indicator+="%F{#966E00} %f"
-  fi
-    # Go
-  if [[ -n *.go(#qN[1]) || -f "go.mod" ]]; then
-    lang_indicator+="%F{#00ADD8}󰟓 %f"
-  fi
+  [[ -n *.java(#qN[1]) ]] && lang_indicator+="%F{#966E00} %f"
+  # Go
+  [[ -n *.go(#qN[1]) || -f "go.mod" ]] && lang_indicator+="%F{#00ADD8}󰟓 %f"
   # Lua
-  if [[ -n *.lua(#qN[1]) ]]; then
-    lang_indicator+="%F{#51B2E8} %f"
-  fi
+  [[ -n *.lua(#qN[1]) ]] && lang_indicator+="%F{#51B2E8} %f"
   # Ruby
-  if [[ -n *.rb(#qN[1]) || -f "Gemfile" ]]; then
-    lang_indicator+="%F{#CC342D} %f"
-  fi
+  [[ -n *.rb(#qN[1]) || -f "Gemfile" ]] && lang_indicator+="%F{#CC342D} %f"
   # SQL
-  if [[ -n *.sql(#qN[1]) ]]; then
-    lang_indicator+="%F{#FFA11F} %f"
-  fi
+  [[ -n *.sql(#qN[1]) ]] && lang_indicator+="%F{#FFA11F} %f"
   # SQLite
-  if [[ -n *.(db|sqlite|sqlite3)(#qN[1]) ]]; then
-    lang_indicator+="%F{#0284C2} %f"
-  fi
+  [[ -n *.(db|sqlite|sqlite3)(#qN[1]) ]] && lang_indicator+="%F{#0284C2} %f"
   # Docker
-  if [[ -f "Dockerfile" || -f "docker-compose.yml" ]]; then
-    lang_indicator+="%F{#2496ED} %f"
-  fi
+  [[ -f "Dockerfile" || -f "docker-compose.yml" ]] && lang_indicator+="%F{#2496ED} %f"
 }
 
 # -------------------------------------------------
