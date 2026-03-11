@@ -259,10 +259,10 @@ promt_precmd(){
   prompt_exit_status
   prompt_ssh_indicator
   prompt_privilege_indicator
-  prompt_lang_indicator
   prompt_current_dir
   prompt_trigger_async
   set_full_prompt
 }
 add-zsh-hook precmd promt_precmd
+add-zsh-hook chpwd prompt_lang_indicator
 add-zsh-hook preexec git_preexec_refresh
