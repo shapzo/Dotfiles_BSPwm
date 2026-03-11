@@ -24,6 +24,7 @@ typeset -g exit_status=""
 typeset -g ssh_indicator=""
 typeset -g privilege_indicator=""
 typeset -g lang_indicator=""
+typeset -g last_lang_dir=""
 typeset -g current_dir=""
 typeset -g git_async=""
 typeset -g LAST_GIT_DIR=""
@@ -94,6 +95,8 @@ prompt_privilege_indicator() {
 # Function to detect Languages in the Directory
 # -------------------------------------------------
 prompt_lang_indicator() {
+  [[ "$PWD"=="$last_lang_dir" ]] && return
+  last_lang_dir="$PWD"
   lang_indicator=""
   # Python
   if [[ -n *.py(#qN[1]) || -f "requirements.txt" || -f "pyproject.toml" ]]; then
@@ -282,12 +285,14 @@ zle -N zle-line-finish
 # -------------------------------------------------
 # HOOK REGISTRATION
 # -------------------------------------------------
-add-zsh-hook precmd prompt_exit_status
-add-zsh-hook precmd prompt_ssh_indicator
-add-zsh-hook precmd prompt_privilege_indicator
-add-zsh-hook precmd prompt_lang_indicator
-add-zsh-hook precmd prompt_current_dir
-add-zsh-hook precmd prompt_trigger_async
-add-zsh-hook precmd set_full_prompt
-
+promt_precmd(){
+  prompt_exit_status
+  prompt_ssh_indicator
+  prompt_privilege_indicator
+  prompt_lang_indicator
+  prompt_current_dir
+  prompt_trigger_async
+  set_full_prompt
+}
+add-zsh-hook precmd promt_precmd
 add-zsh-hook preexec git_preexec_refresh
