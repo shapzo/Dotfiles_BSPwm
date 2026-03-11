@@ -29,12 +29,13 @@ typeset -g git_async=""
 typeset -g LAST_GIT_DIR=""
 
 # ---- Git Icons ----
-typeset -gr GIT_ICON_ADDED="%F{#00db12} ✚ %f"
-typeset -gr GIT_ICON_MODIFIED="%F{#cc00e7} ✹ %f"
-typeset -gr GIT_ICON_DELETED="%F{#ff0000} ✖ %f"
-typeset -gr GIT_ICON_UNTRACKED="%F{#00e7b5} ✭ %f"
-typeset -gr GIT_ICON_CLEAN="%F{#00db12} ✔ %f"
+typeset -gr GIT_ICON_ADDED="%F{#DB7500}✚ %f"
+typeset -gr GIT_ICON_MODIFIED="%F{#CF4EDE}✹ %f"
+typeset -gr GIT_ICON_DELETED="%F{#D60000}✖ %f"
+typeset -gr GIT_ICON_UNTRACKED="%F{#00e7b5}✭ %f"
+typeset -gr GIT_ICON_CLEAN="%F{#242424}  %f"
 typeset -gr GIT_ICON_DIRTY="%F{#ff0000} ✘ %f"
+typeset -gr GIT_ICON_RENAMED="%F{#f9e2af} ➜ %f"
 
 # ---- Git Bubble ----
 typeset -gr GIT_PREFIX="%F{#006e0f}%K{#006e0f}%F{#000000}  %B"
@@ -83,7 +84,7 @@ prompt_ssh_indicator() {
 prompt_privilege_indicator() {
   # If user ID is 0 (root)
   if [[ $UID -eq 0 ]]; then
-    privilege_indicator="%F{red}%K{red}%F{white} 󰯆 root %f%k%F{red}%f "
+    privilege_indicator="%F{red}%K{red}%F{white} 󰮯 %f%k%F{red}%f "
   else
     privilege_indicator=""
   fi
@@ -94,15 +95,15 @@ prompt_privilege_indicator() {
 # -------------------------------------------------
 prompt_lang_indicator() {
   lang_indicator=""
-  # Python: .py or management files
+  # Python
   if [[ -n *.py(#qN[1]) || -f "requirements.txt" || -f "pyproject.toml" ]]; then
     lang_indicator+="%F{#3776AB} %f"
   fi
-  # Rust: .rs or Cargo manifest
+  # Rust
   if [[ -n *.rs(#qN[1]) || -f "Cargo.toml" ]]; then
-    lang_indicator+="%F{#E57300} %f"
+    lang_indicator+="%F{#363636} %f"
   fi
-  # C / C++: common extensions
+  # C / C++
   if [[ -n *.(c|cpp|h|hpp)(#qN[1]) ]]; then
     lang_indicator+="%F{#00599C} %f"
   fi
@@ -112,7 +113,7 @@ prompt_lang_indicator() {
   fi
     # Shell scripts
   if [[ -n *.sh(#qN[1]) ]]; then
-    lang_indicator+="%F{#4EAA25} %f"
+    lang_indicator+="%F{#8F726F} %f"
   fi
   # HTML
   if [[ -n *.(html|htm)(#qN[1]) ]]; then
@@ -124,11 +125,11 @@ prompt_lang_indicator() {
   fi
   # PHP
   if [[ -n *.php(#qN[1]) ]]; then
-    lang_indicator+="%F{#777BB4} %f"
+    lang_indicator+="%F{#9877B4} %f"
   fi
   # Java
   if [[ -n *.java(#qN[1]) ]]; then
-    lang_indicator+="%F{#007396} %f"
+    lang_indicator+="%F{#966E00} %f"
   fi
     # Go
   if [[ -n *.go(#qN[1]) || -f "go.mod" ]]; then
@@ -142,32 +143,17 @@ prompt_lang_indicator() {
   if [[ -n *.rb(#qN[1]) || -f "Gemfile" ]]; then
     lang_indicator+="%F{#CC342D} %f"
   fi
-   # SQL
+  # SQL
   if [[ -n *.sql(#qN[1]) ]]; then
-    lang_indicator+="%F{#336791} %f"
+    lang_indicator+="%F{#FFA11F} %f"
   fi
   # SQLite
   if [[ -n *.(db|sqlite|sqlite3)(#qN[1]) ]]; then
-    lang_indicator+="%F{#003b57} %f"
+    lang_indicator+="%F{#0284C2} %f"
   fi
   # Docker
   if [[ -f "Dockerfile" || -f "docker-compose.yml" ]]; then
     lang_indicator+="%F{#2496ED} %f"
-  fi
-}
-
-# -------------------------------------------------
-# Main Prompt Function
-# -------------------------------------------------
-prompt_current_dir() {
-  if [[ "$PWD" == "$HOME" ]]; then
-  #[[  -z ${PWD#$HOME}  ]] -> this would be another way but I like this one for now
-    # Home: Pacman and dots only
-    current_dir="$SEP_OPEN$PACMAN%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
-  else
-    # Outside Home: Includes current folder (%2~) to show the last 2 directories relative to home (could also use 2c)
-    local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}%F{black}  %U%B%2~%b%u %F{$BG_PATH}%K{$BG_GHOSTS}"
-    current_dir="$SEP_OPEN$PACMAN$DIR_BLOCK $GHOST_1 $GHOST_2 $GHOST_3 $SEP_CLOSE"
   fi
 }
 
@@ -213,7 +199,7 @@ git_worker_task() {
     # 3. Assemble status icons based on discovered flags
     [[ -n ${seen[untracked]} ]] && status_info+="$GIT_ICON_UNTRACKED"
     [[ -n ${seen[added]} ]]     && status_info+="$GIT_ICON_ADDED"
-    [[ -n ${seen[renamed]} ]]   && status_info+="%F{#f9e2af} ➜ %f"
+    [[ -n ${seen[renamed]} ]]   && status_info+="$GIT_ICON_RENAMED"
     [[ -n ${seen[staged_mod]} || -n ${seen[wt_mod]} ]] && status_info+="$GIT_ICON_MODIFIED"
     [[ -n ${seen[staged_del]} || -n ${seen[wt_del]} ]] && status_info+="$GIT_ICON_DELETED"
   fi
@@ -261,6 +247,39 @@ git_preexec_refresh() {
 }
 
 # -------------------------------------------------
+# Main Prompt Function
+# -------------------------------------------------
+prompt_current_dir() {
+  if [[ "$PWD" == "$HOME" ]]; then
+  #[[  -z ${PWD#$HOME}  ]] -> this would be another way but I like this one for now
+    # Home: Pacman and dots only
+    current_dir="$SEP_OPEN$PACMAN%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
+  else
+    # Outside Home: Includes current folder (%2~) to show the last 2 directories relative to home (could also use 2c)
+    local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}%F{black}  %U%B%2~%b%u %F{$BG_PATH}%K{$BG_GHOSTS}"
+    current_dir="$SEP_OPEN$PACMAN$DIR_BLOCK $GHOST_1 $GHOST_2 $GHOST_3 $SEP_CLOSE"
+  fi
+}
+
+# Prompt
+set_full_prompt() {
+  PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
+%F{blue}  %f'
+  RPROMPT='${lang_indicator}${ssh_indicator}'
+}
+
+set_tiny_prompt() {
+  PROMPT="%F{yellow}  󰮯 %F{#A6A6A6}%U%1~%u %F{#FA0542}󰊠 %f %F{blue} %f"
+  RPROMPT=""
+  [[ -o zle ]] && zle reset-prompt
+}
+
+zle-line-finish() {
+  set_tiny_prompt
+}
+zle -N zle-line-finish
+
+# -------------------------------------------------
 # HOOK REGISTRATION
 # -------------------------------------------------
 add-zsh-hook precmd prompt_exit_status
@@ -269,11 +288,6 @@ add-zsh-hook precmd prompt_privilege_indicator
 add-zsh-hook precmd prompt_lang_indicator
 add-zsh-hook precmd prompt_current_dir
 add-zsh-hook precmd prompt_trigger_async
-add-zsh-hook preexec git_preexec_refresh
+add-zsh-hook precmd set_full_prompt
 
-# -------------------------------------------------
-# Prompt Function
-# -------------------------------------------------
-PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
-%F{blue}  %f'
-RPROMPT='${lang_indicator}${ssh_indicator}'
+add-zsh-hook preexec git_preexec_refresh
