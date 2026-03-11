@@ -176,6 +176,10 @@ git_worker_task() {
     [[ -n ${seen[staged_mod]} || -n ${seen[wt_mod]} ]] && status_info+="$GIT_ICON_MODIFIED"
     [[ -n ${seen[staged_del]} || -n ${seen[wt_del]} ]] && status_info+="$GIT_ICON_DELETED"
   fi
+
+   # 4. Return block git
+  local result="${GIT_PREFIX}${ref}${state_icon}${status_info}${GIT_SUFFIX}"
+  print -nr -- "$result"
 }
 
 # Callback: Triggered when the async worker finishes
@@ -237,7 +241,7 @@ prompt_current_dir() {
 # Prompt
 set_full_prompt() {
   PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
-%F{blue}  %f'
+  %F{blue}  %f'
   RPROMPT='${lang_indicator}${ssh_indicator}'
 }
 
@@ -255,7 +259,7 @@ zle -N zle-line-finish
 # -------------------------------------------------
 # HOOK REGISTRATION
 # -------------------------------------------------
-promt_precmd(){
+prompt_precmd(){
   prompt_exit_status
   prompt_ssh_indicator
   prompt_privilege_indicator
@@ -263,6 +267,6 @@ promt_precmd(){
   prompt_trigger_async
   set_full_prompt
 }
-add-zsh-hook precmd promt_precmd
+add-zsh-hook precmd prompt_precmd
 add-zsh-hook chpwd prompt_lang_indicator
 add-zsh-hook preexec git_preexec_refresh
