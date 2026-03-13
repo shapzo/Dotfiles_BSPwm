@@ -19,30 +19,33 @@ run() {
 }
 
 run sxhkd
-#picom -b &
+#run picom -b &
 run dunst
 run xsetroot -cursor_name left_ptr
+
+# polkit
+run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Fix java applications
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 #To adjust to the resolution of my laptop
-#xrandr -s 1360x768 &
+#run xrandr -s 1360x768 &
 
-#xrandr -s 1600x900 &
-#xrandr -s 1920x1080 &
-#xrandr -s 2048x1080 &
-#xrandr -s 3840 x 2160 &
+#run xrandr -s 1600x900 &
+#run xrandr -s 1920x1080 &
+#run xrandr -s 2048x1080 &
+#run xrandr -s 3840 x 2160 &
 
 # Set wallpaper
 #feh --bg-fill $HOME/Pictures/Your-wallpaper.jpg
-feh --bg-fill $HOME/.config/bspwm/img_1.jpg
+run feh --bg-fill $HOME/.config/bspwm/img_1.jpg
 
 # Set polybar
-#$HOME/.config/polybar/poly1/launch.sh &
+#run $HOME/.config/polybar/poly1/launch.sh &
 run $HOME/.config/polybar/poly2/launch.sh &
-#$HOME/.config/polybar/poly3/launch.sh &
-#$HOME/.config/polybar/poly4/launch.sh &
+#run $HOME/.config/polybar/poly3/launch.sh &
+#run $HOME/.config/polybar/poly4/launch.sh &
 
 # Dunst notification
 killall -q baterry_alert.sh song_alert.sh
