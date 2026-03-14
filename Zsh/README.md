@@ -20,15 +20,9 @@ A custom theme inspired by Pacman aesthetics, featuring dynamic segments, Git in
 ## Features
 
 -  Pacman-inspired design
-
 -  Current directory display (last two directories)
-
 -  Exit status indicator (shows when a command fails)
-
--  Editor detection (Neovim, Vim, VS Code)
-
 -  Git branch and status integration
-
 -  Clean segmented powerline-style prompt
 
 ##  Requirements
