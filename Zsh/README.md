@@ -33,8 +33,8 @@ A custom theme inspired by Pacman aesthetics, featuring dynamic segments, Git in
 
 ##  Requirements
 
-- A Nerd Font (for icons to display properly)
-- [async.zsh](https://github.com/mafredri/zsh-async)
+-  [A Nerd Font (for icons to display properly)](https://www.nerdfonts.com/)
+-  [async.zsh](https://github.com/mafredri/zsh-async)
 
 ##  Screenshots
 
