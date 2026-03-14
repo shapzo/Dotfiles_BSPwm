@@ -1,7 +1,17 @@
-# 🟡 file zshrc
+# 🟡 ZSHrc file
 
-## Features
+
+Basic zsh configurations with practical aliases and common zsh plugins for a good zsh shell experience
+
 ##  Requirements
+
+Use of required plus signs:
+-  [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete)
+-  [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+-  [fzf](https://github.com/junegunn/fzf) / [fzf-tab](https://github.com/Aloxaf/fzf-tab)
+-  [sudo](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/README.md)
+-  [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+-  [zoxide](https://github.com/ajeetdsouza/zoxide)
 
 # 🟡 Pacman ZSH Theme
 

@@ -23,6 +23,9 @@
 #plugins=(git)
 #source $ZSH/oh-my-zsh.sh
 
+# Exit if it is not an interactive shell
+[[ $- == *i* ]] || return
+
 export EDITOR=nvim
 export VISUAL=nvim
 
