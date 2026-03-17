@@ -105,10 +105,10 @@ setopt INC_APPEND_HISTORY
 
 #============================plugins========================
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+if [[ ! -f ~/.zcompdump || ~/.zcompdump -nt ~/.zshrc ]]; then
     compinit
 else
-    compinit -C -d "${ZDOTDIR:-$HOME}/.zcompdump"
+    compinit -C
 fi
 
 plug=(
@@ -348,7 +348,7 @@ alias \
         clockl='tty-clock -b -t -c | lolcat' \
         pdf='evince' \
         img='eog' \
-        alias vi='nvim' \
+        vi='nvim' \
         video='mplayer' \
         dm='mdcat' \
         na='nano -0 -lmt'
