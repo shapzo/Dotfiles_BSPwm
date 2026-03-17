@@ -9,20 +9,7 @@
 #        __/\\\\\\\\\\\\\\\_\///\\\\\\\\\\\/___\/\\\_______\/\\\_\/\\\______\//\\\____\////\\\\\\\\\_ 
 #         _\///////////////____\///////////_____\///________\///__\///________\///________\/////////__
 
-#change to shell: chsh user -s /bin/zsh
-
-# If you use the themes of oh-my-zsh
-# Path to your oh-my-zsh installation.
-#export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="random"
-#plugins=(git)
-#source $ZSH/oh-my-zsh.sh
-
+# Change to shell: chsh user -s /bin/zsh
 # Exit if it is not an interactive shell
 [[ $- == *i* ]] || return
 
@@ -35,14 +22,21 @@ setopt magicequalsubst
 setopt nonomatch
 setopt notify
 setopt numericglobsort
+setopt interactivecomments
+setopt GlobComplete
+setopt COMPLETE_ALIASES
+setopt COMPLETE_IN_WORD
+
 setopt correct
+unsetopt correct_all
+
 autoload -Uz zmv
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete
+zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format '%B%F{yellow}--- %d ---%f%b'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -137,7 +131,8 @@ done
 # --- FZF load ---
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-zstyle ':fzf-tab:*' fzf-flags --style=full --height=95% --pointer '' \
+zstyle ':fzf-tab:*' fzf-flags \
+                --style=full --height=95% --pointer '' --preview-window=right:65% \
                 --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
                 --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
                 --list-label ' Results ' --color 'list-border:green,list-label:green:bold' \
@@ -183,6 +178,72 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview '
     fi ;;
   esac'
 
+# FZF-Tab Package Completion (Pacman/Paru) usig pacman -Fl and  pacman -Si
+#zstyle ':fzf-tab:complete:(pacman|paru):*' fzf-preview \
+#    '{ pacman -Si $word 2>/dev/null; echo -e "\nFILES:"; pacman -Fl $word 2>/dev/null | awk "NF>1{print $2}" } | bat -l yaml -p --color=always'
+#zstyle ':fzf-tab:complete:(pacman|paru):*' fzf-flags \
+#                --style=full --height=95% --pointer '' \
+#                --color 'pointer:green:bold,bg+:-1:,fg+:green:bold' \
+#                --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
+#                --list-label ' Packages ' --color 'list-border:green,list-label:green:bold' \
+#                --preview-label ' Describcion ' --color 'preview-border:magenta,preview-label:magenta:bold'
+
+# FZF-Tab Package Completion (Pacman/Paru) usig expac
+zstyle ':fzf-tab:complete:(pacman|paru):*' fzf-preview '
+    pkg=$word
+
+    {
+        if expac -S "%n" "$pkg" &>/dev/null; then
+            # Official Repositories (Fast Preview)
+            expac -H M -S "📦 Name           : %n
+📂 Repository     : %r
+🔖 Version        : %v
+🏗️ Architecture    : %a
+📝 Description    : %d
+🌐 URL            : %u
+⚖️ Licenses       : %L
+💾 Installed Size : %m
+📅 Build Date     : %b
+👤 Packager       : %p
+🔗 Depends On     : %D
+➕ Optional Deps  : %O
+⚠️ Conflicts      : %C
+🔄 Replaces       : %e" "$pkg"
+        else
+            # AUR Fallback (Paru)
+            paru -Si "$pkg" 2>/dev/null | sed \
+                -e "s/^Name/📦 Name/" \
+                -e "s/^Version/🔖 Version/" \
+                -e "s/^Description/📝 Description/" \
+                -e "s/^Architecture/🏗️ Architecture/" \
+                -e "s/^URL/🌐 URL/" \
+                -e "s/^Licenses/⚖️ Licenses/" \
+                -e "s/^Installed Size/💾 Installed Size/" \
+                -e "s/^SHA256 Sum/🛡️ SHA Validation/" \
+                -e "s/^Depends On/🔗 Depends On/" \
+                -e "s/^Make Deps/🛠️ Make Deps/" \
+                -e "s/^Check Deps/🧪 Check Deps/" \
+                -e "s/^Optional Deps/➕ Optional Deps/" \
+                -e "s/^Conflicts With/⚠️ Conflicts/" \
+                -e "s/^Maintainer/👤 Maintainer/" \
+                -e "s/^Votes/🗳️ Votes/" \
+                -e "s/^Popularity/📈 Popularity/" \
+                -e "s/^Last Modified/📅 Last Modified/"
+        fi
+
+        echo
+        echo -e "\e[1;35m📂 PACKAGE FILES:\e[0m"
+        { pacman -Fl "$pkg" 2>/dev/null || paru -Fl "$pkg" 2>/dev/null; } | awk "NF>1{print \$2}"
+    } | bat -l yaml -p --color=always'
+
+# --- FZF UI Customization ---
+zstyle ':fzf-tab:complete:(pacman|paru):*' fzf-flags \
+        --style=full --height=95% --pointer '' --preview-window=right:65% \
+        --color 'pointer:green:bold,bg+:-1:,fg+:green:bold' \
+        --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
+        --list-label ' Packages ' --color 'list-border:green,list-label:green:bold' \
+        --preview-label ' Description ' --color 'preview-border:magenta,preview-label:magenta:bold'
+
 # fzf shortcuts
 #alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
 alias gitfz='git log --oneline | fzf --preview "git show --color=always {1}" | cut -d" " -f1 | xargs -r git show'
@@ -200,19 +261,27 @@ ZSH_HIGHLIGHT_STYLES[path]='fg=#f080ff,underline'
 ZSH_HIGHLIGHT_STYLES[error]='fg=#f38ba8,bold'
 ZSH_HIGHLIGHT_STYLES[function]='fg=#89dceb'
 ZSH_HIGHLIGHT_STYLES[comment]='fg=#6c7086,italic'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg#ff6e34,bold'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg#34ffaa,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-error]='fg#ff1100,bold'
 ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#f9e2af'
 ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#fab387'
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#35b11c'
+ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#b1811c'
+ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=#1ca7b1'
+ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
 
 #===================== autocomplete ==================
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
 #zstyle ':autocomplete:tab:*' widget-style menu-select
-zstyle ':autocomplete:*' min-input 2
-zstyle ':autocomplete:*' list-lines 16
-zstyle ':autocomplete:*' groups enabled
-zstyle ':autocomplete:history:*' list-lines 16
-zstyle ':autocomplete:history:*' remove-all-dups yes
-zstyle ':autocomplete:files:*' list-lines 16
-zstyle ':autocomplete:files:*' hidden all 
+
+#zstyle ':autocomplete:*' min-input 2
+#zstyle ':autocomplete:*' list-lines 16
+#zstyle ':autocomplete:*' groups enabled
+#zstyle ':autocomplete:history:*' list-lines 16
+#zstyle ':autocomplete:history:*' remove-all-dups yes
+#zstyle ':autocomplete:files:*' list-lines 16
+#zstyle ':autocomplete:files:*' hidden all 
 
 #=============tool for learning routes=========================
 eval "$(zoxide init zsh)"
@@ -221,8 +290,12 @@ eval "$(zoxide init zsh)"
 #unalias z 2>/dev/null
 zfz_zoxide() {
     local dir
-    dir=$(zoxide query -l | fzf --height 70% \
-        --layout=reverse \
+    dir=$(zoxide query -l | fzf \
+        --style=full --height=95% --pointer='' --layout=reverse --preview-window=right:49% \
+        --color='pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold' \
+        --input-label=' Search dir ' --color='input-border:blue,input-label:blue:bold' \
+        --list-label=' History Zoxide ' --color='list-border:green,list-label:green:bold' \
+        --preview-label=' Content dir ' --color='preview-border:magenta,preview-label:magenta:bold' \
         --preview '
             if [ -d {} ]; then
                 eza --group-directories-first -T -L 2 --icons --color=always {} | head -50
@@ -278,7 +351,7 @@ alias \
         alias vi='nvim' \
         video='mplayer' \
         dm='mdcat' \
-        na='nano -0 -l -m -t'
+        na='nano -0 -lmt'
 
 if command -v lsd >/dev/null 2>&1; then
     # ls for lsd

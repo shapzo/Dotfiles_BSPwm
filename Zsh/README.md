@@ -3,6 +3,17 @@
 
 Basic zsh configurations with practical aliases and common zsh plugins for a good zsh shell experience
 
+Key Features:
+
+- Smart Detection: Leverages expac for lightning-fast official package previews and paru for AUR package fallbacks.
+
+- Rich Metadata: Displays icons, architecture, file sizes, dependencies, and the full list of files included in the package.
+
+- Advanced Aesthetics: Implements color-coded borders (Blue for input, Green for the list, Magenta for the preview) with custom labels.
+
+- YAML Formatting: Uses bat to apply syntax highlighting to the package details for better readability.
+
+
 ##  Requirements
 
 Use of required plus signs:
@@ -12,6 +23,7 @@ Use of required plus signs:
 -  [sudo](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/README.md)
 -  [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 -  [zoxide](https://github.com/ajeetdsouza/zoxide)
+-  [expac]()
 
 # 🟡 Pacman ZSH Theme
 
