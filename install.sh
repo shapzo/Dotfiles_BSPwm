@@ -166,10 +166,16 @@ install_nano() {
 install_zsh() {
 	echo -e "\n [*] Installing zshrc..."
 	if [[ -d "$HOME_DIR" ]]; then
-		cp $DIR/Zsh/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc; cp -r $DIR/Zsh/* "ZDIR"
+		cp $DIR/Zsh/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc;
+	else
+        echo -e "error"
+	fi
+
+    if [[ -d "$ZDIR" ]]; then
+		cp -r $DIR/Zsh/* "ZDIR"
 	else
         mkdir -p "ZDIR"
-        cp $DIR/Zsh/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc; cp -r $DIR/Zsh/* "ZDIR"
+        cp -r $DIR/Zsh/* "ZDIR"
 	fi
 }
 
