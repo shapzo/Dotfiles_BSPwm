@@ -18,6 +18,8 @@ FASDIR="$HOME/.config/fastfetch"
 LDIR="$HOME/.config/lf"
 LSDIR="$HOME/.config/lf/scrips"
 
+ZDIR="$HOME/.config/zsh"
+
 DDIR="$HOME/.config/dunst"
 DDIRS="$HOME/.config/dunst/Scripts"
 
@@ -164,9 +166,10 @@ install_nano() {
 install_zsh() {
 	echo -e "\n [*] Installing zshrc..."
 	if [[ -d "$HOME_DIR" ]]; then
-		cp $DIR/Zsh/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc
+		cp $DIR/Zsh/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc; cp -r $DIR/Zsh/* "ZDIR"
 	else
-		echo -e "error"
+        mkdir -p "ZDIR"
+        cp $DIR/Zsh/zshrc "$HOME_DIR" && mv "$HOME_DIR"/zshrc "$HOME_DIR"/.zshrc; cp -r $DIR/Zsh/* "ZDIR"
 	fi
 }
 
