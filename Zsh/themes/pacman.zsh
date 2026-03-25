@@ -38,30 +38,30 @@ typeset -g git_async=""
 typeset -g LAST_GIT_DIR=""
 
 # ---- Git Icons ----
-typeset -gr GIT_ICON_ADDED="%F{#DB7500}✚ %f"
-typeset -gr GIT_ICON_MODIFIED="%F{#CF4EDE}✹ %f"
-typeset -gr GIT_ICON_DELETED="%F{#D60000}✖ %f"
-typeset -gr GIT_ICON_UNTRACKED="%F{#00e7b5}✭ %f"
-typeset -gr GIT_ICON_CLEAN="%F{#242424}  %f"
-typeset -gr GIT_ICON_DIRTY="%F{#ff0000} ✘ %f"
-typeset -gr GIT_ICON_RENAMED="%F{#f9e2af} ➜ %f"
+typeset -g GIT_ICON_ADDED="%F{#DB7500}✚ %f"
+typeset -g GIT_ICON_MODIFIED="%F{#CF4EDE}✹ %f"
+typeset -g GIT_ICON_DELETED="%F{#D60000}✖ %f"
+typeset -g GIT_ICON_UNTRACKED="%F{#00e7b5}✭ %f"
+typeset -g GIT_ICON_CLEAN="%F{#242424}  %f"
+typeset -g GIT_ICON_DIRTY="%F{#ff0000} ✘ %f"
+typeset -g GIT_ICON_RENAMED="%F{#f9e2af} ➜ %f"
 
 # ---- Git Bubble ----
-typeset -gr GIT_PREFIX="%F{#006e0f}%K{#006e0f}%F{#000000}  %B"
-typeset -gr GIT_SUFFIX="%b%k%F{#006e0f}%f"
+typeset -g GIT_PREFIX="%F{#006e0f}%K{#006e0f}%F{#000000}  %B"
+typeset -g GIT_SUFFIX="%b%k%F{#006e0f}%f"
 
 # ---- Prompt Bubble ----
-typeset -gr BG_PACMAN="#050505"
-typeset -gr BG_PATH="#06bbbb"
-typeset -gr BG_GHOSTS="#030303"
+typeset -g BG_PACMAN="#050505"
+typeset -g BG_PATH="#06bbbb"
+typeset -g BG_GHOSTS="#030303"
   
-typeset -gr SEP_OPEN="%F{$BG_PACMAN}"
-typeset -gr PACMAN="%F{yellow}%K{$BG_PACMAN} 󰮯 "
-typeset -gr CIRCLE="%F{#ffffff}"
-typeset -gr GHOST_1="%F{#05bbbb}󱙝"
-typeset -gr GHOST_2="%F{#ff960c}󱙝"
-typeset -gr GHOST_3="%F{#ff1b5f}󱙝"
-typeset -gr SEP_CLOSE="%F{$BG_GHOSTS}%k%f"
+typeset -g SEP_OPEN="%F{$BG_PACMAN}"
+typeset -g PACMAN="%F{yellow}%K{$BG_PACMAN} 󰮯 "
+typeset -g CIRCLE="%F{#ffffff}"
+typeset -g GHOST_1="%F{#05bbbb}󱙝"
+typeset -g GHOST_2="%F{#ff960c}󱙝"
+typeset -g GHOST_3="%F{#ff1b5f}󱙝"
+typeset -g SEP_CLOSE="%F{$BG_GHOSTS}%k%f"
 
 # -------------------------------------------------
 # Function to show if a command failed

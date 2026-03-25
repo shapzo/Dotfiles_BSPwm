@@ -31,4 +31,4 @@ for module in \
     [[ -f "$module" ]] && source "$module" || echo "Fail: $module"
 done
 
-alias reload='source ~/.zshrc
+alias reload='source ~/.zshrc'

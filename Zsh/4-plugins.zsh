@@ -23,8 +23,12 @@ for plugin in "${plug[@]}"; do
 done
 
 #============================== autosuggestion =================
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+ZSH_AUTOSUGGEST_MANUAL_REBIND=true
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7c7c7c,bg=#1e1e1e"
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *|rm *|sudo *|mv *|ls *"
+ZSH_AUTOSUGGEST_COMPLETION_IGNORE="git *|npm *|pip *"
 
 #============================== highlight ==========================
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
