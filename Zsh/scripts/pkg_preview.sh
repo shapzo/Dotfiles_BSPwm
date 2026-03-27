@@ -3,7 +3,7 @@ pkg="$1"
 
 # 1. Status
 if pacman -Qi "$pkg" &>/dev/null; then
-    echo "Status             : ✅ INSTALLED"
+    echo "Status             : ✔️ INSTALLED"
 else
     echo "Status             : ❌ NOT INSTALLED"
 fi
