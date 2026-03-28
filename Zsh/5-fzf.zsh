@@ -5,7 +5,7 @@
 zstyle ':fzf-tab:*' fzf-flags \
                 --style=full --height=95% --pointer '' --preview-window=right:65% \
                 --padding='1,2' --layout=reverse-list --cycle \
-                --multi --marker='󰄬 ' --color 'marker:green:bold' \
+                --multi --marker=' ' --color 'marker:green:bold' \
                 --bind 'ctrl-s:toggle-down,ctrl-a:select-all,ctrl-d:deselect-all' \
                 --bind 'alt-up:preview-up,alt-down:preview-down,ctrl-p:toggle-preview' \
                 --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
@@ -53,6 +53,30 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview '
     fi ;;
   esac'
 
+# Configuration for dnf and dnf5
+#zstyle ':fzf-tab:complete:(dnf|dnf5):*' fzf-preview \
+#    '{ dnf info $word 2>/dev/null; echo -e "\nFILES:"; dnf repoquery -l $word 2>/dev/null } | bat -l yaml -p --color=always'
+
+#zstyle ':fzf-tab:complete:dnf:*' fzf-flags \
+#                --style=full --height=95% --pointer '' \
+#                --color 'pointer:green:bold,bg+:-1:,fg+:green:bold' \
+#                --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
+#                --list-label ' Packages ' --color 'list-border:green,list-label:green:bold' \
+#                --preview-label ' Descripción ' --color 'preview-border:magenta,preview-label:magenta:bold'
+
+
+# Configuration for apt and nala
+#zstyle ':fzf-tab:complete:(apt|nala):*' fzf-preview \
+#    '{ nala show $word 2>/dev/null || apt-cache show $word 2>/dev/null; echo -e "\nFILES:"; apt-file list $word 2>/dev/null | cut -d" " -f2- } | bat -l yaml -p --color=always'
+
+#zstyle ':fzf-tab:complete:(apt|nala):*' fzf-flags \
+#                --style=full --height=95% --pointer '' \
+#                --color 'pointer:green:bold,bg+:-1:,fg+:green:bold' \
+#                --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
+#                --list-label ' Packages ' --color 'list-border:green,list-label:green:bold' \
+#                --preview-label ' Descripción ' --color 'preview-border:magenta,preview-label:magenta:bold'
+
+
 # FZF-Tab Package Completion (Pacman/Paru) usig pacman -Fl and  pacman -Si
 #zstyle ':fzf-tab:complete:(pacman|paru):*' fzf-preview \
 #    '{ pacman -Si $word 2>/dev/null; echo -e "\nFILES:"; pacman -Fl $word 2>/dev/null | awk "NF>1{print $2}" } | bat -l yaml -p --color=always'
@@ -70,7 +94,7 @@ zstyle ':fzf-tab:complete:pacman:*' fzf-preview \
 zstyle ':fzf-tab:complete:pacman:*' fzf-flags \
         --style=full --height=95% --pointer '' --preview-window=right:65%:hidden \
         --padding='1,2' --layout=reverse-list --cycle \
-        --multi --marker='󰄬 ' --color 'marker:green:bold' \
+        --multi --marker=' ' --color 'marker:green:bold' \
         --bind 'ctrl-s:toggle-down,ctrl-a:select-all,ctrl-d:deselect-all' \
         --bind 'alt-up:preview-up,alt-down:preview-down,ctrl-p:toggle-preview' \
         --color 'pointer:green:bold,bg+:-1:,fg+:green:bold' \
