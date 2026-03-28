@@ -9,9 +9,9 @@ zstyle ':fzf-tab:*' fzf-flags \
                 --bind 'ctrl-s:toggle-down,ctrl-a:select-all,ctrl-d:deselect-all' \
                 --bind 'alt-up:preview-up,alt-down:preview-down,ctrl-p:toggle-preview' \
                 --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
-                --input-label ' [ 🧿 Search ] ' --color 'input-border:blue,input-label:blue:bold' \
-                --list-label ' [ 📑 Results ] ' --color 'list-border:green,list-label:green:bold' \
-                --preview-label ' [ 🖥️ Preview ] ' --color 'preview-border:magenta,preview-label:magenta:bold'
+                --input-label ' [ Search ] ' --color 'input-border:blue,input-label:blue:bold' \
+                --list-label ' [ Results ] ' --color 'list-border:green,list-label:green:bold' \
+                --preview-label ' [ Preview ] ' --color 'preview-border:magenta,preview-label:magenta:bold'
 
 # --- Shortcuts and Behavior ---
 
@@ -74,9 +74,9 @@ zstyle ':fzf-tab:complete:pacman:*' fzf-flags \
         --bind 'ctrl-s:toggle-down,ctrl-a:select-all,ctrl-d:deselect-all' \
         --bind 'alt-up:preview-up,alt-down:preview-down,ctrl-p:toggle-preview' \
         --color 'pointer:green:bold,bg+:-1:,fg+:green:bold' \
-        --input-label ' [ 🧿 Search ] ' --color 'input-border:blue,input-label:blue:bold' \
-        --list-label ' [ 🛒 Pkgs ] ' --color 'list-border:green,list-label:green:bold' \
-        --preview-label ' [ 📺 Descripcion ] ' --color 'preview-border:magenta,preview-label:magenta:bold'
+        --input-label ' [ Search ] ' --color 'input-border:blue,input-label:blue:bold' \
+        --list-label ' [ Pkgs ] ' --color 'list-border:green,list-label:green:bold' \
+        --preview-label ' [ Descripcion ] ' --color 'preview-border:magenta,preview-label:magenta:bold'
 
 # fzf shortcuts
 #alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
