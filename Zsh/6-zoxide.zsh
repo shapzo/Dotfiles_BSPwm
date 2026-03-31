@@ -13,12 +13,7 @@ zfz_zoxide() {
         --input-label=' [ Search dir ] ' --color='input-border:blue,input-label:blue:bold' \
         --list-label=' [ History Zoxide ] ' --color='list-border:green,list-label:green:bold' \
         --preview-label=' [ Content dir ] ' --color='preview-border:magenta,preview-label:magenta:bold' \
-        --preview '
-            if [ -d {} ]; then
-                eza --group-directories-first -T -L 2 --icons --color=always {} | head -50
-            else
-                bat --color=always {}
-            fi' \
+        --preview 'eza --group-directories-first -T -L 2 --icons --color=always {} | head -50' \
         )
 
     if [[ -n "$dir" ]]; then
@@ -26,9 +21,24 @@ zfz_zoxide() {
         zle reset-prompt
     fi
 }
-zle -N zfz_zoxide
-bindkey '^z' zfz_zoxide
 
-# normal zoxide
-alias zii='zi'
-bindkey -s '^o' 'zii\n'
+# Search for files and open them directly in your preferred editor (nvim/vim)
+fz_edit_file() {
+    local file
+    file=$(fd --type f --strip-cwd-prefix --hidden --exclude .git | fzf \
+        --style=full --height=95% --pointer='' --layout=reverse --preview-window=right:49% \
+        --padding='1,2' --layout=reverse-list --cycle \
+        --bind 'alt-up:preview-up,alt-down:preview-down,ctrl-p:toggle-preview' \
+        --color='pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold' \
+        --input-label=' [ Find File ] ' --color='input-border:blue,input-label:blue:bold' \
+        --list-label=' [ Files in Directory ] ' --color='list-border:green,list-label:green:bold' \
+        --preview-label=' [ File Content ] ' --color='preview-border:magenta,preview-label:magenta:bold' \
+        --preview 'bat --color=always --style=numbers --line-range :500 {}' \
+    )
+
+    if [[ -n "$file" ]]; then
+        # Open with your preferred editor, example -> atom "$file" &>/dev/null && disown
+        ${EDITOR:-nvim} "$file"
+        zle reset-prompt
+    fi
+}
