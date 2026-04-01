@@ -19,23 +19,42 @@
 # Basically helps zsh render everything: it reads first and then tells the prompt what to display
 setopt prompt_subst
 setopt extendedglob
+#: Load module datatime and mathfunc
+zmodload zsh/datetime
+zmodload zsh/mathfunc
 # Load hooks module
 autoload -Uz add-zsh-hook
 # Load zsh async
-source /usr/share/zsh/plugins/zsh-async/async.zsh
-async_init
+typeset -a asyncc=(
+    "/usr/share/zsh/plugins/zsh-async/async.zsh"
+)
+
+for plugin in "$asyncc[@]"; do
+    if [[ -f "$plugin" ]]; then
+        source "$plugin"
+    else
+        [[ "$plugin" == *"async"* ]]
+    fi
+done
+
+if (( $+functions[async_init] )); then
+    async_init
+else
+    async_job() { :; } 
+fi
 
 # -------------------------------------------------
 # Global Variables
 # -------------------------------------------------
 typeset -g exit_status=""
 typeset -g ssh_indicator=""
+typeset -g cmd_duration=""
 typeset -g privilege_indicator=""
 typeset -g lang_indicator=""
 typeset -g last_lang_dir=""
 typeset -g current_dir=""
 typeset -g git_async=""
-typeset -g LAST_GIT_DIR=""
+typeset -g last_git_dir=""
 
 # ---- Git Icons ----
 typeset -g GIT_ICON_ADDED="%F{#DB7500}✚ %f"
@@ -85,6 +104,50 @@ prompt_ssh_indicator() {
   else
     ssh_indicator=""
   fi
+}
+
+# -------------------------------------------------
+# Command Execution Timer
+# -------------------------------------------------
+# Runs BEFORE the command starts
+prompt_preexec_timer() {
+    cmd_timer=$EPOCHREALTIME
+}
+
+# Runs AFTER the command finishes
+prompt_cmd_duration() {
+    # Exit if timer wasn't started
+    [[ -z "$cmd_timer" ]] && return
+    
+    # Calculate decimal difference
+    local elapsed=$(( EPOCHREALTIME - cmd_timer ))
+    unset cmd_timer
+    
+    # 0.3s Threshold: Only show if the command took a noticeable amount of time
+    if (( elapsed >= 0.3 )); then
+        local res=""
+        
+        if (( elapsed >= 3600 )); then
+            # Format: 1h 20m
+            local h=$(( int(elapsed / 3600) ))
+            local m=$(( int((elapsed % 3600) / 60) ))
+            res="${h}h ${m}m"
+        elif (( elapsed >= 60 )); then
+            # Format: 2m 15s
+            local m=$(( int(elapsed / 60) ))
+            local s=$(( int(elapsed % 60) ))
+            res="${m}m ${s}s"
+        else
+            # Format: 2.45s (using printf for 2 decimal places)
+            res="$(printf "%.2fs" $elapsed)"
+        fi
+        
+        # Color: Peach (#fab387) with speed icon
+        cmd_duration="%F{#fab387}󱦟 ${res}%f "
+    else
+        # Clear duration if below threshold
+        cmd_duration=""
+    fi
 }
 
 # -------------------------------------------------
@@ -214,8 +277,8 @@ async_register_callback git_worker git_callback
 # Trigger Hook: Decides when to spawn a new async job
 prompt_trigger_async() {
   # Skip if directory hasn't changed to save resources
-  [[ "$PWD" == "$LAST_GIT_DIR" ]] && return
-  LAST_GIT_DIR="$PWD"
+  [[ "$PWD" == "$last_git_dir" ]] && return
+  last_git_dir="$PWD"
 
   # Check if we are inside a Git work tree
   git -C "$PWD" rev-parse --is-inside-work-tree &>/dev/null || {
@@ -228,20 +291,22 @@ prompt_trigger_async() {
 
 # Pre-execution Hook: Forces a refresh after running any command (like 'git add')
 git_preexec_refresh() {
-  LAST_GIT_DIR=""
+  last_git_dir=""
 }
 
 # -------------------------------------------------
 # Main Prompt Function
 # -------------------------------------------------
 prompt_current_dir() {
-  if [[ "$PWD" == "$HOME" ]]; then
+  local dir_text=" %U%B%2~%b%u"
+  local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}%F{black} $dir_text %F{$BG_PATH}%K{$BG_GHOSTS}"
+
   #[[  -z ${PWD#$HOME}  ]] -> this would be another way but I like this one for now
+  if [[ "$PWD" == "$HOME" ]]; then
     # Home: Pacman and dots only
     current_dir="$SEP_OPEN$PACMAN%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
   else
     # Outside Home: Includes current folder (%2~) to show the last 2 directories relative to home (could also use 2c)
-    local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}%F{black}  %U%B%2~%b%u %F{$BG_PATH}%K{$BG_GHOSTS}"
     current_dir="$SEP_OPEN$PACMAN$DIR_BLOCK $GHOST_1 $GHOST_2 $GHOST_3 $SEP_CLOSE"
   fi
 }
@@ -250,17 +315,21 @@ prompt_current_dir() {
 set_full_prompt() {
   PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
  %F{blue}  %f'
-  RPROMPT='${lang_indicator}${ssh_indicator}'
-}
-
-set_tiny_prompt() {
-  PROMPT="%F{yellow}  󰮯 %F{#A6A6A6}%U%1~%u %F{#FA0542}󰊠 %f %F{blue} %f"
-  RPROMPT=""
-  [[ -o zle ]] && zle reset-prompt
+  if (( COLUMNS >= 80 )); then
+    RPROMPT='${cmd_duration}${lang_indicator}${ssh_indicator}'
+  else
+    RPROMPT=""
+  fi
 }
 
 zle-line-finish() {
-  set_tiny_prompt
+  if [[ -n "$exit_status" ]]; then
+    PROMPT="%F{red}  󰮯 %F{#A6A6A6}%U%1~%u %F{#05FA63}󰊠 %f ${cmd_duration}%F{blue} %f"
+  else
+    PROMPT="%F{yellow}  󰮯 %F{#A6A6A6}%U%1~%u %F{#05FA63}󰊠 %f ${cmd_duration}%F{blue} %f"
+  fi
+  RPROMPT=""
+  [[ -o zle ]] && zle reset-prompt
 }
 zle -N zle-line-finish
 
@@ -270,6 +339,7 @@ zle -N zle-line-finish
 prompt_precmd(){
   prompt_exit_status
   prompt_ssh_indicator
+  prompt_cmd_duration
   prompt_privilege_indicator
   prompt_current_dir
   prompt_trigger_async
@@ -277,4 +347,4 @@ prompt_precmd(){
 }
 add-zsh-hook precmd prompt_precmd
 add-zsh-hook chpwd prompt_lang_indicator
-add-zsh-hook preexec git_preexec_refresh
+add-zsh-hook preexec prompt_preexec_timer
