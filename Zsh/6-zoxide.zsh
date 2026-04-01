@@ -28,12 +28,14 @@ fz_edit_file() {
     file=$(fd --type f --strip-cwd-prefix --hidden --exclude .git | fzf \
         --style=full --height=95% --pointer='' --layout=reverse --preview-window=right:49% \
         --padding='1,2' --layout=reverse-list --cycle \
+        --multi --marker=' ' --color 'marker:green:bold' \
+        --bind 'ctrl-s:toggle-down,ctrl-a:select-all,ctrl-d:deselect-all' \
         --bind 'alt-up:preview-up,alt-down:preview-down,ctrl-p:toggle-preview' \
         --color='pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold' \
         --input-label=' [ Find File ] ' --color='input-border:blue,input-label:blue:bold' \
         --list-label=' [ Files in Directory ] ' --color='list-border:green,list-label:green:bold' \
         --preview-label=' [ File Content ] ' --color='preview-border:magenta,preview-label:magenta:bold' \
-        --preview 'bat --color=always --style=numbers --line-range :500 {}' \
+        --preview 'bat -l yaml -p --color=always --style=numbers --line-range :500 {}' \
     )
 
     if [[ -n "$file" ]]; then
