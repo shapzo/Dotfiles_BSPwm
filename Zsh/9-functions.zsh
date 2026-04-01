@@ -101,3 +101,26 @@ rena() {
 
     echo "${i-1} as '${name} (N).ext'"
 }
+
+#======================================
+zscomp() {
+    local compiled=0
+    local files=(
+        ~/.zshrc(N)
+        ~/.config/zsh/*.zsh(N)
+        ~/.config/zsh/themes/*.zsh(N)
+    )
+
+    for file in "${files[@]}"; do
+        if [[ ! -f "${file}.zwc" || "$file" -nt "${file}.zwc" ]]; then
+            zcompile "$file" && (( compiled++ ))
+        fi
+    done
+}
+
+zsclean() {
+    rm -f \
+        ~/.zshrc.zwc(N) \
+        ~/.config/zsh/*.zwc(N) \
+        ~/.config/zsh/**/*.zwc(N)
+}
