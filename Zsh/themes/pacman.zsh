@@ -271,8 +271,10 @@ git_callback() {
 }
 
 # Initialize Async Worker
-async_start_worker git_worker -n
-async_register_callback git_worker git_callback
+if (( $+functions[async_start_worker] )); then
+    async_start_worker git_worker -n
+    async_register_callback git_worker git_callback
+fi
 
 # Trigger Hook: Decides when to spawn a new async job
 prompt_trigger_async() {
