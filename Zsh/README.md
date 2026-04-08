@@ -5,14 +5,29 @@ Basic zsh configurations with practical aliases and common zsh plugins for a goo
 
 Key Features:
 
-- Smart Detection: Leverages expac for lightning-fast official package previews and paru for AUR package fallbacks.
+- **Smart Detection:** Leverages expac for lightning-fast official package previews and paru for AUR package fallbacks.
 
-- Rich Metadata: Displays icons, architecture, file sizes, dependencies, and the full list of files included in the package.
+- **Rich Metadata:** Displays icons, architecture, file sizes, dependencies, and the full list of files included in the package.
 
-- Advanced Aesthetics: Implements color-coded borders (Blue for input, Green for the list, Magenta for the preview) with custom labels.
+- **Advanced Aesthetics:** Implements color-coded borders (Blue for input, Green for the list, Magenta for the preview) with custom labels.
 
-- YAML Formatting: Uses bat to apply syntax highlighting to the package details for better readability.
+- **YAML Formatting:** Uses bat to apply syntax highlighting to the package details for better readability.
 
+## Ubuntu & Debian Derivatives
+
+Please note that the configuration differs for Debian-based systems. You will need to install specific dependencies and perform an initial setup:
+
+- **Install Dependencies:** Install **`apt-file`** and **`bat`** using the following command:
+```bash
+    sudo apt update && sudo apt install apt-file bat
+``` 
+
+- **Update apt-file Database:** For the package preview features to function correctly, you must initialize the **`apt-file`** index:
+```bash
+    sudo apt-file update
+``` 
+
+- **Command Name Adjustment (batcat):** On these systems, the bat package installs the executable as batcat.
 
 ##  Requirements
 

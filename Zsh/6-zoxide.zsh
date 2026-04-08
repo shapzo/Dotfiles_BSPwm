@@ -23,6 +23,8 @@ zfz_zoxide() {
 }
 
 # Search for files and open them directly in your preferred editor (nvim/vim)
+## In Ubuntu/Debian and Derivatives change fd -> fdfind
+## change bat -> batcat
 fz_edit_file() {
     local file
     file=$(fd --type f --strip-cwd-prefix --hidden --exclude .git | fzf \
