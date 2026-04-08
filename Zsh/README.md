@@ -34,11 +34,10 @@ Please note that the configuration differs for Debian-based systems. You will ne
 Use of required plus signs:
 -  [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete)
 -  [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
--  [fzf](https://github.com/junegunn/fzf) / [fzf-tab](https://github.com/Aloxaf/fzf-tab)
--  [sudo](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/README.md)
 -  [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+-  [fzf](https://github.com/junegunn/fzf) / [fzf-tab](https://github.com/Aloxaf/fzf-tab)
 -  [zoxide](https://github.com/ajeetdsouza/zoxide)
--  [expac]()
+-  [sudo](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/README.md)
 
 # 🟡 Pacman ZSH Theme
 
