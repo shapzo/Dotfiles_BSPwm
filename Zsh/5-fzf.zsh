@@ -98,5 +98,4 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview '
 #                --preview-label ' [ Describcion ] ' --color 'preview-border:magenta,preview-label:magenta:bold'
 
 # fzf shortcuts
-#alias cdfz='cd $(fd -t d -H . 2>/dev/null | fzf --height 40% --reverse || find . -maxdepth 3 -type d 2>/dev/null | fzf)'
 alias gitfz='git log --oneline | fzf --preview "git show --color=always {1}" | cut -d" " -f1 | xargs -r git show'
