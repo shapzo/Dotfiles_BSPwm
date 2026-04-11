@@ -101,8 +101,6 @@ rena() {
 
     echo "${i-1} as '${name} (N).ext'"
 }
-
-#======================================
 zscomp() {
     local compiled=0
     local files=(
