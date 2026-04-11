@@ -72,7 +72,7 @@ alias \
         status='git status' \
         add='git add .' \
         push='git push origin main' \
-        pull='git pull origin' \
+        pull='git pull' \
         remote='git remote add origin' \
         clon='git clone' \
         commit='git commit -m'
