@@ -9,7 +9,13 @@
 #     ##:::: ##:::: ##::::::: ########::. ######:: ##::::::::. ###. ###:: ##:::: ##:  
 #   ..:::::..:::::..::::::::........::::......:::..::::::::::...::...:::..:::::..::   
 #=====================================================================================
+# Exports
 
+export XDG_SESSION_TYPE=x11
+export GDK_BACKEND=x11
+
+# Fix java applications
+export _JAVA_AWT_WM_NONREPARENTING=1
 # Start
 
 run() {
@@ -25,9 +31,6 @@ run xsetroot -cursor_name left_ptr
 
 # polkit
 run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
-# Fix java applications
-export _JAVA_AWT_WM_NONREPARENTING=1
 
 #To adjust to the resolution of my laptop
 #run xrandr -s 1360x768 &

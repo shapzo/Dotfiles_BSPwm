@@ -49,7 +49,6 @@ fi
 typeset -g exit_status=""
 typeset -g ssh_indicator=""
 typeset -g cmd_duration=""
-typeset -g privilege_indicator=""
 typeset -g lang_indicator=""
 typeset -g last_lang_dir=""
 typeset -g current_dir=""
@@ -64,6 +63,11 @@ typeset -g GIT_ICON_UNTRACKED="%F{#00e7b5}✭ %f"
 typeset -g GIT_ICON_CLEAN="%F{#242424}  %f"
 typeset -g GIT_ICON_DIRTY="%F{#ff0000} ✘ %f"
 typeset -g GIT_ICON_RENAMED="%F{#f9e2af} ➜ %f"
+
+# ---- Cache Git ----
+typeset -gA GIT_CACHE
+typeset -gA GIT_CACHE_TIME
+typeset -g last_async_time=0
 
 # ---- Git Bubble ----
 typeset -g GIT_PREFIX="%F{#006e0f}%K{#006e0f}%F{#000000}  %B"
@@ -123,8 +127,8 @@ prompt_cmd_duration() {
     local elapsed=$(( EPOCHREALTIME - cmd_timer ))
     unset cmd_timer
     
-    # 0.3s Threshold: Only show if the command took a noticeable amount of time
-    if (( elapsed >= 0.3 )); then
+    # 0.2s Threshold: Only show if the command took a noticeable amount of time
+    if (( elapsed >= 0.2 )); then
         local res=""
         
         if (( elapsed >= 3600 )); then
@@ -148,18 +152,6 @@ prompt_cmd_duration() {
         # Clear duration if below threshold
         cmd_duration=""
     fi
-}
-
-# -------------------------------------------------
-# Function to detect Privileges (Root)
-# -------------------------------------------------
-prompt_privilege_indicator() {
-  # If user ID is 0 (root)
-  if [[ $UID -eq 0 ]]; then
-    privilege_indicator="%F{red}%K{red}%F{white} 󰮯 %f%k%F{red}%f "
-  else
-    privilege_indicator=""
-  fi
 }
 
 # -------------------------------------------------
@@ -214,10 +206,12 @@ git_worker_task() {
 
   local status_info=""
   local state_icon="$GIT_ICON_CLEAN"
+  local remote_info=""
+  local stash_info=""
   
   # 2. Get status in porcelain format (script-friendly)
   # Ignore submodules for maximum performance
-  local git_status_output=$(git -C "$target_dir" status --porcelain --ignore-submodules 2>/dev/null)
+  local git_status_output=$(git -C "$target_dir" status --porcelain --ignore-submodules=dirty --untracked-files=normal 2>/dev/null)
 
   if [[ -n "$git_status_output" ]]; then
     state_icon="$GIT_ICON_DIRTY"
@@ -248,25 +242,43 @@ git_worker_task() {
     [[ -n ${seen[staged_del]} || -n ${seen[wt_del]} ]] && status_info+="$GIT_ICON_DELETED"
   fi
 
+  # Stash
+  local stash_count=$(git -C "$target_dir" rev-list --walk-reflogs --count refs/stash 2>/dev/null || echo 0)
+  local stash_count=${#${(f)stash_list}}
+  (( stash_count > 0 )) && stash_info="%F{#fab387} ${stash_count}%f "
+
+  # Remote status
+  local upstream=$(git -C "$target_dir"rev-parse --abbrev-ref @{upstream} 2>/dev/null)
+  if [[ -n "$upstream" ]]; then
+    local ahead=$(git -C "$target_dir"rev-list @{upstream}..HEAD --count 2>/dev/null)
+    local behind=$(git -C "$target_dir"rev-list HEAD..@{upstream} --count 2>/dev/null)
+    (( ahead  > 0 )) && remote_info+="%F{#a6e3a1} ${ahead}%f "
+    (( behind > 0 )) && remote_info+="%F{#f38ba8} ${behind}%f "
+  fi
+
    # 4. Return block git
-  local result="${GIT_PREFIX}${ref}${state_icon}${status_info}${GIT_SUFFIX}"
-  print -nr -- "$result"
+  print -nr -- "${GIT_PREFIX}${ref}${state_icon}${stash_info}${remote_info}${status_info}${GIT_SUFFIX}"
 }
 
 # Callback: Triggered when the async worker finishes
 git_callback() {
   local output="$3"
-  
-  # Clear variable and reset prompt if output is empty
-  if [[ -z $output ]]; then
-    [[ -n $git_async ]] && { git_async=""; zle && zle reset-prompt; }
-    return
-  fi
-  
-  # Only reset prompt if the Git status string has actually changed
-  if [[ "$git_async" != "$output" ]]; then
-    git_async="$output"
-    zle && zle reset-prompt
+  local target_dir="$5" 
+
+  if [[ -n $output ]]; then
+    GIT_CACHE[$target_dir]="$output"
+    GIT_CACHE_TIME[$target_dir]=$EPOCHSECONDS
+    
+    if [[ "$git_async" != "$output" ]]; then
+      git_async="$output"
+      zle && zle reset-prompt
+    fi
+  else
+    if [[ -n "$git_async" || -n "$git_status_icons" ]]; then
+        git_async=""
+        git_status_icons=""
+        zle && zle reset-prompt
+    fi
   fi
 }
 
@@ -278,44 +290,69 @@ fi
 
 # Trigger Hook: Decides when to spawn a new async job
 prompt_trigger_async() {
-  # Skip if directory hasn't changed to save resources
-  [[ "$PWD" == "$last_git_dir" ]] && return
+  local now=$EPOCHSECONDS
+
+  # 1. Recent Cache: Use directly if available and fresh
+  if [[ -n "${GIT_CACHE[$PWD]}" ]]; then
+    local last_time=${GIT_CACHE_TIME[$PWD]:-0}
+    if (( now - last_time < 2 )); then
+      git_async="${GIT_CACHE[$PWD]}"
+      return
+    fi
+  fi
+
+  # 2. Throttle: Limit to one worker per second in the same directory to save resources
+  (( now - last_async_time < 1 )) && [[ "$PWD" == "$last_git_dir" ]] && return
+  last_async_time=$now
   last_git_dir="$PWD"
 
-  # Check if we are inside a Git work tree
+  # 3. Git Check: Verify if the current directory is inside a Git work tree
   git -C "$PWD" rev-parse --is-inside-work-tree &>/dev/null || {
     git_async=""
     return
   }
-  # Dispatch job to worker
+
+  # 4. Async Execution: Dispatch the task to the git_worker
   async_job git_worker git_worker_task "$PWD"
 }
 
 # Pre-execution Hook: Forces a refresh after running any command (like 'git add')
 git_preexec_refresh() {
   last_git_dir=""
+  if [[ "$1" == "git "* ]]; then
+    unset "GIT_CACHE[$PWD]"
+    unset "GIT_CACHE_TIME[$PWD]"
+  fi
 }
 
 # -------------------------------------------------
 # Main Prompt Function
 # -------------------------------------------------
 prompt_current_dir() {
+  local PACMAN_ICON
+  if [[ $UID -eq 0 ]]; then
+    PACMAN_ICON="%F{#FF0000}%K{$BG_PACMAN} 󰮯 "
+  else
+    PACMAN_ICON="$PACMAN"
+  fi
+
+  # function normal
   local dir_text=" %U%B%2~%b%u"
   local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}%F{black} $dir_text %F{$BG_PATH}%K{$BG_GHOSTS}"
 
   #[[  -z ${PWD#$HOME}  ]] -> this would be another way but I like this one for now
   if [[ "$PWD" == "$HOME" ]]; then
     # Home: Pacman and dots only
-    current_dir="$SEP_OPEN$PACMAN%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
+    current_dir="$SEP_OPEN${PACMAN_ICON}%F{$BG_PACMAN}%K{$BG_GHOSTS}%F{#ffffff}$CIRCLE $CIRCLE $CIRCLE $GHOST_1 $SEP_CLOSE"
   else
     # Outside Home: Includes current folder (%2~) to show the last 2 directories relative to home (could also use 2c)
-    current_dir="$SEP_OPEN$PACMAN$DIR_BLOCK $GHOST_1 $GHOST_2 $GHOST_3 $SEP_CLOSE"
+    current_dir="$SEP_OPEN${PACMAN_ICON}$DIR_BLOCK $GHOST_1 $GHOST_2 $GHOST_3 $SEP_CLOSE"
   fi
 }
 
 # Prompt
 set_full_prompt() {
-  PROMPT='${exit_status}${privilege_indicator}${current_dir}${git_async:+ ${git_async}}
+  PROMPT='${exit_status}${current_dir}${git_async:+ ${git_async}}
  %F{blue}  %f'
   if (( COLUMNS >= 80 )); then
     RPROMPT='${cmd_duration}${lang_indicator}${ssh_indicator}'
@@ -325,10 +362,11 @@ set_full_prompt() {
 }
 
 zle-line-finish() {
+  local dir_alter="%F{blue} %f"
   if [[ -n "$exit_status" ]]; then
-    PROMPT="%F{red}  󰮯 %F{#A6A6A6}%U%1~%u %F{#05FA63}󰊠 %f ${cmd_duration}%F{blue} %f"
+    PROMPT="%F{red}  󰮯 %F{#A6A6A6}%U%1~%u %F{#05FA63}󰊠 %f ${cmd_duration}$dir_alter"
   else
-    PROMPT="%F{yellow}  󰮯 %F{#A6A6A6}%U%1~%u %F{#05FA63}󰊠 %f ${cmd_duration}%F{blue} %f"
+    PROMPT="%F{yellow}  󰮯 %F{#A6A6A6}%U%1~%u %F{#05FA63}󰊠 %f ${cmd_duration}$dir_alter"
   fi
   RPROMPT=""
   [[ -o zle ]] && zle reset-prompt
@@ -342,11 +380,11 @@ prompt_precmd(){
   prompt_exit_status
   prompt_ssh_indicator
   prompt_cmd_duration
-  prompt_privilege_indicator
   prompt_current_dir
   prompt_trigger_async
   set_full_prompt
 }
 add-zsh-hook precmd prompt_precmd
 add-zsh-hook chpwd prompt_lang_indicator
+add-zsh-hook preexec git_preexec_refresh
 add-zsh-hook preexec prompt_preexec_timer
