@@ -59,4 +59,4 @@ ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
 #zstyle ':autocomplete:history:*' list-lines 16
 #zstyle ':autocomplete:history:*' remove-all-dups yes
 #zstyle ':autocomplete:files:*' list-lines 16
-#zstyle ':autocomplete:files:*' hidden all 
+#zstyle ':autocomplete:files:*' hidden all
