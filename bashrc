@@ -69,11 +69,6 @@ extrac() {
     [[ $? -eq 0 ]] && echo "Extract in ./$dirname"
 }
 
-# History search
-hist() {
-    grep -r "$1" ~/.zsh_history | tail -20
-}
-
 # Search files by name
 f() {
     find . -type f -name "*$1*" 2>/dev/null
@@ -98,3 +93,4 @@ fi
 #depending on the distro the path may vary
 #exmple: -> /usr/share/powerline/bash/powerline.sh
 #
+
