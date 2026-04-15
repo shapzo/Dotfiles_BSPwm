@@ -100,13 +100,12 @@ bspc config border_radius         16.0
 
 # Rules
 #bspc rule -a polybar manage=off
-#bspc rule -a firefoxdeveloperedition desktop='^3'
-bspc rule -a "spotify" desktop='^9'
+bspc rule -a "firefox-developer-edition" desktop='^2'
+bspc rule -a "org.gnome.Nautilus" desktop='^5'
+bspc rule -a "Spotify" desktop='^0'
 
 # -- float's --
-bspc rule -a "WM_CLASS=gnome-calculator" state=floating center=on
 bspc rule -a "gnome-calculator" state=floating center=on
-bspc rule -a "WM_CLASS=Gnome-screenshot" state=floating center=on
 bspc rule -a "Gnome-screenshot" state=floating center=on
 
 # Touchpad
