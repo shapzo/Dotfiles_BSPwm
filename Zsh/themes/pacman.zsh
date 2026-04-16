@@ -195,6 +195,15 @@ prompt_lang_indicator() {
 # -------------------------------------------------
 # Git Function
 # -------------------------------------------------
+#funtion detect git repo
+_find_git_root() {
+    local dir="$PWD"
+    while [[ "$dir" != "/" ]]; do
+        [[ -d "$dir/.git" || -f "$dir/.git" ]] && return 0
+        dir="${dir:h}"
+    done
+    return 1
+}
 # Git "Worker" Function: Runs heavy Git operations in the background
 git_worker_task() {
   local target_dir="$1"
@@ -243,14 +252,14 @@ git_worker_task() {
 
   # Stash
   local stash_count=$(git -C "$target_dir" rev-list --walk-reflogs --count refs/stash 2>/dev/null || echo 0)
-  local stash_count=${#${(f)stash_list}}
   (( stash_count > 0 )) && stash_info="%F{#fab387} ${stash_count}%f "
 
+
   # Remote status
-  local upstream=$(git -C "$target_dir"rev-parse --abbrev-ref @{upstream} 2>/dev/null)
+  local upstream=$(git -C "$target_dir" rev-parse --abbrev-ref @{upstream} 2>/dev/null)
   if [[ -n "$upstream" ]]; then
-    local ahead=$(git -C "$target_dir"rev-list @{upstream}..HEAD --count 2>/dev/null)
-    local behind=$(git -C "$target_dir"rev-list HEAD..@{upstream} --count 2>/dev/null)
+    local ahead=$(git -C "$target_dir" rev-list @{upstream}..HEAD --count 2>/dev/null)
+    local behind=$(git -C "$target_dir" rev-list HEAD..@{upstream} --count 2>/dev/null)
     (( ahead  > 0 )) && remote_info+="%F{#a6e3a1} ${ahead}%f "
     (( behind > 0 )) && remote_info+="%F{#f38ba8} ${behind}%f "
   fi
@@ -273,10 +282,9 @@ git_callback() {
       zle && zle reset-prompt
     fi
   else
-    if [[ -n "$git_async" || -n "$git_status_icons" ]]; then
-        git_async=""
-        git_status_icons=""
-        zle && zle reset-prompt
+    if [[ -n "$git_async" ]]; then
+      git_async=""
+      zle && zle reset-prompt
     fi
   fi
 }
@@ -306,7 +314,7 @@ prompt_trigger_async() {
   last_git_dir="$PWD"
 
   # 3. Git Check: Verify if the current directory is inside a Git work tree
-  git -C "$PWD" rev-parse --is-inside-work-tree &>/dev/null || {
+  _find_git_root || {
     git_async=""
     return
   }
