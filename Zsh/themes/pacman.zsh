@@ -63,10 +63,20 @@ typeset -g GIT_ICON_CLEAN="%F{#242424}  %f"
 typeset -g GIT_ICON_DIRTY="%F{#ff0000} ✘ %f"
 typeset -g GIT_ICON_RENAMED="%F{#f9e2af} ➜ %f"
 
+typeset -g GIT_ICON_REBASE="%F{#fab387}󰦗 %f"
+typeset -g GIT_ICON_MERGE="%F{#89b4fa}󰃸 %f"
+typeset -g GIT_ICON_CONFLICT="%F{#f38ba8}⚔ %f"
+typeset -g GIT_ICON_CHERRY="%F{#f9e2af} %f"
+typeset -g GIT_ICON_REVERT="%F{#a6e3a1} %f"
+typeset -g GIT_ICON_BISECT="%F{#cba6f7}󰃷 %f"
+
 # ---- Cache Git ----
 typeset -gA GIT_CACHE
 typeset -gA GIT_CACHE_TIME
 typeset -g last_async_time=0
+
+# ---- Branch git ----
+typeset -gA GIT_BRANCH_CACHE
 
 # ---- Git Bubble ----
 typeset -g GIT_PREFIX="%F{#006e0f}%K{#006e0f}%F{#000000}  %B"
@@ -204,6 +214,33 @@ _find_git_root() {
     done
     return 1
 }
+# Limpiar cache viejo (cada cierto tiempo)
+clean_git_cache() {
+  local now=$EPOCHSECONDS
+  for dir in ${(k)GIT_CACHE_TIME}; do
+    (( now - GIT_CACHE_TIME[$dir] > 300 )) && {
+      unset "GIT_CACHE[$dir]"
+      unset "GIT_CACHE_TIME[$dir]"
+    }
+  done
+}
+
+#funtion on detec branch
+get_git_branch_fast() {
+  git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null
+}
+check_git_branch_change() {
+  _find_git_root || return
+  local current_branch=$(get_git_branch_fast)
+  local cached_branch=${GIT_BRANCH_CACHE[$PWD]}
+
+  if [[ "$current_branch" != "$cached_branch" ]]; then
+    unset "GIT_CACHE[$PWD]"
+    unset "GIT_CACHE_TIME[$PWD]"
+    GIT_BRANCH_CACHE[$PWD]="$current_branch"
+  fi
+}
+
 # Git "Worker" Function: Runs heavy Git operations in the background
 git_worker_task() {
   local target_dir="$1"
@@ -216,6 +253,30 @@ git_worker_task() {
   local state_icon="$GIT_ICON_CLEAN"
   local remote_info=""
   local stash_info=""
+
+  local repo_dir="$target_dir/.git"
+  [[ -f "$repo_dir" ]] && repo_dir=$(git -C "$target_dir" rev-parse --git-dir 2>/dev/null)
+  local special_state=""
+  # REBASE
+  if [[ -d "$repo_dir/rebase-merge" || -d "$repo_dir/rebase-apply" ]]; then
+    special_state+="$GIT_ICON_REBASE"
+  fi
+  # MERGE
+  if [[ -f "$repo_dir/MERGE_HEAD" ]]; then
+    special_state+="$GIT_ICON_MERGE"
+  fi
+  # CHERRY-PICK
+  if [[ -f "$repo_dir/CHERRY_PICK_HEAD" ]]; then
+    special_state+="$GIT_ICON_CHERRY"
+  fi
+  # REVERT
+  if [[ -f "$repo_dir/REVERT_HEAD" ]]; then
+    special_state+="$GIT_ICON_REVERT"
+  fi
+  # BISECT
+  if [[ -f "$repo_dir/BISECT_LOG" ]]; then
+    special_state+="$GIT_ICON_BISECT"
+  fi
   
   # 2. Get status in porcelain format (script-friendly)
   # Ignore submodules for maximum performance
@@ -233,17 +294,19 @@ git_worker_task() {
       case "$xy" in
         \?\?) seen[untracked]=1                      ;; # untracked file 
         A?)   seen[added]=1                          ;; # file added/staged for commit
-        M?)   seen[staged_mod]=1                     ;; # file modified and staged
         MM)   seen[staged_mod]=1; seen[wt_mod]=1     ;; # modified in staging AND also modified in working tree
+        M?)   seen[staged_mod]=1                     ;; # file modified and staged
         \ M)  seen[wt_mod]=1                         ;; # modified only in working tree
         D?)   seen[staged_del]=1                     ;; # file deleted and staged
         \ D)  seen[wt_del]=1                         ;; # file deleted only in working tree
         R?)   seen[renamed]=1                        ;; # file renamed
+        UU)   seen[conflict]=1  ;; # Conflicts
       esac
     done <<< "$git_status_output"
 
     # 3. Assemble status icons based on discovered flags
     [[ -n ${seen[untracked]} ]] && status_info+="$GIT_ICON_UNTRACKED"
+    [[ -n ${seen[conflict]} ]] && status_info+="$GIT_ICON_CONFLICT"
     [[ -n ${seen[added]} ]]     && status_info+="$GIT_ICON_ADDED"
     [[ -n ${seen[renamed]} ]]   && status_info+="$GIT_ICON_RENAMED"
     [[ -n ${seen[staged_mod]} || -n ${seen[wt_mod]} ]] && status_info+="$GIT_ICON_MODIFIED"
@@ -265,13 +328,13 @@ git_worker_task() {
   fi
 
    # 4. Return block git
-  print -nr -- "${GIT_PREFIX}${ref}${state_icon}${stash_info}${remote_info}${status_info}${GIT_SUFFIX}"
+  print -nr -- "${GIT_PREFIX}${ref}${state_icon}${stash_info}${remote_info}${special_state}${status_info}${GIT_SUFFIX}"
 }
 
 # Callback: Triggered when the async worker finishes
 git_callback() {
   local output="$3"
-  local target_dir="$5" 
+  local target_dir="$6" 
 
   if [[ -n $output ]]; then
     GIT_CACHE[$target_dir]="$output"
@@ -388,7 +451,9 @@ prompt_precmd(){
   prompt_ssh_indicator
   prompt_cmd_duration
   prompt_current_dir
+  check_git_branch_change
   prompt_trigger_async
+  (( EPOCHSECONDS % 20 == 0 )) && clean_git_cache
   set_full_prompt
 }
 add-zsh-hook precmd prompt_precmd
