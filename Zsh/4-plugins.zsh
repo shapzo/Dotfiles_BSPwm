@@ -11,6 +11,7 @@ plug=(
     #"/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
     #"/usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
     #"/usr/share/zsh/plugins/sudo.plugin.zsh"
+    #"/usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
     #"/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 )
 
@@ -31,23 +32,27 @@ ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *|rm *|sudo *|mv *|ls *"
 ZSH_AUTOSUGGEST_COMPLETION_IGNORE="git *|npm *|pip *"
 
 #============================== highlight ==========================
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[command]='fg=#bc9dee,bold'
-ZSH_HIGHLIGHT_STYLES[alias]='fg=#89b4fa,bold'
-ZSH_HIGHLIGHT_STYLES[path]='fg=#f080ff,underline'
-ZSH_HIGHLIGHT_STYLES[error]='fg=#f38ba8,bold'
-ZSH_HIGHLIGHT_STYLES[function]='fg=#89dceb'
-ZSH_HIGHLIGHT_STYLES[comment]='fg=#6c7086,italic'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#ff6e34,bold'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#34ffaa,bold'
-ZSH_HIGHLIGHT_STYLES[bracket-error]='fg=#ff1100,bold'
-ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#f9e2af'
-ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#fab387'
-ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#35b11c'
-ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#b1811c'
-ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=#1ca7b1'
-ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
+#ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+#typeset -A ZSH_HIGHLIGHT_STYLES
+#ZSH_HIGHLIGHT_STYLES[command]='fg=#bc9dee,bold'
+#ZSH_HIGHLIGHT_STYLES[alias]='fg=#89b4fa,bold'
+#ZSH_HIGHLIGHT_STYLES[path]='fg=#f080ff,underline'
+#ZSH_HIGHLIGHT_STYLES[error]='fg=#f38ba8,bold'
+#ZSH_HIGHLIGHT_STYLES[function]='fg=#89dceb'
+#ZSH_HIGHLIGHT_STYLES[comment]='fg=#6c7086,italic'
+#ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#ff6e34,bold'
+#ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#34ffaa,bold'
+#ZSH_HIGHLIGHT_STYLES[bracket-error]='fg=#ff1100,bold'
+#ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#f9e2af'
+#ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#fab387'
+#ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#35b11c'
+#ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#b1811c'
+#ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=#1ca7b1'
+#ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
+
+# fast highlight
+# example -> fast-theme base16
+FAST_HIGHLIGHT_MAXLENGTH=200
 
 #===================== autocomplete ==================
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
