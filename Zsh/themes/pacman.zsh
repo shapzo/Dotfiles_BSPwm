@@ -334,7 +334,7 @@ git_worker_task() {
 # Callback: Triggered when the async worker finishes
 git_callback() {
   local output="$3"
-  local target_dir="$6" 
+  local target_dir="$5" 
 
   if [[ -n $output ]]; then
     GIT_CACHE[$target_dir]="$output"
@@ -363,7 +363,7 @@ prompt_trigger_async() {
   local now=$EPOCHSECONDS
 
   # 1. Recent Cache: Use directly if available and fresh
-  if [[ -n "${GIT_CACHE[$PWD]}" ]]; then
+  if (( ${+GIT_CACHE[$PWD]} )); then
     local last_time=${GIT_CACHE_TIME[$PWD]:-0}
     if (( now - last_time < 2 )); then
       git_async="${GIT_CACHE[$PWD]}"
@@ -389,7 +389,7 @@ prompt_trigger_async() {
 # Pre-execution Hook: Forces a refresh after running any command (like 'git add')
 git_preexec_refresh() {
   last_git_dir=""
-  if [[ "$1" == "git "* ]]; then
+  if [[ "$1" == git(|\ *) ]]; then
     unset "GIT_CACHE[$PWD]"
     unset "GIT_CACHE_TIME[$PWD]"
   fi
@@ -453,7 +453,10 @@ prompt_precmd(){
   prompt_current_dir
   check_git_branch_change
   prompt_trigger_async
-  (( EPOCHSECONDS % 20 == 0 )) && clean_git_cache
+  if (( EPOCHSECONDS - ${GIT_LAST_CLEAN:-0} > 20 )); then
+    GIT_LAST_CLEAN=$EPOCHSECONDS
+    clean_git_cache
+  fi
   set_full_prompt
 }
 add-zsh-hook precmd prompt_precmd
