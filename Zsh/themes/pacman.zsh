@@ -73,6 +73,7 @@ typeset -g GIT_ICON_BISECT="%F{#cba6f7}󰃷 %f"
 # ---- Cache Git ----
 typeset -gA GIT_CACHE
 typeset -gA GIT_CACHE_TIME
+typeset -gA GIT_LAST_CLEAN=0
 typeset -g last_async_time=0
 
 # ---- Branch git ----
@@ -214,7 +215,7 @@ _find_git_root() {
     done
     return 1
 }
-# Limpiar cache viejo (cada cierto tiempo)
+# Clean old cache
 clean_git_cache() {
   local now=$EPOCHSECONDS
   for dir in ${(k)GIT_CACHE_TIME}; do
