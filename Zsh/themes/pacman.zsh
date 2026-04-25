@@ -40,7 +40,7 @@ done
 if (( $+functions[async_init] )); then
     async_init
 else
-    async_job() { :; } 
+    echo "Error"
 fi
 # -------------------------------------------------
 # Global Variables
