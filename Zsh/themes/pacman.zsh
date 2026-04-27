@@ -64,11 +64,11 @@ typeset -g GIT_ICON_DIRTY="%F{#ff0000} ✘ %f"
 typeset -g GIT_ICON_RENAMED="%F{#f9e2af} ➜ %f"
 
 typeset -g GIT_ICON_REBASE="%F{#fab387}󰦗 %f"
-typeset -g GIT_ICON_MERGE="%F{#89b4fa}󰃸 %f"
-typeset -g GIT_ICON_CONFLICT="%F{#f38ba8}⚔ %f"
+typeset -g GIT_ICON_MERGE="%F{#89b4fa} %f"
+typeset -g GIT_ICON_CONFLICT="%F{#f38ba8} %f"
 typeset -g GIT_ICON_CHERRY="%F{#f9e2af} %f"
-typeset -g GIT_ICON_REVERT="%F{#a6e3a1} %f"
-typeset -g GIT_ICON_BISECT="%F{#cba6f7}󰃷 %f"
+typeset -g GIT_ICON_REVERT="%F{#a6e3a1} %f"
+typeset -g GIT_ICON_BISECT="%F{#cba6f7} %f"
 
 # ---- Cache Git ----
 typeset -gA GIT_CACHE
@@ -226,7 +226,7 @@ clean_git_cache() {
   done
 }
 
-#funtion on detec branch
+# funtion on detec branch
 get_git_branch_fast() {
   git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null
 }
@@ -245,88 +245,82 @@ check_git_branch_change() {
 # Git "Worker" Function: Runs heavy Git operations in the background
 git_worker_task() {
   local target_dir="$1"
-  
-  # 1. Fetch branch name or short hash (detached HEAD)
-  local ref=$(git -C "$target_dir" symbolic-ref --short HEAD 2>/dev/null || git -C "$target_dir" rev-parse --short HEAD 2>/dev/null)
-  [[ -z $ref ]] && return # Bail if not a git repo
-
-  local status_info=""
+  local ref="" status_info="" remote_info="" stash_info="" special_state=""
   local state_icon="$GIT_ICON_CLEAN"
-  local remote_info=""
-  local stash_info=""
+  local -A seen=()
 
+  # 1. Execute Git Status v2 with Branch info
+  # This provides the working tree state and branch details in a single process call
+  local git_status_output
+  git_status_output=$(git -C "$target_dir" status --porcelain=v2 --branch --ignore-submodules=dirty --untracked-files=normal 2>/dev/null)
+  
+  # Exit if not a git repository
+  [[ -z "$git_status_output" ]] && return
+
+  # 2. Parse output line by line
+  while IFS= read -r line; do
+    case "$line" in
+      # Branch name extraction
+      "# branch.head "*) 
+        ref="${line#*branch.head }" 
+        ;;
+      
+      # Ahead / Behind status (Remote synchronization)
+      "# branch.ab "*) 
+        local ab="${line#*branch.ab }"
+        local ahead="${ab% *}"
+        local behind="${ab#* }"
+        # Clean the + and - signs to perform arithmetic check
+        (( ${ahead#+} > 0 )) && remote_info+="%F{#a6e3a1} ${ahead#+}%f "
+        (( ${behind#-} > 0 )) && remote_info+="%F{#f38ba8} ${behind#-}%f "
+        ;;
+      
+      # File states:
+      # v2 prefixes: 1=tracked, 2=renamed/copied, u=unmerged, ?=untracked
+      "1 "*) 
+        state_icon="$GIT_ICON_DIRTY"
+        local xy="${line[3,4]}"
+        [[ "${xy:0:1}" != "." ]] && seen[added]=1    # X != . means changes are staged
+        [[ "${xy:1:1}" != "." ]] && seen[mod]=1      # Y != . means changes in working tree
+        ;;
+      "2 "*) 
+        state_icon="$GIT_ICON_DIRTY"
+        seen[renamed]=1 
+        ;;
+      "u "*) 
+        state_icon="$GIT_ICON_DIRTY"
+        seen[conflict]=1 
+        ;;
+      "? "*) 
+        state_icon="$GIT_ICON_DIRTY"
+        seen[untracked]=1 
+        ;;
+    esac
+  done <<< "$git_status_output"
+
+  # 3. Detect Special States (Rebase, Merge, etc.)
+  # Check for metadata files in the .git directory
   local repo_dir="$target_dir/.git"
   [[ -f "$repo_dir" ]] && repo_dir=$(git -C "$target_dir" rev-parse --git-dir 2>/dev/null)
-  local special_state=""
-  # REBASE
-  if [[ -d "$repo_dir/rebase-merge" || -d "$repo_dir/rebase-apply" ]]; then
-    special_state+="$GIT_ICON_REBASE"
-  fi
-  # MERGE
-  if [[ -f "$repo_dir/MERGE_HEAD" ]]; then
-    special_state+="$GIT_ICON_MERGE"
-  fi
-  # CHERRY-PICK
-  if [[ -f "$repo_dir/CHERRY_PICK_HEAD" ]]; then
-    special_state+="$GIT_ICON_CHERRY"
-  fi
-  # REVERT
-  if [[ -f "$repo_dir/REVERT_HEAD" ]]; then
-    special_state+="$GIT_ICON_REVERT"
-  fi
-  # BISECT
-  if [[ -f "$repo_dir/BISECT_LOG" ]]; then
-    special_state+="$GIT_ICON_BISECT"
-  fi
   
-  # 2. Get status in porcelain format (script-friendly)
-  # Ignore submodules for maximum performance
-  local git_status_output=$(git -C "$target_dir" status --porcelain --ignore-submodules=dirty --untracked-files=normal 2>/dev/null)
+  [[ -d "$repo_dir/rebase-merge" || -d "$repo_dir/rebase-apply" ]] && special_state+="$GIT_ICON_REBASE"
+  [[ -f "$repo_dir/MERGE_HEAD" ]] && special_state+="$GIT_ICON_MERGE"
+  [[ -f "$repo_dir/CHERRY_PICK_HEAD" ]] && special_state+="$GIT_ICON_CHERRY"
+  [[ -f "$repo_dir/REVERT_HEAD" ]] && special_state+="$GIT_ICON_REVERT"
+  [[ -f "$repo_dir/BISECT_LOG" ]] && special_state+="$GIT_ICON_BISECT"
 
-  if [[ -n "$git_status_output" ]]; then
-    state_icon="$GIT_ICON_DIRTY"
-    
-    # Use an associative array to track unique states
-    # This prevents icon duplication when multiple files share the same status
-    local -A seen=()
-    local line
-    while IFS= read -r line; do
-      local xy="${line[1,2]}"   # Extract first two characters (X & Y status codes)
-      case "$xy" in
-        \?\?) seen[untracked]=1                      ;; # untracked file 
-        A?)   seen[added]=1                          ;; # file added/staged for commit
-        MM)   seen[staged_mod]=1; seen[wt_mod]=1     ;; # modified in staging AND also modified in working tree
-        M?)   seen[staged_mod]=1                     ;; # file modified and staged
-        \ M)  seen[wt_mod]=1                         ;; # modified only in working tree
-        D?)   seen[staged_del]=1                     ;; # file deleted and staged
-        \ D)  seen[wt_del]=1                         ;; # file deleted only in working tree
-        R?)   seen[renamed]=1                        ;; # file renamed
-        UU)   seen[conflict]=1  ;; # Conflicts
-      esac
-    done <<< "$git_status_output"
+  # 4. Build Status Icons
+  # Append icons only if the state was flagged during parsing
+  [[ -n ${seen[untracked]} ]] && status_info+="$GIT_ICON_UNTRACKED"
+  [[ -n ${seen[conflict]} ]]  && status_info+="$GIT_ICON_CONFLICT"
+  [[ -n ${seen[added]} ]]     && status_info+="$GIT_ICON_ADDED"
+  [[ -n ${seen[renamed]} ]]   && status_info+="$GIT_ICON_RENAMED"
+  [[ -n ${seen[mod]} ]]       && status_info+="$GIT_ICON_MODIFIED"
 
-    # 3. Assemble status icons based on discovered flags
-    [[ -n ${seen[untracked]} ]] && status_info+="$GIT_ICON_UNTRACKED"
-    [[ -n ${seen[conflict]} ]] && status_info+="$GIT_ICON_CONFLICT"
-    [[ -n ${seen[added]} ]]     && status_info+="$GIT_ICON_ADDED"
-    [[ -n ${seen[renamed]} ]]   && status_info+="$GIT_ICON_RENAMED"
-    [[ -n ${seen[staged_mod]} || -n ${seen[wt_mod]} ]] && status_info+="$GIT_ICON_MODIFIED"
-    [[ -n ${seen[staged_del]} || -n ${seen[wt_del]} ]] && status_info+="$GIT_ICON_DELETED"
-  fi
-
-  # Stash
+  # 5. Stash Count
+  # This requires a separate git call as it's not part of the porcelain status
   local stash_count=$(git -C "$target_dir" rev-list --walk-reflogs --count refs/stash 2>/dev/null || echo 0)
   (( stash_count > 0 )) && stash_info="%F{#fab387} ${stash_count}%f "
-
-
-  # Remote status
-  local upstream=$(git -C "$target_dir" rev-parse --abbrev-ref @{upstream} 2>/dev/null)
-  if [[ -n "$upstream" ]]; then
-    local ahead=$(git -C "$target_dir" rev-list @{upstream}..HEAD --count 2>/dev/null)
-    local behind=$(git -C "$target_dir" rev-list HEAD..@{upstream} --count 2>/dev/null)
-    (( ahead  > 0 )) && remote_info+="%F{#a6e3a1} ${ahead}%f "
-    (( behind > 0 )) && remote_info+="%F{#f38ba8} ${behind}%f "
-  fi
 
    # 4. Return block git
   print -nr -- "${GIT_PREFIX}${ref}${state_icon}${stash_info}${remote_info}${special_state}${status_info}${GIT_SUFFIX}"
