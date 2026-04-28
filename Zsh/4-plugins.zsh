@@ -31,6 +31,13 @@ ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *|rm *|sudo *|mv *|ls *"
 ZSH_AUTOSUGGEST_COMPLETION_IGNORE="git *|npm *|pip *"
 
+#===================== fast highlight ==================
+# example -> fast-theme XDG:cherry
+FAST_HIGHLIGHT_MAXLENGTH=200
+zstyle ':fsh:*' use-chroma true
+zstyle ':fsh:*' highlight-brackets true
+zstyle ':fsh:layer:main' error '196,bold,standout'
+
 #============================== highlight ==========================
 #ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 #typeset -A ZSH_HIGHLIGHT_STYLES
@@ -49,13 +56,6 @@ ZSH_AUTOSUGGEST_COMPLETION_IGNORE="git *|npm *|pip *"
 #ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#b1811c'
 #ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=#1ca7b1'
 #ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
-
-# fast highlight
-# example -> fast-theme base16
-FAST_HIGHLIGHT_MAXLENGTH=200
-zstyle ':fsh:*' use-chroma true
-zstyle ':fsh:*' highlight-brackets true
-zstyle ':fsh:layer:main' error '196,bold,standout'
 
 #===================== autocomplete ==================
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
