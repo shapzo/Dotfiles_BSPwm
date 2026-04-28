@@ -53,6 +53,9 @@ ZSH_AUTOSUGGEST_COMPLETION_IGNORE="git *|npm *|pip *"
 # fast highlight
 # example -> fast-theme base16
 FAST_HIGHLIGHT_MAXLENGTH=200
+zstyle ':fsh:*' use-chroma true
+zstyle ':fsh:*' highlight-brackets true
+zstyle ':fsh:layer:main' error '196,bold,standout'
 
 #===================== autocomplete ==================
 #zstyle ':autocomplete:tab:*' insert-unambiguous yes
