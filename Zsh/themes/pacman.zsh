@@ -40,7 +40,7 @@ done
 if (( $+functions[async_init] )); then
     async_init
 else
-    echo "Error"
+    async_job() { :; }
 fi
 # -------------------------------------------------
 # Global Variables
@@ -56,12 +56,12 @@ typeset -g last_git_dir=""
 
 # ---- Git Icons ----
 typeset -g GIT_ICON_ADDED="%F{#DB7500}✚ %f"
-typeset -g GIT_ICON_MODIFIED="%F{#CF4EDE}✹ %f"
-typeset -g GIT_ICON_DELETED="%F{#D60000}✖ %f"
+typeset -g GIT_ICON_MODIFIED="%F{#CF4EDE} %f"
+typeset -g GIT_ICON_DELETED="%F{#ABABAB}󰗨 %f"
 typeset -g GIT_ICON_UNTRACKED="%F{#00e7b5}✭ %f"
-typeset -g GIT_ICON_CLEAN="%F{#242424}  %f"
+typeset -g GIT_ICON_CLEAN="%F{#242424} 󰍜 %f"
 typeset -g GIT_ICON_DIRTY="%F{#ff0000} ✘ %f"
-typeset -g GIT_ICON_RENAMED="%F{#f9e2af} ➜ %f"
+typeset -g GIT_ICON_RENAMED="%F{#f9e2af}  %f"
 
 typeset -g GIT_ICON_REBASE="%F{#fab387}󰦗 %f"
 typeset -g GIT_ICON_MERGE="%F{#89b4fa} %f"
@@ -208,12 +208,7 @@ prompt_lang_indicator() {
 # -------------------------------------------------
 #funtion detect git repo
 _find_git_root() {
-    local dir="$PWD"
-    while [[ "$dir" != "/" ]]; do
-        [[ -d "$dir/.git" || -f "$dir/.git" ]] && return 0
-        dir="${dir:h}"
-    done
-    return 1
+    command git rev-parse --show-toplevel &>/dev/null
 }
 # Clean old cache
 clean_git_cache() {
@@ -227,12 +222,12 @@ clean_git_cache() {
 }
 
 # funtion on detec branch
-get_git_branch_fast() {
+get_git_branch() {
   git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null
 }
 check_git_branch_change() {
   _find_git_root || return
-  local current_branch=$(get_git_branch_fast)
+  local current_branch=$(get_git_branch)
   local cached_branch=${GIT_BRANCH_CACHE[$PWD]}
 
   if [[ "$current_branch" != "$cached_branch" ]]; then
@@ -248,82 +243,93 @@ git_worker_task() {
   local ref="" status_info="" remote_info="" stash_info="" special_state=""
   local state_icon="$GIT_ICON_CLEAN"
   local -A seen=()
-
-  # 1. Execute Git Status v2 with Branch info
-  # This provides the working tree state and branch details in a single process call
-  local git_status_output
-  git_status_output=$(git -C "$target_dir" status --porcelain=v2 --branch --ignore-submodules=dirty --untracked-files=normal 2>/dev/null)
   
-  # Exit if not a git repository
+  # File counters
+  local -i added_count=0 modified_count=0 deleted_count=0 untracked_count=0
+
+  # 1. Run Git Status v2 with Branch info
+  # This provides working tree status and branch data in a single process
+  local git_status_output
+  git_status_output=$(git -C "$target_dir" status --porcelain=v2 --branch --ignore-submodules=dirty --no-renames --untracked-files=normal 2>/dev/null)
   [[ -z "$git_status_output" ]] && return
 
   # 2. Parse output line by line
   while IFS= read -r line; do
     case "$line" in
-      # Branch name extraction
+      # Branch and remote information
       "# branch.head "*) 
         ref="${line#*branch.head }" 
         ;;
-      
-      # Ahead / Behind status (Remote synchronization)
-      "# branch.ab "*) 
+      # Ahead / Behind status
+      "# branch.ab "*)
         local ab="${line#*branch.ab }"
         local ahead="${ab% *}"
         local behind="${ab#* }"
-        # Clean the + and - signs to perform arithmetic check
         (( ${ahead#+} > 0 )) && remote_info+="%F{#a6e3a1} ${ahead#+}%f "
         (( ${behind#-} > 0 )) && remote_info+="%F{#f38ba8} ${behind#-}%f "
         ;;
       
-      # File states:
-      # v2 prefixes: 1=tracked, 2=renamed/copied, u=unmerged, ?=untracked
+      # File states (v2 uses prefixes: 1=tracked, 2=renamed, u=unmerged, ?=untracked)
       "1 "*) 
         state_icon="$GIT_ICON_DIRTY"
         local xy="${line[3,4]}"
-        [[ "${xy:0:1}" != "." ]] && seen[added]=1    # X != . means changes are staged
-        [[ "${xy:1:1}" != "." ]] && seen[mod]=1      # Y != . means changes in working tree
+        # Staged changes (Index)
+        [[ "${xy:0:1}" == "A" ]] && { ((added_count++));    seen[added]=1; }
+        [[ "${xy:0:1}" == "M" ]] && { ((modified_count++)); seen[mod]=1; }
+        [[ "${xy:0:1}" == "D" ]] && { ((deleted_count++));  seen[mod]=1; }
+        # Unstaged changes (Working Tree)
+        [[ "${xy:1:1}" == "M" ]] && { ((modified_count++)); seen[mod]=1; }
+        [[ "${xy:1:1}" == "D" ]] && { ((deleted_count++));  seen[mod]=1; }
         ;;
+      # 2 <XY>: Renamed files
       "2 "*) 
         state_icon="$GIT_ICON_DIRTY"
+        ((modified_count++))
         seen[renamed]=1 
         ;;
+      # u <XY>: Merge conflicts (Unmerged)
       "u "*) 
         state_icon="$GIT_ICON_DIRTY"
         seen[conflict]=1 
         ;;
+      # ?: Untracked files
       "? "*) 
         state_icon="$GIT_ICON_DIRTY"
+        ((untracked_count++))
         seen[untracked]=1 
         ;;
     esac
   done <<< "$git_status_output"
 
-  # 3. Detect Special States (Rebase, Merge, etc.)
-  # Check for metadata files in the .git directory
+  # 3. Detect special states (Rebase, Merge, etc.)
   local repo_dir="$target_dir/.git"
   [[ -f "$repo_dir" ]] && repo_dir=$(git -C "$target_dir" rev-parse --git-dir 2>/dev/null)
   
-  [[ -d "$repo_dir/rebase-merge" || -d "$repo_dir/rebase-apply" ]] && special_state+="$GIT_ICON_REBASE"
-  [[ -f "$repo_dir/MERGE_HEAD" ]] && special_state+="$GIT_ICON_MERGE"
-  [[ -f "$repo_dir/CHERRY_PICK_HEAD" ]] && special_state+="$GIT_ICON_CHERRY"
-  [[ -f "$repo_dir/REVERT_HEAD" ]] && special_state+="$GIT_ICON_REVERT"
-  [[ -f "$repo_dir/BISECT_LOG" ]] && special_state+="$GIT_ICON_BISECT"
+  if [[ -d "$repo_dir" ]]; then
+    [[ -d "$repo_dir/rebase-merge" || -d "$repo_dir/rebase-apply" ]] && special_state+="$GIT_ICON_REBASE"
+    [[ -f "$repo_dir/MERGE_HEAD" ]] && special_state+="$GIT_ICON_MERGE"
+    [[ -f "$repo_dir/CHERRY_PICK_HEAD" ]] && special_state+="$GIT_ICON_CHERRY"
+    [[ -f "$repo_dir/REVERT_HEAD" ]] && special_state+="$GIT_ICON_REVERT"
+    [[ -f "$repo_dir/BISECT_LOG" ]] && special_state+="$GIT_ICON_BISECT"
+  fi
 
-  # 4. Build Status Icons
-  # Append icons only if the state was flagged during parsing
-  [[ -n ${seen[untracked]} ]] && status_info+="$GIT_ICON_UNTRACKED"
+  # 4. Build status icons (Visual indicators)
   [[ -n ${seen[conflict]} ]]  && status_info+="$GIT_ICON_CONFLICT"
-  [[ -n ${seen[added]} ]]     && status_info+="$GIT_ICON_ADDED"
   [[ -n ${seen[renamed]} ]]   && status_info+="$GIT_ICON_RENAMED"
-  [[ -n ${seen[mod]} ]]       && status_info+="$GIT_ICON_MODIFIED"
 
-  # 5. Stash Count
-  # This requires a separate git call as it's not part of the porcelain status
+  # 5. Build file counters string
+  local file_stats=""
+  (( added_count > 0 ))     && file_stats+="${GIT_ICON_ADDED}${added_count} "
+  (( modified_count > 0 ))  && file_stats+="${GIT_ICON_MODIFIED}${modified_count} "
+  (( deleted_count > 0 ))   && file_stats+="${GIT_ICON_DELETED}${deleted_count} "
+  (( untracked_count > 0 )) && file_stats+="${GIT_ICON_UNTRACKED}${untracked_count} "
+
+  # 6. Stash count (Requires a separate command)
   local stash_count=$(git -C "$target_dir" rev-list --walk-reflogs --count refs/stash 2>/dev/null || echo 0)
   (( stash_count > 0 )) && stash_info="%F{#fab387} ${stash_count}%f "
 
-   # 4. Return block git
-  print -nr -- "${GIT_PREFIX}${ref}${state_icon}${stash_info}${remote_info}${special_state}${status_info}${GIT_SUFFIX}"
+  # Final Result: Printed to be captured by the callback
+  print -nr -- "${GIT_PREFIX}${ref}${state_icon}${special_state}${status_info}${file_stats}${stash_info}${remote_info}${GIT_SUFFIX}"
 }
 
 # Callback: Triggered when the async worker finishes
@@ -357,7 +363,13 @@ fi
 prompt_trigger_async() {
   local now=$EPOCHSECONDS
 
-  # 1. Recent Cache: Use directly if available and fresh
+    # 1. Git Check: Verify if the current directory is inside a Git work tree
+  if ! _find_git_root; then
+    git_async=""
+    return
+  fi
+
+  # 2. Recent Cache: Use directly if available and fresh
   if (( ${+GIT_CACHE[$PWD]} )); then
     local last_time=${GIT_CACHE_TIME[$PWD]:-0}
     if (( now - last_time < 2 )); then
@@ -366,16 +378,10 @@ prompt_trigger_async() {
     fi
   fi
 
-  # 2. Throttle: Limit to one worker per second in the same directory to save resources
+  # 3. Throttle: Limit to one worker per second in the same directory to save resources
   (( now - last_async_time < 1 )) && [[ "$PWD" == "$last_git_dir" ]] && return
   last_async_time=$now
   last_git_dir="$PWD"
-
-  # 3. Git Check: Verify if the current directory is inside a Git work tree
-  _find_git_root || {
-    git_async=""
-    return
-  }
 
   # 4. Async Execution: Dispatch the task to the git_worker
   async_job git_worker git_worker_task "$PWD"
