@@ -1,18 +1,18 @@
 #=========================Aliases======================
 #----------------pacman / paru administration-----------------
-alias cate='paru -Sg | sort -u'
-alias cate1='paru -Sgg | sort -u'
-alias search='paru -Sg | grep'
-alias search1='paru -Sgg | grep'
+alias -g cate='paru -Sg | sort -u'
+alias -g cate1='paru -Sgg | sort -u'
+alias -g search='paru -Sg | grep'
+alias -g search1='paru -Sgg | grep'
 
-alias dowpkg='pacman -Sw'
-alias rem='paru -R'
-alias rem1='paru -Rs'
-alias rem2='paru -Rsc'
+alias -g dowpkg='pacman -Sw'
+alias -g rem='paru -R'
+alias -g rem1='paru -Rs'
+alias -g rem2='paru -Rsc'
 
-alias cach='sudo paccache -rvk 2'
-alias vaccache='sudo pacman -Scc'
-alias rmcahe='sudo paccache -r'
+alias -g cach='sudo paccache -rvk 2'
+alias -g vaccache='sudo pacman -Scc'
+alias -g rmcahe='sudo paccache -r'
 
 #-----------------------aliases----------------------
 alias \
