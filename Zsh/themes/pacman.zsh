@@ -53,6 +53,7 @@ typeset -g last_lang_dir=""
 typeset -g current_dir=""
 typeset -g git_async=""
 typeset -g last_git_dir=""
+typeset -g jobs_indicator=""
 
 # ---- Git Icons ----
 typeset -g GIT_ICON_ADDED="%F{#DB7500}✚ %f"
@@ -117,6 +118,18 @@ prompt_ssh_indicator() {
     ssh_indicator="%F{#00afff}󰖟 %f"
   else
     ssh_indicator=""
+  fi
+}
+
+# -------------------------------------------------
+# Detec jobs
+# -------------------------------------------------
+prompt_jobs_status() {
+  local num_jobs=${(k)#jobstates}
+  if (( num_jobs > 0 )); then
+    jobs_indicator="%F{#94e2d5} 󰛸 ${num_jobs}%f"
+  else
+    jobs_indicator=""
   fi
 }
 
@@ -363,13 +376,18 @@ fi
 prompt_trigger_async() {
   local now=$EPOCHSECONDS
 
-    # 1. Git Check: Verify if the current directory is inside a Git work tree
+  # 1. Git Check: Verify if the current directory is inside a Git work tree
   if ! _find_git_root; then
     git_async=""
     return
   fi
 
-  # 2. Recent Cache: Use directly if available and fresh
+  # 2. If it's a repository but the cache is empty OR more than 2 seconds have passed
+  if [[ -z "$git_async" ]]; then
+   git_async="%F{#444444}  %f"
+  fi
+
+  # 3. Recent Cache: Use directly if available and fresh
   if (( ${+GIT_CACHE[$PWD]} )); then
     local last_time=${GIT_CACHE_TIME[$PWD]:-0}
     if (( now - last_time < 2 )); then
@@ -378,12 +396,12 @@ prompt_trigger_async() {
     fi
   fi
 
-  # 3. Throttle: Limit to one worker per second in the same directory to save resources
+  # 4. Throttle: Limit to one worker per second in the same directory to save resources
   (( now - last_async_time < 1 )) && [[ "$PWD" == "$last_git_dir" ]] && return
   last_async_time=$now
   last_git_dir="$PWD"
 
-  # 4. Async Execution: Dispatch the task to the git_worker
+  # 5. Async Execution: Dispatch the task to the git_worker
   async_job git_worker git_worker_task "$PWD"
 }
 
@@ -401,15 +419,22 @@ git_preexec_refresh() {
 # -------------------------------------------------
 prompt_current_dir() {
   local PACMAN_ICON
+  local read_only_indicator
   if [[ $UID -eq 0 ]]; then
     PACMAN_ICON="%F{#FF0000}%K{$BG_PACMAN} 󰮯 "
   else
     PACMAN_ICON="$PACMAN"
   fi
 
+  if [[ ! -w . ]]; then
+    read_only_indicator="%F{#BAA414} %f"
+  else
+    read_only_indicator=""
+  fi
+
   # function normal
   local dir_text=" %U%B%2~%b%u"
-  local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}%F{black} $dir_text %F{$BG_PATH}%K{$BG_GHOSTS}"
+  local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}${read_only_indicator}%F{black} $dir_text %F{$BG_PATH}%K{$BG_GHOSTS}"
 
   #[[  -z ${PWD#$HOME}  ]] -> this would be another way but I like this one for now
   if [[ "$PWD" == "$HOME" ]]; then
@@ -426,7 +451,7 @@ set_full_prompt() {
   PROMPT='${exit_status}${current_dir}${git_async:+ ${git_async}}
  %F{blue}  %f'
   if (( COLUMNS >= 80 )); then
-    RPROMPT='${cmd_duration}${lang_indicator}${ssh_indicator}'
+    RPROMPT='${cmd_duration}${lang_indicator}${jobs_indicator}${ssh_indicator}'
   else
     RPROMPT=""
   fi
@@ -452,6 +477,7 @@ prompt_precmd(){
   prompt_ssh_indicator
   prompt_cmd_duration
   prompt_current_dir
+  prompt_jobs_status
   check_git_branch_change
   prompt_trigger_async
   if (( EPOCHSECONDS - ${GIT_LAST_CLEAN:-0} > 20 )); then
