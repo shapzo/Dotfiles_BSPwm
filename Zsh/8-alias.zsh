@@ -19,19 +19,26 @@ alias \
         cls='clear' \
         csl='clear' \
         nau='nautilus' \
+        vi='nvim' \
+
+alias -g \
         fa='fastfetch --config ~/.config/fastfetch/config.json' \
         clock='tty-clock -C 5 -b -t -c' \
         clockl='tty-clock -b -t -c | lolcat' \
-        pdf='evince' \
-        img='eog' \
-        vi='nvim' \
-        video='mplayer' \
-        dm='mdcat' \
         na='nano -0 -lmt'
+
+alias -s \
+        pdf='evince' \
+        {png,jpg,jpeg,gif}='eog' \
+        {mp4,mkv,mov}='lollipop' \
+        md='mdcat' \
+        py='python3' \
+        {txt}='gnome-text-editor' \
+        {py,js,lua,sh,zsh,json,rasi,ini,html,css}='nvim'
 
 if command -v lsd >/dev/null 2>&1; then
     # ls for lsd
-    alias \
+    alias -g \
             ls='lsd --group-dirs=first' \
             l='lsd -l --group-dirs=first' \
             ll='lsd -a --group-dirs=first' \
@@ -40,7 +47,7 @@ if command -v lsd >/dev/null 2>&1; then
 
 elif command -v eza >/dev/null 2>&1; then
     # alias for eza
-    alias \
+    alias -g \
             ls='eza --icons --group-directories-first' \
             l='eza --icons --group-directories-first -hl --smart-group' \
             ll='eza --icons --group-directories-first -a' \
@@ -56,7 +63,7 @@ else
 fi
 
 # config
-alias \
+alias -g \
         z='vi ~/.zshrc' \
         b='vi ~/.config/bspwm' \
         s='vi ~/.config/sxhkd/sxhkdrc' \
@@ -68,7 +75,7 @@ alias \
         k='vi ~/.config/kitty'
 
 # git
-alias \
+alias -g \
         status='git status' \
         add='git add .' \
         push='git push origin main' \
