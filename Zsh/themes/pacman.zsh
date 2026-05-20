@@ -21,7 +21,6 @@ setopt prompt_subst
 setopt extendedglob
 #: Load module datatime and mathfunc
 zmodload zsh/datetime
-zmodload zsh/mathfunc
 # Load hooks module
 autoload -Uz add-zsh-hook
 # Load zsh async
@@ -101,13 +100,22 @@ typeset -g SEP_CLOSE="%F{$BG_GHOSTS}%k%f"
 # Function to show if a command failed
 # -------------------------------------------------
 prompt_exit_status() {
-  # Only shows the error if the command failed
   local exit_code=$?
-  if (( exit_code != 0 )); then
-    exit_status="%F{red}%K{red}%F{white}✘ ${exit_code}%f%k%F{red}%f "
-  else
-    exit_status=""
-  fi
+  (( exit_code == 0 )) && { exit_status=""; return; }
+  local color icon label
+  case $exit_code in
+    1)        color="#f38ba8"; icon="✘"; label="Error"         ;; # General error
+    2)        color="#fab387"; icon=""; label="Misuse"        ;; # Misuse of shell builtins
+    126)      color="#BAA414"; icon=""; label="Not executable" ;; # Command invoked cannot execute (Permission denied)
+    127)      color="#89b4fa"; icon="󰅰"; label="Not found"      ;; # Command not found
+    130)      color="#a6e3a1"; icon=""; label="Interrupted"  ;; # Control-C (SIGINT)
+    13[1-9]|\
+    14[0-9]|\
+    1[5-9][0-9]) color="#cba6f7"; icon=""; label="Signal"       ;; # Other signals (Fatal error signal "n")
+    *)        color="#f38ba8"; icon="✘"; label="${exit_code}" ;; # Any other exit code
+  esac
+
+  exit_status="%F{${color}}%K{${color}}%F{#000000} ${icon} ${exit_code} ${label} %f%k%F{${color}}%f "
 }
 
 # -------------------------------------------------
@@ -156,13 +164,13 @@ prompt_cmd_duration() {
         
         if (( elapsed >= 3600 )); then
             # Format: 1h 20m
-            local h=$(( int(elapsed / 3600) ))
-            local m=$(( int((elapsed % 3600) / 60) ))
+            local h=$(( elapsed / 3600 ))
+            local m=$(( (elapsed % 3600) / 60 ))
             res="${h}h ${m}m"
         elif (( elapsed >= 60 )); then
             # Format: 2m 15s
-            local m=$(( int(elapsed / 60) ))
-            local s=$(( int(elapsed % 60) ))
+            local m=$(( elapsed / 60 ))
+            local s=$(( elapsed % 60 ))
             res="${m}m ${s}s"
         else
             # Format: 2.45s (using printf for 2 decimal places)
@@ -221,7 +229,16 @@ prompt_lang_indicator() {
 # -------------------------------------------------
 #funtion detect git repo
 _find_git_root() {
-    command git rev-parse --show-toplevel &>/dev/null
+    local dir="$PWD"
+    while [[ "$dir" != "/" ]]; do
+        if [[ -d "$dir/.git" || -f "$dir/.git" ]]; then
+            _git_root_cache="$dir"
+            return 0
+        fi
+        dir="${dir:h}"
+    done
+    _git_root_cache=""
+    return 1
 }
 # Clean old cache
 clean_git_cache() {
@@ -236,17 +253,35 @@ clean_git_cache() {
 
 # funtion on detec branch
 get_git_branch() {
-  git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null
+    [[ -z "$_git_root_cache" ]] && return 1
+    local git_path="$_git_root_cache/.git"
+    local git_dir
+    if [[ -d "$git_path" ]]; then
+        git_dir="$git_path"
+    elif [[ -f "$git_path" ]]; then
+        local content=$(<"$git_path")
+        git_dir="${content#gitdir: }"
+        [[ "$git_dir" != /* ]] && git_dir="$_git_root_cache/$git_dir"
+    else
+        return 1
+    fi
+    [[ -f "$git_dir/HEAD" ]] || return 1
+    local head=$(<"$git_dir/HEAD")
+    if [[ "$head" == ref:* ]]; then
+        print -- "${head#ref: refs/heads/}"
+    else
+        print -- "${head:0:7}"
+    fi
 }
 check_git_branch_change() {
   _find_git_root || return
+  local git_root="$_git_root_cache"
   local current_branch=$(get_git_branch)
-  local cached_branch=${GIT_BRANCH_CACHE[$PWD]}
-
+  local cached_branch=${GIT_BRANCH_CACHE[$git_root]}
   if [[ "$current_branch" != "$cached_branch" ]]; then
-    unset "GIT_CACHE[$PWD]"
-    unset "GIT_CACHE_TIME[$PWD]"
-    GIT_BRANCH_CACHE[$PWD]="$current_branch"
+    unset "GIT_CACHE[$git_root]"
+    unset "GIT_CACHE_TIME[$git_root]"
+    GIT_BRANCH_CACHE[$git_root]="$current_branch"
   fi
 }
 
@@ -366,12 +401,6 @@ git_callback() {
   fi
 }
 
-# Initialize Async Worker
-if (( $+functions[async_start_worker] )); then
-    async_start_worker git_worker -n
-    async_register_callback git_worker git_callback
-fi
-
 # Trigger Hook: Decides when to spawn a new async job
 prompt_trigger_async() {
   local now=$EPOCHSECONDS
@@ -381,25 +410,33 @@ prompt_trigger_async() {
     git_async=""
     return
   fi
+  local git_root="$_git_root_cache"
 
-  # 2. If it's a repository but the cache is empty OR more than 2 seconds have passed
-  if [[ -z "$git_async" ]]; then
-   git_async="%F{#444444}  %f"
+  # 2. Init lazy
+  if (( !_async_initialized )); then
+    if (( $+functions[async_start_worker] )); then
+      async_init
+      async_start_worker git_worker -n
+      async_register_callback git_worker git_callback
+    fi
+    _async_initialized=1
   fi
 
   # 3. Recent Cache: Use directly if available and fresh
-  if (( ${+GIT_CACHE[$PWD]} )); then
-    local last_time=${GIT_CACHE_TIME[$PWD]:-0}
+  if (( ${+GIT_CACHE[$git_root]} )); then
+    local last_time=${GIT_CACHE_TIME[$git_root]:-0}
     if (( now - last_time < 2 )); then
-      git_async="${GIT_CACHE[$PWD]}"
+      git_async="${GIT_CACHE[$git_root]}"
       return
     fi
   fi
 
   # 4. Throttle: Limit to one worker per second in the same directory to save resources
-  (( now - last_async_time < 1 )) && [[ "$PWD" == "$last_git_dir" ]] && return
+  if (( now - last_async_time < 1 )) && [[ "$git_root" == "$last_git_dir" ]]; then
+    return
+  fi
   last_async_time=$now
-  last_git_dir="$PWD"
+  last_git_dir="$git_root"
 
   # 5. Async Execution: Dispatch the task to the git_worker
   async_job git_worker git_worker_task "$PWD"
@@ -409,8 +446,8 @@ prompt_trigger_async() {
 git_preexec_refresh() {
   last_git_dir=""
   if [[ "$1" == git(|\ *) ]]; then
-    unset "GIT_CACHE[$PWD]"
-    unset "GIT_CACHE_TIME[$PWD]"
+    unset "GIT_CACHE[$_git_root_cache]"
+    unset "GIT_CACHE_TIME[$_git_root_cache]"
   fi
 }
 
@@ -474,8 +511,8 @@ zle -N zle-line-finish
 # -------------------------------------------------
 prompt_precmd(){
   prompt_exit_status
-  prompt_ssh_indicator
   prompt_cmd_duration
+  prompt_lang_indicator
   prompt_current_dir
   prompt_jobs_status
   check_git_branch_change
