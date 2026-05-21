@@ -24,23 +24,9 @@ zmodload zsh/datetime
 # Load hooks module
 autoload -Uz add-zsh-hook
 # Load zsh async
-typeset -a asyncc=(
-    "/usr/share/zsh/plugins/zsh-async/async.zsh"
-)
+[[ -f "/usr/share/zsh/plugins/zsh-async/async.zsh" ]] && \
+    source "/usr/share/zsh/plugins/zsh-async/async.zsh"
 
-for plugin in "$asyncc[@]"; do
-    if [[ -f "$plugin" ]]; then
-        source "$plugin"
-    else
-        [[ "$plugin" == *"async"* ]]
-    fi
-done
-
-if (( $+functions[async_init] )); then
-    async_init
-else
-    async_job() { :; }
-fi
 # -------------------------------------------------
 # Global Variables
 # -------------------------------------------------
@@ -50,9 +36,13 @@ typeset -g cmd_duration=""
 typeset -g lang_indicator=""
 typeset -g last_lang_dir=""
 typeset -g current_dir=""
+typeset -g jobs_indicator=""
+
+# ---- Git ----
 typeset -g git_async=""
 typeset -g last_git_dir=""
-typeset -g jobs_indicator=""
+typeset -g _async_initialized=0
+typeset -g _git_root_cache=""
 
 # ---- Git Icons ----
 typeset -g GIT_ICON_ADDED="%F{#DB7500}✚ %f"
@@ -73,7 +63,6 @@ typeset -g GIT_ICON_BISECT="%F{#cba6f7} %f"
 # ---- Cache Git ----
 typeset -gA GIT_CACHE
 typeset -gA GIT_CACHE_TIME
-typeset -gA GIT_LAST_CLEAN
 typeset -g last_async_time=0
 
 # ---- Branch git ----
@@ -121,13 +110,11 @@ prompt_exit_status() {
 # -------------------------------------------------
 # Function to detect SSH
 # -------------------------------------------------
-prompt_ssh_indicator() {
-  if [[ -n $SSH_CONNECTION || -n $SSH_CLIENT || -n $SSH_TTY ]]; then
+if [[ -n $SSH_CONNECTION || -n $SSH_CLIENT || -n $SSH_TTY ]]; then
     ssh_indicator="%F{#00afff}󰖟 %f"
-  else
+else
     ssh_indicator=""
-  fi
-}
+fi
 
 # -------------------------------------------------
 # Detec jobs
@@ -173,8 +160,7 @@ prompt_cmd_duration() {
             local s=$(( elapsed % 60 ))
             res="${m}m ${s}s"
         else
-            # Format: 2.45s (using printf for 2 decimal places)
-            res="$(printf "%.2fs" $elapsed)"
+            res=${elapsed:0:4}s
         fi
         
         # Color: Peach (#fab387) with speed icon
@@ -229,16 +215,8 @@ prompt_lang_indicator() {
 # -------------------------------------------------
 #funtion detect git repo
 _find_git_root() {
-    local dir="$PWD"
-    while [[ "$dir" != "/" ]]; do
-        if [[ -d "$dir/.git" || -f "$dir/.git" ]]; then
-            _git_root_cache="$dir"
-            return 0
-        fi
-        dir="${dir:h}"
-    done
-    _git_root_cache=""
-    return 1
+    _git_root_cache=$(git rev-parse --show-toplevel 2>/dev/null)
+    [[ -n "$_git_root_cache" ]]
 }
 # Clean old cache
 clean_git_cache() {
@@ -470,7 +448,7 @@ prompt_current_dir() {
   fi
 
   # function normal
-  local dir_text=" %U%B%2~%b%u"
+  local dir_text=" %U%B%50<..<%2~%b%u"
   local DIR_BLOCK="%F{$BG_PACMAN}%K{$BG_PATH}${read_only_indicator}%F{black} $dir_text %F{$BG_PATH}%K{$BG_GHOSTS}"
 
   #[[  -z ${PWD#$HOME}  ]] -> this would be another way but I like this one for now
@@ -512,7 +490,6 @@ zle -N zle-line-finish
 prompt_precmd(){
   prompt_exit_status
   prompt_cmd_duration
-  prompt_lang_indicator
   prompt_current_dir
   prompt_jobs_status
   check_git_branch_change
