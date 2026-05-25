@@ -417,6 +417,7 @@ prompt_trigger_async() {
   last_git_dir="$git_root"
 
   # 5. Async Execution: Dispatch the task to the git_worker
+  # use -> "$PWD" or "$git_root"
   async_job git_worker git_worker_task "$PWD"
 }
 
