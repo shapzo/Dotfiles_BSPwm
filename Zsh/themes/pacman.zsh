@@ -160,7 +160,8 @@ prompt_cmd_duration() {
             local s=$(( elapsed % 60 ))
             res="${m}m ${s}s"
         else
-            res=${elapsed:0:4}s
+            #res=${elapsed:0:4}s
+            res="$(printf "%.2fs" $elapsed)"
         fi
         
         # Color: Peach (#fab387) with speed icon
