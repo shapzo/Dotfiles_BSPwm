@@ -21,6 +21,7 @@ setopt prompt_subst
 setopt extendedglob
 #: Load module datatime and mathfunc
 zmodload zsh/datetime
+zmodload zsh/mathfunc
 # Load hooks module
 autoload -Uz add-zsh-hook
 # Load zsh async
@@ -132,9 +133,7 @@ prompt_jobs_status() {
 # Command Execution Timer
 # -------------------------------------------------
 # Runs BEFORE the command starts
-prompt_preexec_timer() {
-    cmd_timer=$EPOCHREALTIME
-}
+prompt_preexec_timer() { cmd_timer=$EPOCHREALTIME; }
 
 # Runs AFTER the command finishes
 prompt_cmd_duration() {
@@ -151,17 +150,17 @@ prompt_cmd_duration() {
         
         if (( elapsed >= 3600 )); then
             # Format: 1h 20m
-            local h=$(( elapsed / 3600 ))
-            local m=$(( (elapsed % 3600) / 60 ))
+            local h=$(( int(elapsed / 3600) ))
+            local m=$(( int((elapsed % 3600) / 60) ))
             res="${h}h ${m}m"
         elif (( elapsed >= 60 )); then
             # Format: 2m 15s
-            local m=$(( elapsed / 60 ))
-            local s=$(( elapsed % 60 ))
+            local m=$(( int(elapsed / 60) ))
+            local s=$(( int(elapsed % 60) ))
             res="${m}m ${s}s"
         else
-            #res=${elapsed:0:4}s
-            res="$(printf "%.2fs" $elapsed)"
+            res=${elapsed:0:4}s
+            #res="$(printf "%.2fs" $elapsed)"
         fi
         
         # Color: Peach (#fab387) with speed icon
@@ -175,40 +174,32 @@ prompt_cmd_duration() {
 # -------------------------------------------------
 # Function to detect Languages in the Directory
 # -------------------------------------------------
+_has_ext() {
+  local ext=$1
+  local -a files; files=( *.$ext(N[1]) )
+  (( ${#files} > 0 ))
+}
+
 prompt_lang_indicator() {
   [[ "$PWD" == "$last_lang_dir" ]] && return
   last_lang_dir="$PWD"
   lang_indicator=""
-   # Python
-  [[ -n *.py(#qN[1]) || -f "requirements.txt" || -f "pyproject.toml" ]] && lang_indicator+="%F{#3776AB} %f"
-  # Rust
-  [[ -n *.rs(#qN[1]) || -f "Cargo.toml" ]] && lang_indicator+="%F{#363636} %f"
-  # C / C++
-  [[ -n *.(c|cpp|h|hpp)(#qN[1]) ]] && lang_indicator+="%F{#00599C} %f"
-  # JavaScript / TypeScript / Node
-  [[ -n *.(js|ts|jsx|tsx)(#qN[1]) || -f "package.json" ]] && lang_indicator+="%F{#F7DF1E} %f"
-  # Shell scripts
-  [[ -n *.sh(#qN[1]) ]] && lang_indicator+="%F{#8F726F} %f"
-  # HTML
-  [[ -n *.(html|htm)(#qN[1]) ]] && lang_indicator+="%F{#E34F26} %f"
-  # CSS
-  [[ -n *.css(#qN[1]) ]] && lang_indicator+="%F{#1572B6} %f"
-  # PHP
-  [[ -n *.php(#qN[1]) ]] && lang_indicator+="%F{#9877B4} %f"
-  # Java
-  [[ -n *.java(#qN[1]) ]] && lang_indicator+="%F{#966E00} %f"
-  # Go
-  [[ -n *.go(#qN[1]) || -f "go.mod" ]] && lang_indicator+="%F{#00ADD8}󰟓 %f"
-  # Lua
-  [[ -n *.lua(#qN[1]) ]] && lang_indicator+="%F{#51B2E8} %f"
-  # Ruby
-  [[ -n *.rb(#qN[1]) || -f "Gemfile" ]] && lang_indicator+="%F{#CC342D} %f"
-  # SQL
-  [[ -n *.sql(#qN[1]) ]] && lang_indicator+="%F{#FFA11F} %f"
-  # SQLite
-  [[ -n *.(db|sqlite|sqlite3)(#qN[1]) ]] && lang_indicator+="%F{#0284C2} %f"
-  # Docker
-  [[ -f "Dockerfile" || -f "docker-compose.yml" ]] && lang_indicator+="%F{#2496ED} %f"
+
+  { [[ -f "requirements.txt" || -f "pyproject.toml" ]] || _has_ext "py" } && lang_indicator+="%F{#3776AB} %f"
+  { [[ -f "Cargo.toml" ]] || _has_ext "rs" } && lang_indicator+="%F{#363636} %f"
+  { _has_ext "c" || _has_ext "cpp" || _has_ext "h" || _has_ext "hpp" } && lang_indicator+="%F{#00599C} %f"
+  { [[ -f "package.json" ]] || _has_ext "js" || _has_ext "ts" || _has_ext "jsx" || _has_ext "tsx" } && lang_indicator+="%F{#F7DF1E} %f"
+  _has_ext "sh" && lang_indicator+="%F{#8F726F} %f"
+  { _has_ext "html" || _has_ext "htm" } && lang_indicator+="%F{#E34F26} %f"
+  _has_ext "css" && lang_indicator+="%F{#1572B6} %f"
+  _has_ext "php" && lang_indicator+="%F{#9877B4} %f"
+  _has_ext "java" && lang_indicator+="%F{#966E00} %f"
+  { [[ -f "go.mod" ]] || _has_ext "go" } && lang_indicator+="%F{#00ADD8}󰟓 %f"
+  _has_ext "lua" && lang_indicator+="%F{#51B2E8} %f"
+  { [[ -f "Gemfile" ]] || _has_ext "rb" } && lang_indicator+="%F{#CC342D} %f"
+  _has_ext "sql" && lang_indicator+="%F{#FFA11F} %f"
+  { _has_ext "db" || _has_ext "sqlite" || _has_ext "sqlite3" } && lang_indicator+="%F{#0284C2} %f"
+  { [[ -f "Dockerfile" || -f "docker-compose.yml" ]] } && lang_indicator+="%F{#2496ED} %f"
 }
 
 # -------------------------------------------------
@@ -397,8 +388,8 @@ prompt_trigger_async() {
       async_init
       async_start_worker git_worker -n
       async_register_callback git_worker git_callback
+      _async_initialized=1
     fi
-    _async_initialized=1
   fi
 
   # 3. Recent Cache: Use directly if available and fresh
