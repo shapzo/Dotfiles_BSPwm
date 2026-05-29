@@ -31,7 +31,7 @@ run dunst
 run xsetroot -cursor_name left_ptr
 
 # polkit
-run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 #To adjust to the resolution of my laptop
 #run xrandr -s 1360x768 &
@@ -46,10 +46,10 @@ run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 run feh --bg-fill $HOME/.config/bspwm/img_1.jpg
 
 # Set polybar
-#run $HOME/.config/polybar/poly1/launch.sh &
-run $HOME/.config/polybar/poly2/launch.sh &
-#run $HOME/.config/polybar/poly3/launch.sh &
-#run $HOME/.config/polybar/poly4/launch.sh &
+#run $HOME/.config/polybar/poly1/launch.sh
+run $HOME/.config/polybar/poly2/launch.sh
+#run $HOME/.config/polybar/poly3/launch.sh
+#run $HOME/.config/polybar/poly4/launch.sh
 
 # Dunst notification
 killall -q baterry_alert.sh song_alert.sh
@@ -90,12 +90,10 @@ bspc config window_gap           7
 
 bspc config automatic_scheme      spiral
 bspc config split_ratio           0.50
-bspc config borderless_monocle    true
+bspc config borderless_monocle    false
 bspc config gapless_monocle       false
 bspc config single_monocle        true
 bspc config focus_follows_pointer true
-bspc config focused_frame_opacity 0.5
-bspc config normal_frame_opacity  1
 bspc config border_radius         16.0
 
 # Rules
