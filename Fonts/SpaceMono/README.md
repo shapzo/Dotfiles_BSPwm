@@ -6,29 +6,15 @@ For more information see:
 * https://github.com/ryanoasis/nerd-fonts/
 * https://github.com/ryanoasis/nerd-fonts/releases/latest/
 
-# Hermit
+# Space Mono
 
-**Hermit** is a monospace font designed to be clear, pragmatic and very readable.
+Space Mono is an original fixed-width type family designed by Colophon Foundry for Google Design.
 
-https://pcaro.es/p/hermit
+https://fonts.google.com/specimen/Space+Mono
 
-For more information have a look at the upstream website: https://github.com/pcaro90/hermit
+The `fi` and `fl` ligatures are removed because they map to only one advance width.
 
-Version: 2.0
-
-## Why `Hurmit` and not `Hermit`?
-
-What's in a name? The reason for the name change is to comply with the SIL Open Font License (OFL), in particular the [Reserved Font Name mechanism][SIL-RFN]
-
-Some fonts have parts of their name "reserved" per the [Reserved Font Name mechanism][SIL-RFN]:
-> No Modified Version of the Font Software may use the Reserved Font
-> Name(s) unless explicit written permission is granted by the corresponding
-> Copyright Holder. This restriction only applies to the primary font name as
-> presented to the users.
-
-- The main goals seem to be to: `Avoid collisions`, `Protect authors`, `Minimize support`, and `Encourage derivatives`
-
-See the [Reserved Font Name section][SIL-RFN] for additional information
+Version: 1.001
 
 ## Which font?
 
