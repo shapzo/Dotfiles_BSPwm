@@ -46,7 +46,7 @@
     min_icon_size = 50
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/:/usr/share/icons/
+    #icon_path = /usr/share/icons/:/usr/share/icons/
     icon_theme = "Colloid, candy-icons, hicolor"
     enable_recursive_icon_lookup = true
     
