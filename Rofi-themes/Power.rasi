@@ -13,7 +13,6 @@
 //=======================================================================|
 
 // power menu
-
 configuration {
     font:                           "Organo Regular 11";
     scroll-method:                  0;

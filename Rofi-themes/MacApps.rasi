@@ -12,7 +12,7 @@
 //        \/__/         \/__/         \/__/      |
 //================================================
 
-//Rofi theme macApps   
+//Rofi theme macApps
 
 configuration {
     font:                           "Comfortaa bold 9";

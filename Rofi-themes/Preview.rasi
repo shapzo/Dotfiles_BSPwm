@@ -9,7 +9,6 @@
 //=======================================================================|
 
 //Rofi theme Preview for apps
-
 configuration {
     font:                           "Organo Regular 11";
     show-icons:                     true;
