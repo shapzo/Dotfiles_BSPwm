@@ -3,11 +3,32 @@
 ETH="enp2s0"
 WIFI="wlp3s0"
 STATE="/tmp/polybar-network-state"
+INET_CACHE="/tmp/polybar-inet-status"
+SCRIPT_PATH="$(realpath "$0")"
 
-# default state
-[[ ! -f $STATE ]] && echo "icon" > "$STATE"
-MODE=$(cat "$STATE")
+COLOR_OFF="#ed245c"
+COLOR_WARN="#f39c12"
 
+[[ ! -f "$STATE" ]] && echo "icon" > "$STATE"
+MODE=$(<"$STATE")
+
+# -------------------------------------------------
+# Check internet with a 30-second cache
+# -------------------------------------------------
+check_internet() {
+  if [[ -f "$INET_CACHE" ]] && (( $(date +%s) - $(stat -c %Y "$INET_CACHE") < 30 )); then
+    return $(<"$INET_CACHE")
+  fi
+  if ping -c 1 -W 1 8.8.8.8 &>/dev/null; then
+    echo 0 > "$INET_CACHE"; return 0
+  else
+    echo 1 > "$INET_CACHE"; return 1
+  fi
+}
+
+# -------------------------------------------------
+# Toggle between icon/text mode on click
+# -------------------------------------------------
 toggle() {
   if [[ "$MODE" == "icon" ]]; then
     echo "text" > "$STATE"
@@ -16,42 +37,61 @@ toggle() {
   fi
 }
 
-# toggle with click
-if [[ "$1" == "toggle" ]]; then
-  toggle
-  exit 0
-fi
+[[ "$1" == "toggle" ]] && { toggle; exit 0; }
 
-# ---------- Ethernet ----------
+# -------------------------------------------------
+# Ethernet
+# -------------------------------------------------
 if ip link show "$ETH" 2>/dev/null | grep -q "state UP"; then
-  if [[ "$MODE" == "icon" ]]; then
-    echo "%{A1:$0 toggle:} %{A}"
+  if check_internet; then
+    ICON=" "
+    LABEL="Ethernet"
   else
-    echo "%{A1:$0 toggle:}  Ethernet%{A}"
+    ICON="%{F$COLOR_WARN}󱘖 %{F-}"
+    LABEL="%{F$COLOR_WARN}No Internet%{F-}"
+  fi
+
+  if [[ "$MODE" == "icon" ]]; then
+    echo "%{A1:$SCRIPT_PATH toggle:}$ICON%{A}"
+  else
+    echo "%{A1:$SCRIPT_PATH toggle:}$ICON $LABEL%{A}"
   fi
   exit 0
 fi
 
-# ---------- WiFi ----------
+# -------------------------------------------------
+# WiFi
+# -------------------------------------------------
 if ip link show "$WIFI" 2>/dev/null | grep -q "state UP"; then
   ESSID=$(iw dev "$WIFI" link | awk -F': ' '/SSID/ {print $2}')
-  SIGNAL=$(grep "$WIFI" /proc/net/wireless | awk '{print int($3)}')
-  SIGNAL=$(( (SIGNAL + 100) * 2 ))
 
-  if [[ $SIGNAL -gt 70 ]]; then ICON="󰤨"
-  elif [[ $SIGNAL -gt 55 ]]; then ICON="󰤥"
-  elif [[ $SIGNAL -gt 40 ]]; then ICON="󰤢"
-  elif [[ $SIGNAL -gt 25 ]]; then ICON="󰤟"
-  else ICON="󰤯"
+  # Signal in dBm → percentage
+  SIGNAL=$(iw dev "$WIFI" link | awk '/signal/ {print int($2)}')
+  SIGNAL=$(( (SIGNAL + 90) * 100 / 60 ))
+  (( SIGNAL > 100 )) && SIGNAL=100
+  (( SIGNAL < 0 ))   && SIGNAL=0
+
+  if   (( SIGNAL > 70 )); then ICON="󰤨"
+  elif (( SIGNAL > 55 )); then ICON="󰤥"
+  elif (( SIGNAL > 40 )); then ICON="󰤢"
+  elif (( SIGNAL > 25 )); then ICON="󰤟"
+  else                         ICON="󰤯"
+  fi
+
+  if ! check_internet; then
+    ICON="%{F$COLOR_WARN}󰤫 %{F-}"
+    ESSID="%{F$COLOR_WARN}No Internet%{F-}"
   fi
 
   if [[ "$MODE" == "icon" ]]; then
-    echo "%{A1:$0 toggle:}$ICON  %{A}"
+    echo "%{A1:$SCRIPT_PATH toggle:}$ICON%{A}"
   else
-    echo "%{A1:$0 toggle:}$ICON  $ESSID%{A}"
+    echo "%{A1:$SCRIPT_PATH toggle:}$ICON  $ESSID%{A}"
   fi
   exit 0
 fi
 
-# ---------- No network ----------
-echo "%{F#ed245c A1:$0 toggle:}󰤮  No network%{A F-}"
+# -------------------------------------------------
+# No network
+# -------------------------------------------------
+echo "%{F$COLOR_OFF}%{A1:$SCRIPT_PATH toggle:}󰤮 No network%{A}%{F-}"
