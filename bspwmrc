@@ -106,6 +106,13 @@ bspc rule -a "Spotify" desktop='^0'
 bspc rule -a "gnome-calculator" state=floating center=on
 bspc rule -a "Gnome-screenshot" state=floating center=on
 
+# moving floating windows and resize them with mouse, hold alt key key -> alt
+bspc config pointer_modifier mod1
+#: Alt + ->
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action3 resize_corner
+
 # Touchpad
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
