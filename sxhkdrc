@@ -25,7 +25,7 @@ alt + e
 	rofi -show emoji -modi emoji -theme $HOME/.config/rofi/themes/Emoji.rasi
 
 alt + r
-	rofi -show run -theme ~/.config/rofi/themes/Run.rasi
+	rofi -show run -theme $HOME/.config/rofi/themes/Run.rasi
 
 super + shift + w
 	$HOME/.config/polybar/Scripts/powermenu.sh &
@@ -165,8 +165,8 @@ super + ctrl + shift + space
 
 # Volume
 XF86Audio{RaiseVolume,LowerVolume,Mute}
-    ~/.config/dunst/scripts/volume-notify.sh {up,down,mute}
+    $HOME/.config/dunst/scripts/volume-alert.sh {up,down,mute}
 
 # Brightness
 XF86MonBrightness{Up,Down}
-    ~/.config/dunst/scripts/brightness-notify.sh {up,down}
+    $HOME/.config/dunst/scripts/brightness-alert.sh {up,down}
