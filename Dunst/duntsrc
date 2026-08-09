@@ -20,6 +20,7 @@
     show_age_threshold = 60
     word_wrap = yes
     ellipsize = middle
+    gap_size = 8
     
     width = 320
     height = (0, 400)
@@ -61,6 +62,8 @@
     progress_bar_height = 6
     progress_bar_min_width = 200
     progress_bar_max_width = 320
+    progress_bar_frame_width = 1
+    progress_bar_corner_radius = 2
     
     mouse_left_click = close_current
     mouse_middle_click = do_action, close_current
@@ -83,3 +86,11 @@
     foreground = "#ffffff"
     frame_color = "#ff0000"
     timeout = 10
+
+[volume]
+    appname = "Volume"
+    timeout = 5
+
+[brightness]
+    appname = "Brightness"
+    timeout = 5
