@@ -19,21 +19,21 @@ tree(){
         lsd --group-dirs=first --tree "$@"
 }
 #Function using eza
-et(){
+lst(){
         eza --icons --group-directories-first -T "$@"
 }
-eth(){
+lsth(){
         eza --icons --group-directories-first -ahlg -T "$@"
 }
 # function extract
-extract() {
+ext() {
     if command -v dtrx &> /dev/null; then
         dtrx "$@"
     else
         echo "Extract using manual method..."
     fi
 }
-extrac() {
+extract() {
     local file="$1"
 
     if [[ ! -f "$file" ]]; then
