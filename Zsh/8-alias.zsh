@@ -30,11 +30,13 @@ alias -g \
 alias -s \
         pdf='evince' \
         {png,jpg,jpeg,gif}='eog' \
-        {mp4,mkv,mov}='lollipop' \
+        {mp4,mkv,mov}='mpv' \
+        {mp3,flac}='lollipop' \
         md='mdcat' \
         py='python3' \
         {txt}='gnome-text-editor' \
-        {py,js,lua,sh,zsh,json,rasi,ini,html,css}='nvim'
+        {py,js,lua,sh,zsh,json,rasi,ini,html,css}='nvim' \
+        {xlsx,pptx,csv,docx,odt}='libreoffice'
 
 if command -v lsd >/dev/null 2>&1; then
     # ls for lsd
@@ -76,10 +78,10 @@ alias -g \
 
 # git
 alias -g \
-        status='git status' \
-        add='git add .' \
-        push='git push origin main' \
-        pull='git pull' \
-        remote='git remote add origin' \
-        clon='git clone' \
-        commit='git commit -m'
+        st='git status' \
+        ad='git add' \
+        pu='git push' \
+        pl='git pull' \
+        re='git remote add origin' \
+        cl='git clone' \
+        com='git commit -m'
