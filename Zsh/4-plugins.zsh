@@ -1,9 +1,9 @@
 #============================plugins========================
 autoload -Uz compinit
-if [[ ! -f ~/.zcompdump || ~/.zcompdump -nt ~/.zshrc ]]; then
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
     compinit
 else
-    compinit -C
+    compinit -C -d "${ZDOTDIR:-$HOME}/.zcompdump"
 fi
 
 plug=(
