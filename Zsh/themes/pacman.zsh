@@ -148,7 +148,12 @@ prompt_cmd_duration() {
     if (( elapsed >= 0.2 )); then
         local res=""
         
-        if (( elapsed >= 3600 )); then
+        if (( elapsed >= 86400 )); then
+            # Format: 2d 5h
+            local d=$(( int(elapsed / 86400) ))
+            local h=$(( int((elapsed % 86400) / 3600) ))
+            res="${d}d ${h}h"
+        elif (( elapsed >= 3600 )); then
             # Format: 1h 20m
             local h=$(( int(elapsed / 3600) ))
             local m=$(( int((elapsed % 3600) / 60) ))
